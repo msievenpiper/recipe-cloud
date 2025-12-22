@@ -11,6 +11,7 @@
 .env.production
 .env.development
 /server/.env
+/credentials
 
 # Logs
 npm-debug.log*

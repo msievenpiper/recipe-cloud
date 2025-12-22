@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { prisma } from '../../../lib/prisma';
+import { prisma } from '@/lib/prisma';
 import { getServerSession } from "next-auth/next"
 import { authOptions } from "../auth/[...nextauth]/route"
 import { ImageAnnotatorClient } from '@google-cloud/vision';
@@ -37,15 +37,18 @@ export async function POST(request: Request) {
         const detections = result.textAnnotations;
         const text = detections.map(d => d.description).join(' ');
 
-        const model = genAI.getGenerativeModel({ model: "gemini-pro"});
+        const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash"});
         const prompt = `Create a recipe from the following text: ${text}. The recipe should have a name, instructions, and notes.`;
         const aiResult = await model.generateContent(prompt);
-        const response = await aiResult.response;
+        const response = aiResult.response;
         const recipeText = response.text();
 
-        const name = recipeText.match(/Name: (.*)/)[1];
-        const instructions = recipeText.match(/Instructions: (.*)/)[1];
-        const notes = recipeText.match(/Notes: (.*)/)[1];
+        console.log(response);
+        console.log(recipeText);
+
+        const name = recipeText.match(/Name: (.*)/);
+        const instructions = recipeText.match(/Instructions: (.*)/);
+        const notes = recipeText.match(/Notes: (.*)/);
 
         const newRecipe = await prisma.recipe.create({
             data: {
