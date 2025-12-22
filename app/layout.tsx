@@ -9,6 +9,7 @@ const inter = Inter({ subsets: ["latin"] }); // Keep if Inter is used elsewhere,
 export const metadata: Metadata = {
   title: "Recipe Cloud",
   description: "Your personal AI-powered recipe manager",
+  manifest: "/manifest.json",
   icons: {
     icon: "/icon.svg",
   },
