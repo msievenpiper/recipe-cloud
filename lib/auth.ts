@@ -1,4 +1,4 @@
-import {type Awaitable, NextAuthOptions, type User} from "next-auth";
+import {NextAuthOptions} from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import FacebookProvider from "next-auth/providers/facebook";
 import TwitterProvider from "next-auth/providers/twitter";

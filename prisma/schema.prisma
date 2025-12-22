@@ -20,6 +20,7 @@ model Recipe {
   title        String
   summary      String? // New field for short summary
   content      String
+  icon         String? // New field for icon
   author       User     @relation(fields: [authorId], references: [id])
   authorId     String
 }
