@@ -12,7 +12,7 @@ interface Recipe {
 }
 
 export default function RecipeListPage() {
-  const [recipes, setRecipes] = useState<Recipe[]>([]);
+  let [recipes, setRecipes] = useState<Recipe[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
   const [showSuggestions, setShowSuggestions] = useState(false);
@@ -81,10 +81,13 @@ export default function RecipeListPage() {
     <div className="flex flex-col items-center px-4 py-8 md:p-24 bg-gray-50"> {/* Removed min-h-screen and justify-center */}
       <div className="w-full max-w-2xl flex justify-between items-center mb-8">
         <h1 className="text-4xl font-bold text-primary-800">Your Recipes</h1>
-        <Link href="/upload" className="bg-primary-600 hover:bg-primary-700 text-white font-bold py-2 px-4 rounded-lg flex items-center space-x-2 transition-colors duration-200">
-          <FaPlus />
-          <span>Add New</span>
-        </Link>
+        {recipes.length > 0 && (
+            <Link href="/upload"
+                  className="bg-primary-600 hover:bg-primary-700 text-white font-bold py-2 px-4 rounded-lg flex items-center space-x-2 transition-colors duration-200">
+              <FaPlus/>
+              <span>Add New</span>
+            </Link>
+        )}
       </div>
 
       {recipes.length > 0 && (
