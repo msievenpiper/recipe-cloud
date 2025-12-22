@@ -1,9 +1,13 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { useParams } from "next/navigation";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
+
+// Import the SimpleMDE editor and its styles
+import SimpleMdeReact from "react-simplemde-editor";
+import "easymde/dist/easymde.min.css";
 
 interface Recipe {
   id: number;
@@ -44,6 +48,36 @@ export default function RecipeDetailPage() {
     setIsEditing(false);
   };
 
+  // Options for SimpleMDE editor
+  const editorOptions = useMemo(() => {
+    return {
+      autofocus: true,
+      spellChecker: false,
+      fixedToolbar: true, // Make the toolbar sticky
+      toolbar: [ // Custom toolbar with individual heading buttons
+        "bold",
+        "italic",
+        "strikethrough",
+        "|",
+        "heading-1", // Replaced heading-select with individual headings
+        "heading-2",
+        "heading-3",
+        "|",
+        "quote",
+        "code",
+        "unordered-list",
+        "ordered-list",
+        "|",
+        "link",
+        "image",
+        "|",
+        "preview",
+        "fullscreen",
+        "guide",
+      ],
+    };
+  }, []);
+
   if (!recipe) {
     return <div className="text-center px-4 py-8 md:p-10 text-primary-700">Loading...</div>;
   }
@@ -51,13 +85,14 @@ export default function RecipeDetailPage() {
   return (
     <div className="container mx-auto px-4 py-8 md:p-8 bg-white rounded-lg shadow-md mt-8 mb-8">
       {isEditing ? (
-        <div className="w-full">
-          <textarea
+        <div className="w-full flex flex-col h-[calc(100vh-150px)]">
+          <SimpleMdeReact
             value={content}
-            onChange={(e) => setContent(e.target.value)}
-            className="w-full h-screen p-4 border border-gray-300 rounded-lg font-mono focus:ring-primary-500 focus:border-primary-500"
+            onChange={setContent}
+            options={editorOptions}
+            className="w-full flex-1" // Removed overflow-y-auto from here
           />
-          <div className="mt-4 space-x-2">
+          <div className="mt-4 space-x-2 flex-shrink-0">
             <button
               onClick={handleSave}
               className="bg-primary-600 hover:bg-primary-700 text-white font-bold py-2 px-4 rounded-lg transition-colors duration-200"
@@ -73,13 +108,13 @@ export default function RecipeDetailPage() {
           </div>
         </div>
       ) : (
-        <div>
-          <article className="prose prose-base"> {/* Changed lg:prose-xl max-w-none to prose-base */}
+        <div className="relative">
+          <article className="prose prose-base">
             <ReactMarkdown remarkPlugins={[remarkGfm]}>{recipe.content}</ReactMarkdown>
           </article>
           <button
             onClick={() => setIsEditing(true)}
-            className="bg-primary-600 hover:bg-primary-700 text-white font-bold py-2 px-4 rounded-lg mt-8 transition-colors duration-200"
+            className="absolute top-4 right-4 bg-primary-600 hover:bg-primary-700 text-white font-bold py-2 px-4 rounded-lg transition-colors duration-200"
           >
             Edit
           </button>
