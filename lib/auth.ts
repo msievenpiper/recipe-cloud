@@ -1,4 +1,4 @@
-import { NextAuthOptions } from "next-auth";
+import {type Awaitable, NextAuthOptions, type User} from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import FacebookProvider from "next-auth/providers/facebook";
 import TwitterProvider from "next-auth/providers/twitter";
@@ -6,8 +6,31 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import { prisma } from "./prisma";
 import bcrypt from 'bcryptjs';
 
-export const authOptions: NextAuthOptions = {
-  providers: [
+let gprov = null
+if (process.env.GOOGLE_CLIENT_ID && process.env.GOOGLE_CLIENT_SECRET) {
+  gprov = GoogleProvider({
+    clientId: process.env.GOOGLE_CLIENT_ID,
+    clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+  });
+}
+
+let fprov = null
+if (process.env.FACEBOOK_CLIENT_ID && process.env.FACEBOOK_CLIENT_SECRET) {
+  fprov = FacebookProvider({
+    clientId: process.env.FACEBOOK_CLIENT_ID,
+    clientSecret: process.env.FACEBOOK_CLIENT_SECRET,
+  })
+}
+
+let tprov = null
+if (process.env.TWITTER_CLIENT_ID && process.env.TWITTER_CLIENT_SECRET) {
+  tprov = TwitterProvider({
+    clientId: process.env.TWITTER_CLIENT_ID,
+    clientSecret: process.env.TWITTER_CLIENT_SECRET,
+  })
+}
+
+let providers = [
     CredentialsProvider({
       name: 'Credentials',
       credentials: {
@@ -15,6 +38,12 @@ export const authOptions: NextAuthOptions = {
         password: {  label: "Password", type: "password" }
       },
       async authorize(credentials) {
+
+        if (!credentials || !credentials.email || !credentials.password)
+        {
+          return null;
+        }
+
         const user = await prisma.user.findUnique({
           where: { email: credentials.email },
         });
@@ -26,19 +55,14 @@ export const authOptions: NextAuthOptions = {
         }
       }
     }),
-    GoogleProvider({
-      clientId: process.env.GOOGLE_CLIENT_ID,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-    }),
-    FacebookProvider({
-      clientId: process.env.FACEBOOK_CLIENT_ID,
-      clientSecret: process.env.FACEBOOK_CLIENT_SECRET,
-    }),
-    TwitterProvider({
-      clientId: process.env.TWITTER_CLIENT_ID,
-      clientSecret: process.env.TWITTER_CLIENT_SECRET,
-    }),
-  ],
+    gprov,
+    fprov,
+    tprov
+].filter((provider) => provider !== null)
+
+
+export const authOptions: NextAuthOptions = {
+  providers,
   session: {
     strategy: "jwt",
   },
