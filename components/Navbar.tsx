@@ -29,12 +29,17 @@ export default function Navbar() {
               </button>
             </>
           ) : (
-            <button
-              onClick={() => signIn()}
-              className="text-gray-300 hover:text-white"
-            >
-              Sign In
-            </button>
+            <>
+              <Link href="/register" className="text-gray-300 hover:text-white">
+                Register
+              </Link>
+              <button
+                onClick={() => signIn()}
+                className="text-gray-300 hover:text-white"
+              >
+                Sign In
+              </button>
+            </>
           )}
         </div>
       </div>
