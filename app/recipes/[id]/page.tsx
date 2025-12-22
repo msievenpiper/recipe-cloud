@@ -113,7 +113,7 @@ export default function RecipeDetailPage() {
   return (
     <div className="container mx-auto px-4 py-8 md:p-8 bg-white rounded-lg shadow-md mt-8 mb-8">
       {isEditing ? (
-        <div className="w-full flex flex-col h-[calc(100vh-150px)]">
+        <div className="w-full flex flex-col min-h-[calc(100vh-150px)]">
           {/* Summary Input */}
           <div className="mb-4">
             <label htmlFor="summary" className="block text-sm font-medium text-gray-700">
@@ -161,7 +161,6 @@ export default function RecipeDetailPage() {
           <div className="flex items-start justify-between mb-4">
             <div className="flex items-center"> {/* Container for icon and title */}
               {recipe.icon && <span className="text-4xl mr-2">{recipe.icon}</span>}
-              <h1 className="text-3xl font-bold">{recipe.title}</h1>
             </div>
             <button
               onClick={() => setIsEditing(true)}
