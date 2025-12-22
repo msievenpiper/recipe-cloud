@@ -1,2 +1,5 @@
 #!/bin/bash
-npm install && npm run build
+npm install
+npx prisma generate
+npx prisma migrate deploy
+npm run build
