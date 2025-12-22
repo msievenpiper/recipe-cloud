@@ -1,19 +1,21 @@
 "use client";
 
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect, useMemo, useRef } from "react";
 import Link from "next/link";
-import { FaBookOpen, FaSearch } from "react-icons/fa"; // Added FaSearch icon
+import { FaBookOpen, FaSearch } from "react-icons/fa";
 
 interface Recipe {
   id: number;
   title: string;
-  summary?: string; // Summary is now optional
+  summary?: string;
 }
 
 export default function RecipeListPage() {
   const [recipes, setRecipes] = useState<Recipe[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
+  const [showSuggestions, setShowSuggestions] = useState(false);
+  const searchInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     fetch("/api/recipes")
@@ -23,6 +25,18 @@ export default function RecipeListPage() {
         setLoading(false);
       });
   }, []);
+
+  const suggestions = useMemo(() => {
+    if (!searchTerm) return [];
+    const lowercasedSearchTerm = searchTerm.toLowerCase();
+    return recipes
+      .filter(
+        (recipe) =>
+          recipe.title.toLowerCase().includes(lowercasedSearchTerm) ||
+          (recipe.summary && recipe.summary.toLowerCase().includes(lowercasedSearchTerm))
+      )
+      .slice(0, 5); // Limit to 5 suggestions
+  }, [recipes, searchTerm]);
 
   const filteredRecipes = useMemo(() => {
     if (!searchTerm) {
@@ -35,6 +49,24 @@ export default function RecipeListPage() {
         (recipe.summary && recipe.summary.toLowerCase().includes(lowercasedSearchTerm))
     );
   }, [recipes, searchTerm]);
+
+  const handleSelectSuggestion = (title: string) => {
+    setSearchTerm(title);
+    setShowSuggestions(false);
+  };
+
+  // Close suggestions when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (searchInputRef.current && !searchInputRef.current.contains(event.target as Node)) {
+        setShowSuggestions(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   if (loading) {
     return (
@@ -49,15 +81,33 @@ export default function RecipeListPage() {
       <h1 className="text-4xl font-bold mb-8 text-primary-800">Your Recipes</h1>
 
       {recipes.length > 0 && (
-        <div className="w-full max-w-2xl mb-8 relative">
+        <div className="w-full max-w-2xl mb-8 relative" ref={searchInputRef}>
           <input
             type="text"
             placeholder="Search your recipes..."
             className="w-full p-3 pl-10 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200"
             value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
+            onChange={(e) => {
+              setSearchTerm(e.target.value);
+              setShowSuggestions(true);
+            }}
+            onFocus={() => setShowSuggestions(true)}
           />
           <FaSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+
+          {showSuggestions && suggestions.length > 0 && (
+            <ul className="absolute z-10 w-full bg-white border border-gray-300 rounded-lg shadow-lg mt-1 max-h-60 overflow-y-auto">
+              {suggestions.map((recipe) => (
+                <li
+                  key={recipe.id}
+                  className="p-3 hover:bg-primary-50 cursor-pointer border-b border-gray-200 last:border-b-0"
+                  onClick={() => handleSelectSuggestion(recipe.title)}
+                >
+                  {recipe.title}
+                </li>
+              ))}
+            </ul>
+          )}
         </div>
       )}
 
