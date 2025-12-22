@@ -42,7 +42,6 @@ export async function POST(request: Request) {
         const aiResult = await model.generateContent(prompt);
         const response = aiResult.response;
         const markdownContent = response.text();
-        console.log(markdownContent)
 
         // Extract the main title from the markdown
         const titleMatch = markdownContent.match(/^#\s*(.*)/);
