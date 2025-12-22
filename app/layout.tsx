@@ -3,6 +3,7 @@ import { Inter } from "next/font/google"; // Keep if Inter is used elsewhere, ot
 import "./globals.css";
 import Navbar from "../components/Navbar";
 import { Providers } from "./providers"; // Import the new Providers component
+import PWAInstallPrompt from "../components/PWAInstallPrompt"; // Import the PWAInstallPrompt component
 
 const inter = Inter({ subsets: ["latin"] }); // Keep if Inter is used elsewhere, otherwise remove
 
@@ -26,6 +27,7 @@ export default function RootLayout({
         <Providers>
           <Navbar />
           {children}
+          <PWAInstallPrompt />
         </Providers>
       </body>
     </html>

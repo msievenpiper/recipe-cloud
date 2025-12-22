@@ -1,8 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { useRouter } from "next/navigation";
-import { FaLightbulb, FaCamera, FaTextHeight, FaSun } from "react-icons/fa"; // Added new icons
+import { FaLightbulb, FaCamera, FaTextHeight, FaSun, FaUpload } from "react-icons/fa"; // Added FaUpload icon
 
 export default function UploadPage() {
   const [file, setFile] = useState<File | null>(null);
@@ -11,12 +11,23 @@ export default function UploadPage() {
   const [progress, setProgress] = useState(0);
   const router = useRouter();
 
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const cameraInputRef = useRef<HTMLInputElement>(null);
+
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFile = e.target.files ? e.target.files[0] : null;
     setFile(selectedFile);
     if (selectedFile) {
       setError(null); // Clear error when a file is selected
     }
+  };
+
+  const handleUploadClick = () => {
+    fileInputRef.current?.click();
+  };
+
+  const handleCameraClick = () => {
+    cameraInputRef.current?.click();
   };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -64,23 +75,49 @@ export default function UploadPage() {
         <h1 className="text-3xl font-bold mb-6 text-center text-primary-800">Upload a Recipe Photo</h1>
         <form onSubmit={handleSubmit} className="space-y-6">
           <div>
-            <label htmlFor="file-upload" className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-sm font-medium text-gray-700 mb-2">
               Choose an image or take a photo
             </label>
+            <div className="flex justify-around space-x-4 mb-4">
+              <button
+                type="button"
+                onClick={handleUploadClick}
+                className="flex-1 flex flex-col items-center justify-center py-3 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 transition-colors duration-200"
+              >
+                <FaUpload className="text-xl mb-1" />
+                <span>Upload Photo</span>
+              </button>
+              <button
+                type="button"
+                onClick={handleCameraClick}
+                className="flex-1 flex flex-col items-center justify-center py-3 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 transition-colors duration-200"
+              >
+                <FaCamera className="text-xl mb-1" />
+                <span>Take Photo</span>
+              </button>
+            </div>
+
+            {/* Hidden file inputs */}
             <input
-              id="file-upload"
+              ref={fileInputRef}
+              type="file"
+              accept="image/*"
+              onChange={handleFileChange}
+              className="hidden"
+            />
+            <input
+              ref={cameraInputRef}
               type="file"
               accept="image/*"
               capture="environment"
               onChange={handleFileChange}
-              className="mt-1 block w-full text-sm text-gray-500
-                         file:mr-4 file:py-2 file:px-4
-                         file:rounded-full file:border-0
-                         file:text-sm file:font-semibold
-                         file:bg-primary-50 file:text-primary-700
-                         hover:file:bg-primary-100 transition-colors duration-200"
+              className="hidden"
             />
-            {error && <p className="mt-2 text-sm text-red-600">{error}</p>}
+
+            {file && (
+              <p className="mt-2 text-sm text-gray-700 text-center">Selected file: <span className="font-semibold">{file.name}</span></p>
+            )}
+            {error && <p className="mt-2 text-sm text-red-600 text-center">{error}</p>}
           </div>
 
           {uploading && (
@@ -99,7 +136,7 @@ export default function UploadPage() {
 
           <button
             type="submit"
-            disabled={uploading}
+            disabled={uploading || !file}
             className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 disabled:bg-gray-400 transition-colors duration-200"
           >
             {uploading ? "Uploading..." : "Upload and Process"}
