@@ -2,11 +2,12 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import { FaBookOpen } from "react-icons/fa"; // Placeholder icon
 
 interface Recipe {
   id: number;
   title: string;
-  content: string;
+  summary?: string; // Summary is now optional
 }
 
 export default function RecipeListPage() {
@@ -34,12 +35,18 @@ export default function RecipeListPage() {
     <div className="flex min-h-screen flex-col items-center p-24">
       <h1 className="text-4xl font-bold mb-8">Your Recipes</h1>
       {recipes.length > 0 ? (
-        <ul>
+        <ul className="w-full max-w-2xl">
           {recipes.map((recipe) => (
-            <li key={recipe.id} className="mb-4 p-4 border rounded-lg shadow-sm">
-              <Link href={`/recipes/${recipe.id}`} className="text-2xl font-semibold text-blue-600 hover:underline">
-                {recipe.title}
-              </Link>
+            <li key={recipe.id} className="mb-4 p-4 border rounded-lg shadow-sm flex items-start space-x-4">
+              <FaBookOpen className="text-blue-500 text-3xl mt-1" />
+              <div>
+                <Link href={`/recipes/${recipe.id}`} className="text-2xl font-semibold text-blue-600 hover:underline">
+                  {recipe.title}
+                </Link>
+                {recipe.summary && (
+                  <p className="text-gray-600 text-sm mt-1">{recipe.summary}</p>
+                )}
+              </div>
             </li>
           ))}
         </ul>

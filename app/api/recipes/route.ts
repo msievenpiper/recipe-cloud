@@ -16,6 +16,7 @@ export async function GET() {
     }
     const recipes = await prisma.recipe.findMany({
         where: { authorId: session.user.id },
+        select: { id: true, title: true, summary: true } // Only fetch what's needed for the list
     });
     return NextResponse.json(recipes);
 }
@@ -38,10 +39,24 @@ export async function POST(request: Request) {
         const text = detections.map(d => d.description).join(' ');
 
         const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash"});
-        const prompt = `Format the following recipe text into a clean, well-structured markdown document. It should start with a main heading for the recipe title. Include sections for description, yield, prep time, bake time, ingredients, instructions, and notes. Use markdown for all formatting (e.g., headings, lists, bold text). Here is the text: ${text}`;
+        const prompt = `From the following recipe text, first provide a concise, one-sentence summary. Then, format the entire recipe into a clean, well-structured markdown document. It should start with a main heading for the recipe title. Include sections for description, yield, prep time, bake time, ingredients, instructions, and notes. Use markdown for all formatting (e.g., headings, lists, bold text).
+        
+        Example Output Format:
+        Summary: This is a short summary of the recipe.
+        
+        # Recipe Title
+        ... rest of the markdown content ...
+        
+        Here is the text: ${text}`;
+
         const aiResult = await model.generateContent(prompt);
-        const response = aiResult.response;
-        const markdownContent = response.text();
+        const response = await aiResult.response;
+        const fullAiResponse = response.text();
+
+        // Extract summary and markdown content
+        const summaryMatch = fullAiResponse.match(/Summary: (.*)\n\n/);
+        const summary = summaryMatch ? summaryMatch[1].trim() : 'No summary available.';
+        const markdownContent = fullAiResponse.replace(/Summary: (.*)\n\n/, '').trim();
 
         // Extract the main title from the markdown
         const titleMatch = markdownContent.match(/^#\s*(.*)/);
@@ -50,6 +65,7 @@ export async function POST(request: Request) {
         const newRecipe = await prisma.recipe.create({
             data: {
                 title,
+                summary,
                 content: markdownContent,
                 authorId: session.user.id,
             },
