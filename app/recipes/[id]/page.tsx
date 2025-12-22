@@ -9,6 +9,12 @@ import remarkGfm from "remark-gfm";
 import SimpleMdeReact from "react-simplemde-editor";
 import "easymde/dist/easymde.min.css";
 
+// Import unified and related plugins for custom preview rendering
+import { unified } from 'unified';
+import remarkParse from 'remark-parse';
+import remarkRehype from 'remark-rehype';
+import rehypeStringify from 'rehype-stringify';
+
 interface Recipe {
   id: number;
   title: string;
@@ -71,10 +77,23 @@ export default function RecipeDetailPage() {
         "link",
         "image",
         "|",
-        "preview",
+        // Removed "preview" button
         "fullscreen",
         "guide",
       ],
+      previewRender(plainText: string) {
+        // Use unified to parse markdown and convert to HTML, applying remarkGfm
+        const processedContent = unified()
+          .use(remarkParse)
+          .use(remarkGfm) // Ensure GitHub Flavored Markdown is processed
+          .use(remarkRehype)
+          .use(rehypeStringify)
+          .processSync(plainText)
+          .toString();
+
+        // Wrap the processed HTML in a div with your desired Tailwind prose classes
+        return `<div class="prose prose-base">${processedContent}</div>`;
+      },
     };
   }, []);
 
@@ -90,7 +109,7 @@ export default function RecipeDetailPage() {
             value={content}
             onChange={setContent}
             options={editorOptions}
-            className="w-full flex-1" // Removed overflow-y-auto from here
+            className="w-full flex-1"
           />
           <div className="mt-4 space-x-2 flex-shrink-0">
             <button
