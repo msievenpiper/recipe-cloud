@@ -58,8 +58,8 @@ export default function UploadPage() {
   };
 
   return (
-    <div className="flex min-h-screen flex-col items-center p-24">
-      <div className="w-full max-w-md p-8 bg-white rounded-lg shadow-md">
+    <div className="flex min-h-screen flex-col items-center px-4 py-8 md:p-24">
+      <div className="w-full max-w-md p-6 md:p-8 bg-white rounded-lg shadow-md">
         <h1 className="text-3xl font-bold mb-6 text-center">Upload a Recipe</h1>
         <form onSubmit={handleSubmit} className="space-y-6">
           <div>

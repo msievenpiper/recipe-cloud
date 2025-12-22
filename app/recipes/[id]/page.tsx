@@ -45,11 +45,11 @@ export default function RecipeDetailPage() {
   };
 
   if (!recipe) {
-    return <div className="text-center p-10">Loading...</div>;
+    return <div className="text-center px-4 py-8 md:p-10">Loading...</div>;
   }
 
   return (
-    <div className="container mx-auto p-8">
+    <div className="container mx-auto px-4 py-8 md:p-8">
       {isEditing ? (
         <div className="w-full">
           <textarea

@@ -28,9 +28,9 @@ export default function RegisterPage() {
   };
 
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center p-24">
+    <div className="flex min-h-screen flex-col items-center justify-center px-4 py-8 md:p-24">
       <h1 className="text-4xl font-bold mb-8">Register</h1>
-      <form onSubmit={handleSubmit} className="flex flex-col space-y-4">
+      <form onSubmit={handleSubmit} className="flex flex-col space-y-4 w-full max-w-md">
         <input
           type="email"
           placeholder="Email"
