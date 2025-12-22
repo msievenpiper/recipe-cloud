@@ -21,7 +21,7 @@ export default function UploadPage() {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!file) {
-      setError("Please select an image to upload.");
+      setError("Please select an image or take a photo to upload.");
       return;
     }
 
@@ -60,16 +60,17 @@ export default function UploadPage() {
   return (
     <div className="flex min-h-screen flex-col items-center px-4 py-8 md:p-24 bg-gray-50">
       <div className="w-full max-w-md p-6 md:p-8 bg-white rounded-lg shadow-lg border border-gray-200">
-        <h1 className="text-3xl font-bold mb-6 text-center text-primary-800">Upload a Recipe</h1>
+        <h1 className="text-3xl font-bold mb-6 text-center text-primary-800">Upload a Recipe Photo</h1>
         <form onSubmit={handleSubmit} className="space-y-6">
           <div>
             <label htmlFor="file-upload" className="block text-sm font-medium text-gray-700 mb-2">
-              Recipe Image
+              Choose an image or take a photo
             </label>
             <input
               id="file-upload"
               type="file"
               accept="image/*"
+              capture="environment" // Added capture attribute
               onChange={handleFileChange}
               className="mt-1 block w-full text-sm text-gray-500
                          file:mr-4 file:py-2 file:px-4

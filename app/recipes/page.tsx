@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useMemo, useRef } from "react";
 import Link from "next/link";
-import { FaBookOpen, FaSearch } from "react-icons/fa";
+import { FaBookOpen, FaSearch, FaPlus } from "react-icons/fa"; // Added FaPlus icon
 
 interface Recipe {
   id: number;
@@ -77,8 +77,14 @@ export default function RecipeListPage() {
   }
 
   return (
-    <div className="flex min-h-screen flex-col items-center px-4 py-8 md:p-24 bg-gray-50">
-      <h1 className="text-4xl font-bold mb-8 text-primary-800">Your Recipes</h1>
+    <div className="flex flex-col items-center px-4 py-8 md:p-24 bg-gray-50"> {/* Removed min-h-screen and justify-center */}
+      <div className="w-full max-w-2xl flex justify-between items-center mb-8">
+        <h1 className="text-4xl font-bold text-primary-800">Your Recipes</h1>
+        <Link href="/upload" className="bg-primary-600 hover:bg-primary-700 text-white font-bold py-2 px-4 rounded-lg flex items-center space-x-2 transition-colors duration-200">
+          <FaPlus />
+          <span>Add New</span>
+        </Link>
+      </div>
 
       {recipes.length > 0 && (
         <div className="w-full max-w-2xl mb-8 relative" ref={searchInputRef}>
