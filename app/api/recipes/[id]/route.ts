@@ -1,17 +1,37 @@
 import { NextResponse } from 'next/server';
-import db from '../../../../lib/db';
-import { promisify } from 'util';
-
-const dbGet = promisify(db.get.bind(db));
-const dbRun = promisify(db.run.bind(db));
+import { prisma } from '../../../../lib/prisma';
+import { getServerSession } from "next-auth/next"
+import { authOptions } from "../../auth/[...nextauth]/route"
 
 export async function GET(request: Request, { params }: { params: { id: string } }) {
-  const recipe = await dbGet('SELECT * FROM recipes WHERE id = ?', [params.id]);
-  return NextResponse.json(recipe);
+    const session = await getServerSession(authOptions)
+    if (!session) {
+        return new NextResponse(null, { status: 401 })
+    }
+    const recipe = await prisma.recipe.findUnique({
+        where: { id: parseInt(params.id) },
+    });
+    if (recipe.authorId !== session.user.id) {
+        return new NextResponse(null, { status: 403 })
+    }
+    return NextResponse.json(recipe);
 }
 
 export async function PUT(request: Request, { params }: { params: { id: string } }) {
-  const { name, instructions, notes } = await request.json();
-  await dbRun('UPDATE recipes SET name = ?, instructions = ?, notes = ? WHERE id = ?', [name, instructions, notes, params.id]);
-  return new NextResponse(null, { status: 204 });
+    const session = await getServerSession(authOptions)
+    if (!session) {
+        return new NextResponse(null, { status: 401 })
+    }
+    const recipe = await prisma.recipe.findUnique({
+        where: { id: parseInt(params.id) },
+    });
+    if (recipe.authorId !== session.user.id) {
+        return new NextResponse(null, { status: 403 })
+    }
+    const { name, instructions, notes } = await request.json();
+    await prisma.recipe.update({
+        where: { id: parseInt(params.id) },
+        data: { name, instructions, notes },
+    });
+    return new NextResponse(null, { status: 204 });
 }

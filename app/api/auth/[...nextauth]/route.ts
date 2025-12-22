@@ -2,33 +2,23 @@ import NextAuth from "next-auth"
 import GoogleProvider from "next-auth/providers/google";
 import FacebookProvider from "next-auth/providers/facebook";
 import TwitterProvider from "next-auth/providers/twitter";
-import CredentialsProvider from "next-auth/providers/credentials";
-import db from "../../../../lib/db";
-import bcrypt from 'bcryptjs';
+import EmailProvider from "next-auth/providers/email";
+import { PrismaAdapter } from "@next-auth/prisma-adapter";
+import { prisma } from "../../../../lib/prisma";
 
 export const authOptions = {
-  // Configure one or more authentication providers
+  adapter: PrismaAdapter(prisma),
   providers: [
-    CredentialsProvider({
-      name: 'Credentials',
-      credentials: {
-        email: { label: "Email", type: "text" },
-        password: {  label: "Password", type: "password" }
+    EmailProvider({
+      server: {
+        host: process.env.EMAIL_SERVER_HOST,
+        port: process.env.EMAIL_SERVER_PORT,
+        auth: {
+          user: process.env.EMAIL_SERVER_USER,
+          pass: process.env.EMAIL_SERVER_PASSWORD
+        }
       },
-      async authorize(credentials, req) {
-        return new Promise((resolve, reject) => {
-          db.get('SELECT * FROM users WHERE email = ?', [credentials.email], async (err, user) => {
-            if (err) {
-              reject(new Error('Database error'));
-            }
-            if (user && await bcrypt.compare(credentials.password, user.password)) {
-              resolve({ id: user.id, email: user.email });
-            } else {
-              resolve(null);
-            }
-          });
-        });
-      }
+      from: process.env.EMAIL_FROM
     }),
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID,
@@ -44,11 +34,8 @@ export const authOptions = {
     }),
   ],
   session: {
-    strategy: "jwt",
+    strategy: "database",
   },
-  pages: {
-    signIn: '/login',
-  }
 }
 
 const handler = NextAuth(authOptions)

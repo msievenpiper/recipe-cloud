@@ -1,48 +1,66 @@
 import { NextResponse } from 'next/server';
-import db from '../../../lib/db';
+import { prisma } from '../../../lib/prisma';
+import { getServerSession } from "next-auth/next"
+import { authOptions } from "../auth/[...nextauth]/route"
 import { ImageAnnotatorClient } from '@google-cloud/vision';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import fs from 'fs';
-import { promisify } from 'util';
 
 const visionClient = new ImageAnnotatorClient();
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
-const dbAll = promisify(db.all.bind(db));
-const dbRun = promisify(db.run.bind(db));
 
 export async function GET() {
-  const recipes = await dbAll('SELECT * FROM recipes');
-  return NextResponse.json(recipes);
+    const session = await getServerSession(authOptions)
+    if (!session) {
+        return new NextResponse(null, { status: 401 })
+    }
+    const recipes = await prisma.recipe.findMany({
+        where: { authorId: session.user.id },
+    });
+    return NextResponse.json(recipes);
 }
 
 export async function POST(request: Request) {
-  const formData = await request.formData();
-  const file = formData.get('image') as File;
-  const buffer = Buffer.from(await file.arrayBuffer());
-  const tempFilePath = `/tmp/${file.name}`;
-  fs.writeFileSync(tempFilePath, buffer);
+    const session = await getServerSession(authOptions)
+    if (!session) {
+        return new NextResponse(null, { status: 401 })
+    }
 
-  try {
-    const [result] = await visionClient.textDetection(tempFilePath);
-    const detections = result.textAnnotations;
-    const text = detections.map(d => d.description).join(' ');
+    const formData = await request.formData();
+    const file = formData.get('image') as File;
+    const buffer = Buffer.from(await file.arrayBuffer());
+    const tempFilePath = `/tmp/${file.name}`;
+    fs.writeFileSync(tempFilePath, buffer);
 
-    const model = genAI.getGenerativeModel({ model: "gemini-pro"});
-    const prompt = `Create a recipe from the following text: ${text}. The recipe should have a name, instructions, and notes.`;
-    const aiResult = await model.generateContent(prompt);
-    const response = await aiResult.response;
-    const recipeText = response.text();
+    try {
+        const [result] = await visionClient.textDetection(tempFilePath);
+        const detections = result.textAnnotations;
+        const text = detections.map(d => d.description).join(' ');
 
-    const name = recipeText.match(/Name: (.*)/)[1];
-    const instructions = recipeText.match(/Instructions: (.*)/)[1];
-    const notes = recipeText.match(/Notes: (.*)/)[1];
+        const model = genAI.getGenerativeModel({ model: "gemini-pro"});
+        const prompt = `Create a recipe from the following text: ${text}. The recipe should have a name, instructions, and notes.`;
+        const aiResult = await model.generateContent(prompt);
+        const response = await aiResult.response;
+        const recipeText = response.text();
 
-    const resultRun = await dbRun('INSERT INTO recipes (name, instructions, notes) VALUES (?, ?, ?)', [name, instructions, notes]);
-    return NextResponse.json({ id: resultRun.lastID });
-  } catch (error) {
-    console.error(error);
-    return new NextResponse('Error processing image', { status: 500 });
-  } finally {
-    fs.unlinkSync(tempFilePath);
-  }
+        const name = recipeText.match(/Name: (.*)/)[1];
+        const instructions = recipeText.match(/Instructions: (.*)/)[1];
+        const notes = recipeText.match(/Notes: (.*)/)[1];
+
+        const newRecipe = await prisma.recipe.create({
+            data: {
+                name,
+                instructions,
+                notes,
+                authorId: session.user.id,
+            },
+        });
+
+        return NextResponse.json({ id: newRecipe.id });
+    } catch (error) {
+        console.error(error);
+        return new NextResponse('Error processing image', { status: 500 });
+    } finally {
+        fs.unlinkSync(tempFilePath);
+    }
 }
