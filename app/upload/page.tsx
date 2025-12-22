@@ -58,12 +58,12 @@ export default function UploadPage() {
   };
 
   return (
-    <div className="flex min-h-screen flex-col items-center px-4 py-8 md:p-24">
-      <div className="w-full max-w-md p-6 md:p-8 bg-white rounded-lg shadow-md">
-        <h1 className="text-3xl font-bold mb-6 text-center">Upload a Recipe</h1>
+    <div className="flex min-h-screen flex-col items-center px-4 py-8 md:p-24 bg-gray-50">
+      <div className="w-full max-w-md p-6 md:p-8 bg-white rounded-lg shadow-lg border border-gray-200">
+        <h1 className="text-3xl font-bold mb-6 text-center text-primary-800">Upload a Recipe</h1>
         <form onSubmit={handleSubmit} className="space-y-6">
           <div>
-            <label htmlFor="file-upload" className="block text-sm font-medium text-gray-700">
+            <label htmlFor="file-upload" className="block text-sm font-medium text-gray-700 mb-2">
               Recipe Image
             </label>
             <input
@@ -75,18 +75,18 @@ export default function UploadPage() {
                          file:mr-4 file:py-2 file:px-4
                          file:rounded-full file:border-0
                          file:text-sm file:font-semibold
-                         file:bg-blue-50 file:text-blue-700
-                         hover:file:bg-blue-100"
+                         file:bg-primary-50 file:text-primary-700
+                         hover:file:bg-primary-100 transition-colors duration-200"
             />
             {error && <p className="mt-2 text-sm text-red-600">{error}</p>}
           </div>
 
           {uploading && (
             <div>
-              <label className="block text-sm font-medium text-gray-700">Upload Progress</label>
-              <div className="w-full bg-gray-200 rounded-full mt-1">
+              <label className="block text-sm font-medium text-gray-700 mb-1">Upload Progress</label>
+              <div className="w-full bg-gray-200 rounded-full">
                 <div
-                  className="bg-blue-600 text-xs font-medium text-blue-100 text-center p-0.5 leading-none rounded-full"
+                  className="bg-primary-600 text-xs font-medium text-primary-50 text-center p-0.5 leading-none rounded-full"
                   style={{ width: `${progress}%` }}
                 >
                   {Math.round(progress)}%
@@ -98,7 +98,7 @@ export default function UploadPage() {
           <button
             type="submit"
             disabled={uploading}
-            className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:bg-gray-400"
+            className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 disabled:bg-gray-400 transition-colors duration-200"
           >
             {uploading ? "Uploading..." : "Upload and Process"}
           </button>

@@ -45,28 +45,28 @@ export default function RecipeDetailPage() {
   };
 
   if (!recipe) {
-    return <div className="text-center px-4 py-8 md:p-10">Loading...</div>;
+    return <div className="text-center px-4 py-8 md:p-10 text-primary-700">Loading...</div>;
   }
 
   return (
-    <div className="container mx-auto px-4 py-8 md:p-8">
+    <div className="container mx-auto px-4 py-8 md:p-8 bg-white rounded-lg shadow-md mt-8 mb-8">
       {isEditing ? (
         <div className="w-full">
           <textarea
             value={content}
             onChange={(e) => setContent(e.target.value)}
-            className="w-full h-screen p-4 border rounded font-mono"
+            className="w-full h-screen p-4 border border-gray-300 rounded-lg font-mono focus:ring-primary-500 focus:border-primary-500"
           />
           <div className="mt-4 space-x-2">
             <button
               onClick={handleSave}
-              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+              className="bg-primary-600 hover:bg-primary-700 text-white font-bold py-2 px-4 rounded-lg transition-colors duration-200"
             >
               Save
             </button>
             <button
               onClick={() => setIsEditing(false)}
-              className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded"
+              className="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded-lg transition-colors duration-200"
             >
               Cancel
             </button>
@@ -74,12 +74,12 @@ export default function RecipeDetailPage() {
         </div>
       ) : (
         <div>
-          <article className="prose lg:prose-xl">
+          <article className="prose lg:prose-xl max-w-none">
             <ReactMarkdown remarkPlugins={[remarkGfm]}>{recipe.content}</ReactMarkdown>
           </article>
           <button
             onClick={() => setIsEditing(true)}
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-8"
+            className="bg-primary-600 hover:bg-primary-700 text-white font-bold py-2 px-4 rounded-lg mt-8 transition-colors duration-200"
           >
             Edit
           </button>

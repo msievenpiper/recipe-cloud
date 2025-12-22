@@ -2,11 +2,21 @@
 @tailwind components;
 @tailwind utilities;
 
-.parallax {
-  background-image: url("/background.jpg");
-  min-height: 500px;
-  background-attachment: fixed;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
+/* Base styles for the new theme */
+body {
+  @apply bg-gray-50 text-gray-800 antialiased;
+}
+
+/* Custom animation delays */
+.animation-delay-300 {
+  animation-delay: 0.3s;
+}
+.animation-delay-600 {
+  animation-delay: 0.6s;
+}
+.animation-delay-2000 {
+  animation-delay: 2s;
+}
+.animation-delay-4000 {
+  animation-delay: 4s;
 }

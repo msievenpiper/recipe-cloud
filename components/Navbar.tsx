@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import Image from "next/image"; // Import next/image
+import Image from "next/image";
 import { useSession, signIn, signOut } from "next-auth/react";
 import { useState } from "react";
 import { FaBars, FaTimes } from "react-icons/fa";
@@ -18,27 +18,27 @@ export default function Navbar() {
     <>
       {session ? (
         <>
-          <Link href="/recipes" className="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium" onClick={toggleMenu}>
+          <Link href="/recipes" className="text-gray-200 hover:text-white px-3 py-2 rounded-md text-sm font-medium" onClick={toggleMenu}>
             My Recipes
           </Link>
-          <Link href="/upload" className="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium" onClick={toggleMenu}>
+          <Link href="/upload" className="text-gray-200 hover:text-white px-3 py-2 rounded-md text-sm font-medium" onClick={toggleMenu}>
             Upload
           </Link>
           <button
             onClick={() => { signOut(); toggleMenu(); }}
-            className="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+            className="text-gray-200 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
           >
             Sign Out
           </button>
         </>
       ) : (
         <>
-          <Link href="/register" className="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium" onClick={toggleMenu}>
+          <Link href="/register" className="text-gray-200 hover:text-white px-3 py-2 rounded-md text-sm font-medium" onClick={toggleMenu}>
             Register
           </Link>
           <button
             onClick={() => { signIn(); toggleMenu(); }}
-            className="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+            className="text-gray-200 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
           >
             Sign In
           </button>
@@ -48,7 +48,7 @@ export default function Navbar() {
   );
 
   return (
-    <nav className="bg-gray-800 p-4">
+    <nav className="bg-primary-700 p-4 shadow-md">
       <div className="container mx-auto flex justify-between items-center">
         <Link href="/" className="text-white text-lg font-bold flex items-center space-x-2" onClick={() => setIsOpen(false)}>
           <Image src="/icon.svg" alt="Recipe Cloud Icon" width={24} height={24} />
@@ -70,7 +70,7 @@ export default function Navbar() {
 
       {/* Mobile Sidebar */}
       <div
-        className={`fixed inset-y-0 right-0 w-64 bg-gray-800 z-50 transform ${
+        className={`fixed inset-y-0 right-0 w-64 bg-primary-800 z-50 transform ${
           isOpen ? "translate-x-0" : "translate-x-full"
         } md:hidden transition-transform duration-300 ease-in-out`}
       >
