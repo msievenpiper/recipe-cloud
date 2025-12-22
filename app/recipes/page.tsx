@@ -8,6 +8,7 @@ interface Recipe {
   id: number;
   title: string;
   summary?: string;
+  icon?: string; // Added icon field
 }
 
 export default function RecipeListPage() {
@@ -121,7 +122,11 @@ export default function RecipeListPage() {
         <ul className="w-full max-w-2xl">
           {filteredRecipes.map((recipe) => (
             <li key={recipe.id} className="mb-4 p-4 border border-gray-200 rounded-lg shadow-sm flex items-center space-x-4 bg-white hover:shadow-md transition-shadow duration-200">
-              <FaBookOpen className="text-primary-500 text-3xl w-6 h-6 flex-shrink-0" />
+              {recipe.icon ? ( // Conditionally render the icon
+                <span className="text-3xl flex-shrink-0">{recipe.icon}</span>
+              ) : (
+                <FaBookOpen className="text-primary-500 text-3xl w-6 h-6 flex-shrink-0" />
+              )}
               <div>
                 <Link href={`/recipes/${recipe.id}`} className="text-xl font-semibold text-primary-700 hover:text-primary-900 hover:underline">
                   {recipe.title}

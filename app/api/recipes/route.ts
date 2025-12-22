@@ -23,7 +23,7 @@ export async function GET() {
     }
     const recipes = await prisma.recipe.findMany({
         where: { authorId: session.user.id },
-        select: { id: true, title: true, summary: true } // Only fetch what's needed for the list
+        select: { id: true, title: true, summary: true, icon: true } // Added icon: true
     });
     return NextResponse.json(recipes);
 }
