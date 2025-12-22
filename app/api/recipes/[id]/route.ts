@@ -28,10 +28,13 @@ export async function PUT(request: Request, { params }: { params: { id: string }
     if (recipe.authorId !== session.user.id) {
         return new NextResponse(null, { status: 403 })
     }
-    const { name, instructions, notes } = await request.json();
+    const { content } = await request.json();
+    const titleMatch = content.match(/^#\s*(.*)/);
+    const title = titleMatch ? titleMatch[1] : 'Untitled Recipe';
+
     await prisma.recipe.update({
         where: { id: parseInt(params.id) },
-        data: { name, instructions, notes },
+        data: { title, content },
     });
     return new NextResponse(null, { status: 204 });
 }

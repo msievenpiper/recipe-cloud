@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { prisma } from '@/lib/prisma';
+import { prisma } from '../../../lib/prisma';
 import { getServerSession } from "next-auth/next"
 import { authOptions } from "../auth/[...nextauth]/route"
 import { ImageAnnotatorClient } from '@google-cloud/vision';
@@ -38,23 +38,20 @@ export async function POST(request: Request) {
         const text = detections.map(d => d.description).join(' ');
 
         const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash"});
-        const prompt = `Create a recipe from the following text: ${text}. The recipe should have a name, instructions, and notes.`;
+        const prompt = `Format the following recipe text into a clean, well-structured markdown document. It should start with a main heading for the recipe title. Include sections for description, yield, prep time, bake time, ingredients, instructions, and notes. Use markdown for all formatting (e.g., headings, lists, bold text). Here is the text: ${text}`;
         const aiResult = await model.generateContent(prompt);
         const response = aiResult.response;
-        const recipeText = response.text();
+        const markdownContent = response.text();
+        console.log(markdownContent)
 
-        console.log(response);
-        console.log(recipeText);
-
-        const name = recipeText.match(/Name: (.*)/);
-        const instructions = recipeText.match(/Instructions: (.*)/);
-        const notes = recipeText.match(/Notes: (.*)/);
+        // Extract the main title from the markdown
+        const titleMatch = markdownContent.match(/^#\s*(.*)/);
+        const title = titleMatch ? titleMatch[1] : 'Untitled Recipe';
 
         const newRecipe = await prisma.recipe.create({
             data: {
-                name,
-                instructions,
-                notes,
+                title,
+                content: markdownContent,
                 authorId: session.user.id,
             },
         });

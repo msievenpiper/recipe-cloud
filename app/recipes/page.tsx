@@ -5,9 +5,8 @@ import Link from "next/link";
 
 interface Recipe {
   id: number;
-  name: string;
-  instructions: string;
-  notes: string;
+  title: string;
+  content: string;
 }
 
 export default function RecipeListPage() {
@@ -39,7 +38,7 @@ export default function RecipeListPage() {
           {recipes.map((recipe) => (
             <li key={recipe.id} className="mb-4 p-4 border rounded-lg shadow-sm">
               <Link href={`/recipes/${recipe.id}`} className="text-2xl font-semibold text-blue-600 hover:underline">
-                {recipe.name}
+                {recipe.title}
               </Link>
             </li>
           ))}
