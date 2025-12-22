@@ -44,8 +44,10 @@ let providers = [
           return null;
         }
 
+        const lowercasedEmail = credentials.email.toLowerCase();
+
         const user = await prisma.user.findUnique({
-          where: { email: credentials.email },
+          where: { email: lowercasedEmail },
         });
 
         if (user && bcrypt.compareSync(credentials.password, user.password)) {
@@ -79,5 +81,11 @@ export const authOptions: NextAuthOptions = {
       }
       return session;
     },
+    async signIn({ user, account, profile, email, credentials }) {
+      if (user.email) {
+        user.email = user.email.toLowerCase();
+      }
+      return true;
+    }
   },
 };
