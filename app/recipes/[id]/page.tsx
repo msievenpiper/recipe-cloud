@@ -74,7 +74,7 @@ export default function RecipeDetailPage() {
         </div>
       ) : (
         <div>
-          <article className="prose lg:prose-xl max-w-none">
+          <article className="prose prose-base"> {/* Changed lg:prose-xl max-w-none to prose-base */}
             <ReactMarkdown remarkPlugins={[remarkGfm]}>{recipe.content}</ReactMarkdown>
           </article>
           <button
