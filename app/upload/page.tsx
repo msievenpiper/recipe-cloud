@@ -4,11 +4,22 @@ import { useState, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { FaLightbulb, FaCamera, FaTextHeight, FaSun, FaUpload } from "react-icons/fa"; // Added FaUpload icon
 
+const AI_STEPS = [
+  "Analyzing Image",
+  "Extracting Text",
+  "Generating Recipe",
+  "Saving Recipe",
+];
+
 export default function UploadPage() {
   const [file, setFile] = useState<File | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [uploading, setUploading] = useState(false);
-  const [progress, setProgress] = useState(0);
+  const [uploadProgress, setUploadProgress] = useState(0); // For file upload progress
+  const [aiSteps, setAiSteps] = useState(AI_STEPS.map(step => ({ name: step, status: 'pending' })));
+  const [currentAIStepIndex, setCurrentAIStepIndex] = useState(-1);
+  const [aiProcessingComplete, setAiProcessingComplete] = useState(false);
+
   const router = useRouter();
 
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -19,6 +30,10 @@ export default function UploadPage() {
     setFile(selectedFile);
     if (selectedFile) {
       setError(null); // Clear error when a file is selected
+      setUploadProgress(0);
+      setAiSteps(AI_STEPS.map(step => ({ name: step, status: 'pending' })));
+      setCurrentAIStepIndex(-1);
+      setAiProcessingComplete(false);
     }
   };
 
@@ -30,6 +45,25 @@ export default function UploadPage() {
     cameraInputRef.current?.click();
   };
 
+  const simulateAISteps = async (recipeId: string) => {
+    for (let i = 0; i < AI_STEPS.length; i++) {
+      setCurrentAIStepIndex(i);
+      setAiSteps(prevSteps =>
+        prevSteps.map((step, index) =>
+          index === i ? { ...step, status: 'in-progress' } : step
+        )
+      );
+      await new Promise(resolve => setTimeout(resolve, 1500 + Math.random() * 1000)); // Simulate AI work
+      setAiSteps(prevSteps =>
+        prevSteps.map((step, index) =>
+          index === i ? { ...step, status: 'completed' } : step
+        )
+      );
+    }
+    setAiProcessingComplete(true);
+    router.push(`/recipes/${recipeId}`);
+  };
+
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!file) {
@@ -38,6 +72,10 @@ export default function UploadPage() {
     }
 
     setUploading(true);
+    setAiSteps(AI_STEPS.map(step => ({ name: step, status: 'pending' })));
+    setCurrentAIStepIndex(-1);
+    setAiProcessingComplete(false);
+
     const formData = new FormData();
     formData.append("image", file);
 
@@ -46,16 +84,17 @@ export default function UploadPage() {
     xhr.upload.addEventListener("progress", (event) => {
       if (event.lengthComputable) {
         const percentComplete = (event.loaded / event.total) * 100;
-        setProgress(percentComplete);
+        setUploadProgress(percentComplete);
       }
     });
 
     xhr.addEventListener("load", () => {
-      setUploading(false);
       if (xhr.status === 200) {
         const data = JSON.parse(xhr.responseText);
-        router.push(`/recipes/${data.id}`);
+        // File upload complete, now simulate AI steps
+        simulateAISteps(data.id);
       } else {
+        setUploading(false);
         setError("Upload failed. Please try again.");
       }
     });
@@ -68,6 +107,10 @@ export default function UploadPage() {
     xhr.open("POST", "/api/recipes");
     xhr.send(formData);
   };
+
+  const overallAIProgress = currentAIStepIndex === -1 ? 0 :
+    ((currentAIStepIndex + (aiSteps[currentAIStepIndex]?.status === 'completed' ? 1 : 0)) / AI_STEPS.length) * 100;
+
 
   return (
     <div className="flex min-h-screen flex-col items-center px-4 py-8 md:p-24 bg-gray-50">
@@ -120,26 +163,55 @@ export default function UploadPage() {
             {error && <p className="mt-2 text-sm text-red-600 text-center">{error}</p>}
           </div>
 
+
           {uploading && (
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Upload Progress</label>
-              <div className="w-full bg-gray-200 rounded-full">
-                <div
-                  className="bg-primary-600 text-xs font-medium text-primary-50 text-center p-0.5 leading-none rounded-full"
-                  style={{ width: `${progress}%` }}
-                >
-                  {Math.round(progress)}%
+            <div className="space-y-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">File Upload Progress</label>
+                <div className="w-full bg-gray-200 rounded-full">
+                  <div
+                    className="bg-primary-600 text-xs font-medium text-primary-50 text-center p-0.5 leading-none rounded-full"
+                    style={{ width: `${uploadProgress}%` }}
+                  >
+                    {Math.round(uploadProgress)}%
+                  </div>
                 </div>
               </div>
+
+              {uploadProgress === 100 && (
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">AI Processing</label>
+                  <div className="w-full bg-gray-200 rounded-full mb-2">
+                    <div
+                      className="bg-accent text-xs font-medium text-white text-center p-0.5 leading-none rounded-full"
+                      style={{ width: `${overallAIProgress}%` }}
+                    >
+                      {Math.round(overallAIProgress)}%
+                    </div>
+                  </div>
+                  <ul className="text-sm text-gray-600 space-y-1">
+                    {aiSteps.map((step, index) => (
+                      <li key={step.name} className="flex items-center">
+                        {step.status === 'completed' && <span className="text-green-500 mr-2">✓</span>}
+                        {step.status === 'in-progress' && <span className="text-blue-500 mr-2 animate-pulse">...</span>}
+                        {step.status === 'pending' && <span className="text-gray-400 mr-2">○</span>}
+                        <span className={step.status === 'in-progress' ? 'font-semibold text-blue-700' : ''}>
+                          {step.name}
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
             </div>
           )}
 
           <button
             type="submit"
-            disabled={uploading || !file}
+            disabled={uploading || !file || aiProcessingComplete}
             className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 disabled:bg-gray-400 transition-colors duration-200"
           >
-            {uploading ? "Uploading..." : "Upload and Process"}
+            {uploading && !aiProcessingComplete ? "Processing..." : "Upload and Process"}
           </button>
         </form>
       </div>
