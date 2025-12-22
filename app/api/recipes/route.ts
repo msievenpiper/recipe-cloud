@@ -1,13 +1,20 @@
 import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 import { getServerSession } from "next-auth/next"
-import { authOptions } from "../auth/[...nextauth]/route"
+import { authOptions } from "@/lib/auth";
 import { ImageAnnotatorClient } from '@google-cloud/vision';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import fs from 'fs';
 
 const visionClient = new ImageAnnotatorClient();
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
+
+// Ensure GEMINI_API_KEY is defined
+const geminiApiKey = process.env.GEMINI_API_KEY;
+if (!geminiApiKey) {
+  throw new Error("GEMINI_API_KEY is not defined in environment variables.");
+}
+const genAI = new GoogleGenerativeAI(geminiApiKey);
+
 
 export async function GET() {
     const session = await getServerSession(authOptions)
@@ -36,9 +43,12 @@ export async function POST(request: Request) {
     try {
         const [result] = await visionClient.textDetection(tempFilePath);
         const detections = result.textAnnotations;
+        if (!detections) {
+          throw new Error("No text detections found.");
+        }
         const text = detections.map(d => d.description).join(' ');
 
-        const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash"});
+        const model = genAI.getGenerativeModel({ model: "gemini-pro"});
         const prompt = `From the following recipe text, first provide a concise, one-sentence summary. Then, format the entire recipe into a clean, well-structured markdown document. It should start with a main heading for the recipe title. Include sections for description, yield, prep time, bake time, ingredients, instructions, and notes. Use markdown for all formatting (e.g., headings, lists, bold text).
         
         Example Output Format:
@@ -50,7 +60,7 @@ export async function POST(request: Request) {
         Here is the text: ${text}`;
 
         const aiResult = await model.generateContent(prompt);
-        const response = await aiResult.response;
+        const response = aiResult.response;
         const fullAiResponse = response.text();
 
         // Extract summary and markdown content
