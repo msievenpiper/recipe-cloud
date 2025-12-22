@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { FaLightbulb, FaCamera, FaTextHeight, FaSun } from "react-icons/fa"; // Added new icons
 
 export default function UploadPage() {
   const [file, setFile] = useState<File | null>(null);
@@ -70,7 +71,7 @@ export default function UploadPage() {
               id="file-upload"
               type="file"
               accept="image/*"
-              capture="environment" // Added capture attribute
+              capture="environment"
               onChange={handleFileChange}
               className="mt-1 block w-full text-sm text-gray-500
                          file:mr-4 file:py-2 file:px-4
@@ -104,6 +105,44 @@ export default function UploadPage() {
             {uploading ? "Uploading..." : "Upload and Process"}
           </button>
         </form>
+      </div>
+
+      {/* Tips for Best Results Section */}
+      <div className="w-full max-w-md mt-8 p-6 md:p-8 bg-white rounded-lg shadow-lg border border-gray-200">
+        <h2 className="text-2xl font-bold mb-4 text-center text-primary-800 flex items-center justify-center space-x-2">
+          <FaLightbulb className="text-accent" />
+          <span>Tips for Best Results</span>
+        </h2>
+        <ul className="space-y-4 text-gray-700">
+          <li className="flex items-start space-x-3">
+            <FaCamera className="text-primary-500 text-xl flex-shrink-0 mt-1" />
+            <div>
+              <p className="font-semibold">Clear & Steady Photos:</p>
+              <p className="text-sm">Ensure your recipe photo is well-lit and not blurry. Hold your camera steady!</p>
+            </div>
+          </li>
+          <li className="flex items-start space-x-3">
+            <FaTextHeight className="text-primary-500 text-xl flex-shrink-0 mt-1" />
+            <div>
+              <p className="font-semibold">Good Contrast:</p>
+              <p className="text-sm">Text should stand out clearly from the background. Avoid busy patterns behind the recipe.</p>
+            </div>
+          </li>
+          <li className="flex items-start space-x-3">
+            <FaSun className="text-primary-500 text-xl flex-shrink-0 mt-1" />
+            <div>
+              <p className="font-semibold">Even Lighting:</p>
+              <p className="text-sm">Avoid shadows cast over the text. Natural, indirect light often works best.</p>
+            </div>
+          </li>
+          <li className="flex items-start space-x-3">
+            <FaLightbulb className="text-primary-500 text-xl flex-shrink-0 mt-1" />
+            <div>
+              <p className="font-semibold">Focus on the Recipe:</p>
+              <p className="text-sm">Crop out unnecessary background elements to help the AI focus on the recipe text.</p>
+            </div>
+          </li>
+        </ul>
       </div>
     </div>
   );
