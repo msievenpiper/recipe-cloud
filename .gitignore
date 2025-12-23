@@ -26,6 +26,7 @@ yarn-error.log*
 *.js
 *.map
 *.db
+*.db-journel
 *.old
 *.copy
 
