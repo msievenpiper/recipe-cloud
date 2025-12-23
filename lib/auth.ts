@@ -65,6 +65,9 @@ let providers = [
 
 export const authOptions: NextAuthOptions = {
   providers,
+  pages: {
+    signIn: "/signin",
+  },
   session: {
     strategy: "jwt",
   },
