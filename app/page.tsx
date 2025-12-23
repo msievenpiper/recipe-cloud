@@ -1,15 +1,29 @@
-"use client"; // Mark as Client Component
+"use client";
 
+import { useState, useEffect } from "react";
 import Link from "next/link";
-import Image from "next/image"; // Import next/image
-import { FaCamera, FaMagic, FaEdit, FaUsers, FaStar, FaUpload } from "react-icons/fa"; // New icon for upload
-import { useSession } from "next-auth/react"; // Import useSession
+import Image from "next/image";
+import { FaCamera, FaMagic, FaEdit, FaUsers, FaStar, FaUpload, FaBookOpen } from "react-icons/fa";
+import { useSession } from "next-auth/react";
 
 export default function Home() {
   const { data: session, status } = useSession();
+  const [hasRecipes, setHasRecipes] = useState(false);
 
   const isLoading = status === "loading";
   const isLoggedIn = !!session;
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      fetch("/api/recipes")
+        .then((res) => res.json())
+        .then((data) => {
+          if (data && data.length > 0) {
+            setHasRecipes(true);
+          }
+        });
+    }
+  }, [isLoggedIn]);
 
   return (
     <div className="min-h-screen bg-gray-50 text-gray-800">
@@ -27,10 +41,17 @@ export default function Home() {
               Loading...
             </div>
           ) : isLoggedIn ? (
-            <Link href="/upload" className="bg-white text-primary-700 hover:bg-gray-100 px-8 py-3 rounded-full text-lg font-semibold shadow-lg transition-all duration-300 transform hover:scale-105 opacity-0 animate-fade-in-up animation-delay-600 flex items-center justify-center space-x-2 mx-auto w-fit">
-              <FaUpload />
-              <span>Upload Your First Recipe!</span>
-            </Link>
+            hasRecipes ? (
+              <Link href="/recipes" className="bg-white text-primary-700 hover:bg-gray-100 px-8 py-3 rounded-full text-lg font-semibold shadow-lg transition-all duration-300 transform hover:scale-105 opacity-0 animate-fade-in-up animation-delay-600 flex items-center justify-center space-x-2 mx-auto w-fit">
+                <FaBookOpen />
+                <span>Go to Your Library</span>
+              </Link>
+            ) : (
+              <Link href="/upload" className="bg-white text-primary-700 hover:bg-gray-100 px-8 py-3 rounded-full text-lg font-semibold shadow-lg transition-all duration-300 transform hover:scale-105 opacity-0 animate-fade-in-up animation-delay-600 flex items-center justify-center space-x-2 mx-auto w-fit">
+                <FaUpload />
+                <span>Upload Your First Recipe!</span>
+              </Link>
+            )
           ) : (
             <Link href="/register" className="bg-white text-primary-700 hover:bg-gray-100 px-8 py-3 rounded-full text-lg font-semibold shadow-lg transition-all duration-300 transform hover:scale-105 opacity-0 animate-fade-in-up animation-delay-600">
               Get Started - It's Free!
