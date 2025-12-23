@@ -1,94 +1,74 @@
-import { NextResponse } from "next/server";
-import { prisma } from "@/lib/prisma"; // Corrected to named import
+import { NextResponse } from 'next/server';
+import { prisma } from '@/lib/prisma';
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/lib/auth";
 
-export async function GET(req: Request, props: { params: Promise<{ id: string }> }) {
-  const params = await props.params;
-  const session = await getServerSession(authOptions);
+// GET a single recipe by ID
+export async function GET(request: Request, { params }: { params: { id: string } }) {
+    const session = await getServerSession(authOptions);
+    if (!session) {
+        return new NextResponse(null, { status: 401 });
+    }
 
-  if (!session || !session.user) {
-    return NextResponse.json({ message: "Not authenticated" }, { status: 401 });
-  }
+    params = await params;
 
-  const recipeId = parseInt(params.id, 10);
-  if (isNaN(recipeId)) {
-    return NextResponse.json({ error: "Invalid recipe ID" }, { status: 400 });
-  }
+    const recipeId = parseInt(params.id);
+    if (isNaN(recipeId)) {
+        return new NextResponse("Invalid recipe ID", { status: 400 });
+    }
 
-  try {
     const recipe = await prisma.recipe.findUnique({
-      where: { id: recipeId },
-      select: {
-        id: true,
-        title: true,
-        content: true,
-        summary: true,
-        icon: true,
-        authorId: true,
-      },
+        where: { id: recipeId },
     });
 
     if (!recipe) {
-      return NextResponse.json({ error: "Recipe not found" }, { status: 404 });
+        return new NextResponse("Recipe not found", { status: 404 });
     }
 
-    return NextResponse.json(recipe, { status: 200 });
-  } catch (error) {
-    console.error("Error fetching recipe:", error);
-    return NextResponse.json(
-      { error: "Failed to fetch recipe" },
-      { status: 500 }
-    );
-  }
+    // Check if the user is the author or if the recipe is shared with them
+    const isAuthor = recipe.authorId === session.user.id;
+    const isSharedWithUser = await prisma.sharedRecipe.findUnique({
+        where: {
+            recipeId_sharedWithId: {
+                recipeId: recipeId,
+                sharedWithId: session.user.id,
+            },
+        },
+    });
+
+    if (!isAuthor && !isSharedWithUser) {
+        return new NextResponse("Forbidden", { status: 403 });
+    }
+
+    return NextResponse.json(recipe);
 }
 
-export async function PUT(req: Request, props: { params: Promise<{ id: string }> }) {
-  const params = await props.params;
-  const session = await getServerSession(authOptions);
+// PUT to update a recipe
+export async function PUT(request: Request, { params }: { params: { id: string } }) {
+    const session = await getServerSession(authOptions);
+    if (!session) {
+        return new NextResponse(null, { status: 401 });
+    }
 
-  if (!session || !session.user) {
-    return NextResponse.json({ message: "Not authenticated" }, { status: 401 });
-  }
+    const recipeId = parseInt(params.id);
+    if (isNaN(recipeId)) {
+        return new NextResponse("Invalid recipe ID", { status: 400 });
+    }
 
-  const recipeId = parseInt(params.id, 10);
-  if (isNaN(recipeId)) {
-    return NextResponse.json({ error: "Invalid recipe ID" }, { status: 400 });
-  }
-
-  try {
-    const { content, summary, icon } = await req.json();
-
-    const existingRecipe = await prisma.recipe.findUnique({
-      where: { id: recipeId },
+    const recipe = await prisma.recipe.findUnique({
+        where: { id: recipeId },
+        select: { authorId: true },
     });
 
-    if (!existingRecipe) {
-      return NextResponse.json({ error: "Recipe not found" }, { status: 404 });
+    if (!recipe || recipe.authorId !== session.user.id) {
+        return new NextResponse("Forbidden", { status: 403 });
     }
 
-    if (existingRecipe.authorId !== session.user.id) {
-      return NextResponse.json(
-        { error: "Unauthorized to update this recipe" },
-        { status: 403 }
-      );
-    }
-
+    const { title, content, summary, icon } = await request.json();
     const updatedRecipe = await prisma.recipe.update({
-      where: { id: recipeId },
-      data: {
-        content,
-        summary,
-        icon,
-      },
+        where: { id: recipeId },
+        data: { title, content, summary, icon },
     });
 
-    return NextResponse.json(updatedRecipe, { status: 200 });
-  } catch (error) {
-    console.error("Error updating recipe:", error);
-    return NextResponse.json(
-      { error: "Failed to update recipe" },
-      { status: 500 }
-    );
-  }
+    return NextResponse.json(updatedRecipe);
 }

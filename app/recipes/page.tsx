@@ -2,61 +2,77 @@
 
 import { useState, useEffect, useMemo, useRef } from "react";
 import Link from "next/link";
-import { FaBookOpen, FaSearch, FaPlus } from "react-icons/fa"; // Added FaPlus icon
+import { FaBookOpen, FaSearch, FaPlus } from "react-icons/fa";
 
 interface Recipe {
   id: number;
   title: string;
   summary?: string;
-  icon?: string; // Added icon field
+  icon?: string;
+  author?: {
+    name?: string | null;
+    email: string;
+  };
 }
 
 export default function RecipeListPage() {
-  let [recipes, setRecipes] = useState<Recipe[]>([]);
+  const [myRecipes, setMyRecipes] = useState<Recipe[]>([]);
+  const [sharedRecipes, setSharedRecipes] = useState<Recipe[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
   const [showSuggestions, setShowSuggestions] = useState(false);
   const searchInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    fetch("/api/recipes")
-      .then((res) => res.json())
-      .then((data) => {
-        setRecipes(data);
-        setLoading(false);
-      });
+    Promise.all([
+      fetch("/api/recipes").then((res) => res.json()),
+      fetch("/api/shared-recipes").then((res) => res.json()),
+    ]).then(([myRecipesData, sharedRecipesData]) => {
+      setMyRecipes(myRecipesData);
+      setSharedRecipes(sharedRecipesData);
+      setLoading(false);
+    });
   }, []);
+
+  const allRecipes = useMemo(() => [...myRecipes, ...sharedRecipes], [myRecipes, sharedRecipes]);
 
   const suggestions = useMemo(() => {
     if (!searchTerm) return [];
     const lowercasedSearchTerm = searchTerm.toLowerCase();
-    return recipes
+    return allRecipes
       .filter(
         (recipe) =>
           recipe.title.toLowerCase().includes(lowercasedSearchTerm) ||
           (recipe.summary && recipe.summary.toLowerCase().includes(lowercasedSearchTerm))
       )
-      .slice(0, 5); // Limit to 5 suggestions
-  }, [recipes, searchTerm]);
+      .slice(0, 5);
+  }, [allRecipes, searchTerm]);
 
-  const filteredRecipes = useMemo(() => {
-    if (!searchTerm) {
-      return recipes;
-    }
+  const filteredMyRecipes = useMemo(() => {
+    if (!searchTerm) return myRecipes;
     const lowercasedSearchTerm = searchTerm.toLowerCase();
-    return recipes.filter(
+    return myRecipes.filter(
       (recipe) =>
         recipe.title.toLowerCase().includes(lowercasedSearchTerm) ||
         (recipe.summary && recipe.summary.toLowerCase().includes(lowercasedSearchTerm))
     );
-  }, [recipes, searchTerm]);
+  }, [myRecipes, searchTerm]);
+
+  const filteredSharedRecipes = useMemo(() => {
+    if (!searchTerm) return sharedRecipes;
+    const lowercasedSearchTerm = searchTerm.toLowerCase();
+    return sharedRecipes.filter(
+      (recipe) =>
+        recipe.title.toLowerCase().includes(lowercasedSearchTerm) ||
+        (recipe.summary && recipe.summary.toLowerCase().includes(lowercasedSearchTerm))
+    );
+  }, [sharedRecipes, searchTerm]);
 
   const handleSelectSuggestion = (title: string) => {
     setSearchTerm(title);
     setShowSuggestions(false);
   };
 
-  // Close suggestions when clicking outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (searchInputRef.current && !searchInputRef.current.contains(event.target as Node)) {
@@ -78,23 +94,20 @@ export default function RecipeListPage() {
   }
 
   return (
-    <div className="flex flex-col items-center px-4 py-8 md:p-24 bg-gray-50"> {/* Removed min-h-screen and justify-center */}
+    <div className="flex flex-col items-center px-4 py-8 md:p-24 bg-gray-50">
       <div className="w-full max-w-2xl flex justify-between items-center mb-8">
         <h1 className="text-4xl font-bold text-primary-800">Your Recipes</h1>
-        {recipes.length > 0 && (
-            <Link href="/upload"
-                  className="bg-primary-600 hover:bg-primary-700 text-white font-bold py-2 px-4 rounded-lg flex items-center space-x-2 transition-colors duration-200">
-              <FaPlus/>
-              <span>Add New</span>
-            </Link>
-        )}
+        <Link href="/upload" className="bg-primary-600 hover:bg-primary-700 text-white font-bold py-2 px-4 rounded-lg flex items-center space-x-2 transition-colors duration-200">
+          <FaPlus />
+          <span>Add New</span>
+        </Link>
       </div>
 
-      {recipes.length > 0 && (
+      {allRecipes.length > 0 && (
         <div className="w-full max-w-2xl mb-8 relative" ref={searchInputRef}>
           <input
             type="text"
-            placeholder="Search your recipes..."
+            placeholder="Search all recipes..."
             className="w-full p-3 pl-10 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200"
             value={searchTerm}
             onChange={(e) => {
@@ -104,15 +117,10 @@ export default function RecipeListPage() {
             onFocus={() => setShowSuggestions(true)}
           />
           <FaSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
-
           {showSuggestions && suggestions.length > 0 && (
             <ul className="absolute z-10 w-full bg-white border border-gray-300 rounded-lg shadow-lg mt-1 max-h-60 overflow-y-auto">
               {suggestions.map((recipe) => (
-                <li
-                  key={recipe.id}
-                  className="p-3 hover:bg-primary-50 cursor-pointer border-b border-gray-200 last:border-b-0"
-                  onClick={() => handleSelectSuggestion(recipe.title)}
-                >
+                <li key={recipe.id} className="p-3 hover:bg-primary-50 cursor-pointer border-b border-gray-200 last:border-b-0" onClick={() => handleSelectSuggestion(recipe.title)}>
                   {recipe.title}
                 </li>
               ))}
@@ -121,57 +129,52 @@ export default function RecipeListPage() {
         </div>
       )}
 
-      {filteredRecipes.length > 0 ? (
-        <ul className="w-full max-w-2xl">
-          {filteredRecipes.map((recipe) => (
-            <li key={recipe.id} className="mb-4 p-4 border border-gray-200 rounded-lg shadow-sm flex items-center space-x-4 bg-white hover:shadow-md transition-shadow duration-200">
-              {recipe.icon ? ( // Conditionally render the icon
-                <span className="text-3xl flex-shrink-0">{recipe.icon}</span>
-              ) : (
-                <FaBookOpen className="text-primary-500 text-3xl w-6 h-6 flex-shrink-0" />
-              )}
-              <div>
-                <Link href={`/recipes/${recipe.id}`} className="text-xl font-semibold text-primary-700 hover:text-primary-900 hover:underline">
-                  {recipe.title}
-                </Link>
-                {recipe.summary && (
-                  <p className="text-gray-600 text-sm mt-1">{recipe.summary}</p>
-                )}
-              </div>
-            </li>
-          ))}
-        </ul>
-      ) : (
+      {filteredMyRecipes.length > 0 && (
+        <div className="w-full max-w-2xl mb-8">
+          <h2 className="text-2xl font-bold text-primary-800 mb-4">My Recipes</h2>
+          <ul className="w-full">
+            {filteredMyRecipes.map((recipe) => (
+              <li key={recipe.id} className="mb-4 p-4 border border-gray-200 rounded-lg shadow-sm flex items-center space-x-4 bg-white hover:shadow-md transition-shadow duration-200">
+                {recipe.icon ? <span className="text-3xl flex-shrink-0">{recipe.icon}</span> : <FaBookOpen className="text-primary-500 text-3xl w-6 h-6 flex-shrink-0" />}
+                <div>
+                  <Link href={`/recipes/${recipe.id}`} className="text-xl font-semibold text-primary-700 hover:text-primary-900 hover:underline">
+                    {recipe.title}
+                  </Link>
+                  {recipe.summary && <p className="text-gray-600 text-sm mt-1">{recipe.summary}</p>}
+                </div>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+
+      {filteredSharedRecipes.length > 0 && (
+        <div className="w-full max-w-2xl">
+          <h2 className="text-2xl font-bold text-primary-800 mb-4">Shared With You</h2>
+          <ul className="w-full">
+            {filteredSharedRecipes.map((recipe) => (
+              <li key={recipe.id} className="mb-4 p-4 border border-gray-200 rounded-lg shadow-sm flex items-center space-x-4 bg-white hover:shadow-md transition-shadow duration-200">
+                {recipe.icon ? <span className="text-3xl flex-shrink-0">{recipe.icon}</span> : <FaBookOpen className="text-primary-500 text-3xl w-6 h-6 flex-shrink-0" />}
+                <div>
+                  <Link href={`/recipes/${recipe.id}`} className="text-xl font-semibold text-primary-700 hover:text-primary-900 hover:underline">
+                    {recipe.title}
+                  </Link>
+                  <p className="text-gray-500 text-xs mt-1">Shared by {recipe.author?.name || recipe.author?.email}</p>
+                  {recipe.summary && <p className="text-gray-600 text-sm mt-1">{recipe.summary}</p>}
+                </div>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+
+      {allRecipes.length === 0 && (
         <div className="text-center bg-white p-6 md:p-10 rounded-lg shadow-md mx-4 border border-gray-200">
-          {recipes.length > 0 && searchTerm ? (
-            <>
-              <h2 className="text-2xl font-bold mb-4 text-primary-800">No Recipes Found</h2>
-              <p className="mb-6 text-gray-700">Your search for &quot;{searchTerm}&quot; did not match any recipes.</p>
-              <button
-                onClick={() => setSearchTerm("")}
-                className="bg-primary-600 hover:bg-primary-700 text-white font-bold py-2 px-4 rounded-lg transition-colors duration-200"
-              >
-                Clear Search
-              </button>
-            </>
-          ) : (
-            <>
-              <h2 className="text-2xl font-bold mb-4 text-primary-800">Welcome to Your Recipe Collection!</h2>
-              <p className="mb-6 text-gray-700">It looks like you don't have any recipes yet. Let's create your first one.</p>
-              <div className="text-left mb-6 text-gray-700">
-                <h3 className="text-xl font-semibold mb-2">How to Upload Your First Recipe:</h3>
-                <ol className="list-decimal list-inside space-y-2 pl-5">
-                  <li>Click the "Upload" button below or in the navigation bar.</li>
-                  <li>Choose a clear photo of your recipe.</li>
-                  <li>Our AI will work its magic to extract the details.</li>
-                  <li>Review, edit, and save your new digital recipe!</li>
-                </ol>
-              </div>
-              <Link href="/upload" className="bg-primary-600 hover:bg-primary-700 text-white font-bold py-3 px-6 rounded-lg text-lg transition-colors duration-200">
-                Upload Your First Recipe
-              </Link>
-            </>
-          )}
+          <h2 className="text-2xl font-bold mb-4 text-primary-800">Welcome to Your Recipe Collection!</h2>
+          <p className="mb-6 text-gray-700">It looks like you don't have any recipes yet. Let's create your first one.</p>
+          <Link href="/upload" className="bg-primary-600 hover:bg-primary-700 text-white font-bold py-3 px-6 rounded-lg text-lg transition-colors duration-200">
+            Upload Your First Recipe
+          </Link>
         </div>
       )}
     </div>
