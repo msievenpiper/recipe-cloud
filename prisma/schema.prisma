@@ -17,14 +17,15 @@ model User {
 }
 
 model Recipe {
-  id            Int            @id @default(autoincrement())
-  title         String
-  summary       String?
-  content       String
-  icon          String?
-  author        User           @relation(fields: [authorId], references: [id])
-  authorId      String
-  sharedWith    SharedRecipe[]
+  id               Int            @id @default(autoincrement())
+  title            String
+  summary          String?
+  content          String
+  icon             String?
+  author           User           @relation(fields: [authorId], references: [id])
+  authorId         String
+  sharedWith       SharedRecipe[]
+  imageFingerprint String?
 }
 
 model SharedRecipe {

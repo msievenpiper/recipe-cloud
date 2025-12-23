@@ -4,13 +4,13 @@ import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/lib/auth";
 
 // GET a single recipe by ID
-export async function GET(request: Request, { params }: { params: { id: string } }) {
+export async function GET(request: Request, context: any) {
     const session = await getServerSession(authOptions);
     if (!session) {
         return new NextResponse(null, { status: 401 });
     }
 
-    params = await params;
+    let params = await context.params;
 
     const recipeId = parseInt(params.id);
     if (isNaN(recipeId)) {
@@ -25,7 +25,6 @@ export async function GET(request: Request, { params }: { params: { id: string }
         return new NextResponse("Recipe not found", { status: 404 });
     }
 
-    // Check if the user is the author or if the recipe is shared with them
     const isAuthor = recipe.authorId === session.user.id;
     const isSharedWithUser = await prisma.sharedRecipe.findUnique({
         where: {
