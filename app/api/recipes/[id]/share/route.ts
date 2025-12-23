@@ -4,14 +4,14 @@ import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/lib/auth";
 
 // GET: Fetch who the recipe is shared with
-export async function GET(request: Request, { params }: { params: { id: string } }) {
+export async function GET(request: Request, { params }: { params: Promise<{ id: string }> }) {
     const session = await getServerSession(authOptions);
-    params = await params;
+    const { id } = await params;
     if (!session) {
         return new NextResponse(null, { status: 401 });
     }
 
-    const recipeId = parseInt(params.id);
+    const recipeId = parseInt(id);
     if (isNaN(recipeId)) {
         return new NextResponse("Invalid recipe ID", { status: 400 });
     }
@@ -43,7 +43,7 @@ export async function GET(request: Request, { params }: { params: { id: string }
 
 
 // POST: Share a recipe with a user by email
-export async function POST(request: Request, { params }: { params: { id: string } }) {
+export async function POST(request: Request, { params }: { params: Promise<{ id: string }> }) {
     const session = await getServerSession(authOptions);
     if (!session) {
         return new NextResponse(null, { status: 401 });
@@ -54,7 +54,8 @@ export async function POST(request: Request, { params }: { params: { id: string 
         return new NextResponse("Email is required", { status: 400 });
     }
 
-    const recipeId = parseInt(params.id);
+    const { id } = await params;
+    const recipeId = parseInt(id);
     if (isNaN(recipeId)) {
         return new NextResponse("Invalid recipe ID", { status: 400 });
     }
@@ -96,7 +97,7 @@ export async function POST(request: Request, { params }: { params: { id: string 
 }
 
 // DELETE: Revoke access for a user
-export async function DELETE(request: Request, { params }: { params: { id: string } }) {
+export async function DELETE(request: Request, { params }: { params: Promise<{ id: string }> }) {
     const session = await getServerSession(authOptions);
     if (!session) {
         return new NextResponse(null, { status: 401 });
@@ -107,7 +108,8 @@ export async function DELETE(request: Request, { params }: { params: { id: strin
         return new NextResponse("User ID is required", { status: 400 });
     }
 
-    const recipeId = parseInt(params.id);
+    const { id } = await params;
+    const recipeId = parseInt(id);
     if (isNaN(recipeId)) {
         return new NextResponse("Invalid recipe ID", { status: 400 });
     }

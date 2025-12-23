@@ -4,15 +4,15 @@ import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/lib/auth";
 
 // GET a single recipe by ID
-export async function GET(request: Request, context: any) {
+export async function GET(request: Request, { params }: { params: Promise<{ id: string }> }) {
     const session = await getServerSession(authOptions);
     if (!session) {
         return new NextResponse(null, { status: 401 });
     }
 
-    let params = await context.params;
+    const { id } = await params;
 
-    const recipeId = parseInt(params.id);
+    const recipeId = parseInt(id);
     if (isNaN(recipeId)) {
         return new NextResponse("Invalid recipe ID", { status: 400 });
     }
@@ -43,13 +43,15 @@ export async function GET(request: Request, context: any) {
 }
 
 // PUT to update a recipe
-export async function PUT(request: Request, { params }: { params: { id: string } }) {
+export async function PUT(request: Request, { params }: { params: Promise<{ id: string }> }) {
     const session = await getServerSession(authOptions);
     if (!session) {
         return new NextResponse(null, { status: 401 });
     }
 
-    const recipeId = parseInt(params.id);
+    const { id } = await params;
+
+    const recipeId = parseInt(id);
     if (isNaN(recipeId)) {
         return new NextResponse("Invalid recipe ID", { status: 400 });
     }
