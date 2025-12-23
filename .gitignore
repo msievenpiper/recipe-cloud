@@ -25,5 +25,8 @@ yarn-error.log*
 
 *.js
 *.map
+*.db
+*.old
+*.copy
 
 certificates
