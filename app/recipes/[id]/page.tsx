@@ -21,6 +21,10 @@ import IconPicker from "@/components/IconPicker";
 // Import EasyMDE for its Options type
 import EasyMDE from 'easymde';
 
+// Import for PDF generation
+import jsPDF from 'jspdf';
+import html2canvas from 'html2canvas';
+
 interface Recipe {
   id: number;
   title: string;
@@ -66,11 +70,61 @@ export default function RecipeDetailPage() {
     setIsEditing(false);
   };
 
+  const handlePrintToPdf = async () => {
+    const input = document.getElementById('recipe-content');
+    if (input && recipe) {
+      const canvas = await html2canvas(input, { scale: 1 });
+      const imgData = canvas.toDataURL('image/png');
+
+      const pdf = new jsPDF('p', 'mm', 'a4');
+      const pdfWidth = pdf.internal.pageSize.getWidth();
+      const pdfHeight = pdf.internal.pageSize.getHeight();
+
+      const margin = 15; // 15mm margin
+      const contentWidth = pdfWidth - (margin * 2);
+      const contentHeightOnPage = pdfHeight - (margin * 2);
+
+      const canvasWidth = canvas.width;
+      const canvasHeight = canvas.height;
+
+      const ratio = canvasWidth / contentWidth;
+      const totalImgHeight = canvasHeight / ratio;
+
+      let heightLeft = totalImgHeight;
+      let position = 0;
+
+      // Add the first page
+      pdf.addImage(imgData, 'PNG', margin, margin, contentWidth, totalImgHeight);
+      heightLeft -= contentHeightOnPage;
+
+      // Add subsequent pages
+      while (heightLeft > 0) {
+        position -= contentHeightOnPage;
+        pdf.addPage();
+        pdf.addImage(imgData, 'PNG', margin, position + margin, contentWidth, totalImgHeight);
+        heightLeft -= contentHeightOnPage;
+      }
+
+      // Add footer to all pages
+      const totalPages = pdf.internal.getNumberOfPages();
+      for (let i = 1; i <= totalPages; i++) {
+        pdf.setPage(i);
+        pdf.setFontSize(10);
+        const footerText = `Recipe Cloud - Page ${i} of ${totalPages}`;
+        const textWidth = pdf.getStringUnitWidth(footerText) * pdf.getFontSize() / pdf.internal.scaleFactor;
+        const textX = (pdfWidth - textWidth) / 2;
+        pdf.text(footerText, textX, pdfHeight - 6);
+      }
+
+      pdf.save(`${recipe.title}.pdf`);
+    }
+  };
+
   // Options for SimpleMDE editor
   const editorOptions: EasyMDE.Options = useMemo(() => { // Explicitly type as EasyMDE.Options
     return {
       autofocus: true,
-      spellChecker: false,
+      spellChecker: true,
       fixedToolbar: true, // Make the toolbar sticky
       toolbar: [ // Custom toolbar with individual heading buttons
         "bold",
@@ -161,17 +215,26 @@ export default function RecipeDetailPage() {
           <div className="flex items-start justify-between mb-4">
             <div className="flex items-center"> {/* Container for icon and title */}
               {recipe.icon && <span className="text-4xl mr-2">{recipe.icon}</span>}
+              <h1 className="text-3xl font-bold text-gray-800">{recipe.title}</h1>
             </div>
-            <button
-              onClick={() => setIsEditing(true)}
-              className="bg-primary-600 hover:bg-primary-700 text-white font-bold py-2 px-4 rounded-lg transition-colors duration-200"
-            >
-              Edit
-            </button>
+            <div className="flex space-x-2"> {/* Container for buttons */}
+              <button
+                onClick={handlePrintToPdf}
+                className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg transition-colors duration-200"
+              >
+                Print to PDF
+              </button>
+              <button
+                onClick={() => setIsEditing(true)}
+                className="bg-primary-600 hover:bg-primary-700 text-white font-bold py-2 px-4 rounded-lg transition-colors duration-200"
+              >
+                Edit
+              </button>
+            </div>
           </div>
 
           {recipe.summary && <p className="text-lg text-gray-600 mb-4">{recipe.summary}</p>}
-          <article className="prose prose-base"> {/* Removed mt-8 as spacing is handled by flex container */}
+          <article id="recipe-content" className="prose prose-base"> {/* Added id for html2canvas */}
             <ReactMarkdown remarkPlugins={[remarkGfm]}>{recipe.content}</ReactMarkdown>
           </article>
         </div>
