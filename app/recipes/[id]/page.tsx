@@ -23,7 +23,7 @@ import EasyMDE from 'easymde';
 
 // Import for PDF generation
 import jsPDF from 'jspdf';
-import html2canvas from 'html2canvas';
+import html2canvas from 'html2canvas'; // jsPDF's html method requires html2canvas
 
 interface Recipe {
   id: number;
@@ -73,50 +73,30 @@ export default function RecipeDetailPage() {
   const handlePrintToPdf = async () => {
     const input = document.getElementById('recipe-content');
     if (input && recipe) {
-      const canvas = await html2canvas(input, { scale: 1 });
-      const imgData = canvas.toDataURL('image/png');
-
       const pdf = new jsPDF('p', 'mm', 'a4');
-      const pdfWidth = pdf.internal.pageSize.getWidth();
-      const pdfHeight = pdf.internal.pageSize.getHeight();
-
-      const margin = 15; // 15mm margin
-      const contentWidth = pdfWidth - (margin * 2);
-      const contentHeightOnPage = pdfHeight - (margin * 2);
-
-      const canvasWidth = canvas.width;
-      const canvasHeight = canvas.height;
-
-      const ratio = canvasWidth / contentWidth;
-      const totalImgHeight = canvasHeight / ratio;
-
-      let heightLeft = totalImgHeight;
-      let position = 0;
-
-      // Add the first page
-      pdf.addImage(imgData, 'PNG', margin, margin, contentWidth, totalImgHeight);
-      heightLeft -= contentHeightOnPage;
-
-      // Add subsequent pages
-      while (heightLeft > 0) {
-        position -= contentHeightOnPage;
-        pdf.addPage();
-        pdf.addImage(imgData, 'PNG', margin, position + margin, contentWidth, totalImgHeight);
-        heightLeft -= contentHeightOnPage;
-      }
-
-      // Add footer to all pages
-      const totalPages = pdf.internal.getNumberOfPages();
-      for (let i = 1; i <= totalPages; i++) {
-        pdf.setPage(i);
-        pdf.setFontSize(10);
-        const footerText = `Recipe Cloud - Page ${i} of ${totalPages}`;
-        const textWidth = pdf.getStringUnitWidth(footerText) * pdf.getFontSize() / pdf.internal.scaleFactor;
-        const textX = (pdfWidth - textWidth) / 2;
-        pdf.text(footerText, textX, pdfHeight - 6);
-      }
-
-      pdf.save(`${recipe.title}.pdf`);
+      
+      pdf.html(input, {
+        callback: function(doc) {
+          const totalPages = doc.internal.getNumberOfPages();
+          for (let i = 1; i <= totalPages; i++) {
+            doc.setPage(i);
+            doc.setFontSize(10);
+            const footerText = `Recipe Cloud - Page ${i} of ${totalPages}`;
+            const textWidth = doc.getStringUnitWidth(footerText) * doc.getFontSize() / doc.internal.scaleFactor;
+            const textX = (doc.internal.pageSize.getWidth() - textWidth) / 2;
+            doc.text(footerText, textX, doc.internal.pageSize.getHeight() - 8);
+          }
+          doc.save(`${recipe.title}.pdf`);
+        },
+        margin: [15, 15, 20, 15],
+        autoPaging: 'slice',
+        width: 180, 
+        windowWidth: 650, 
+        html2canvas: {
+          // scale: 1, // Use default scale to fix oversized text
+          useCORS: true,
+        },
+      });
     }
   };
 
@@ -124,7 +104,7 @@ export default function RecipeDetailPage() {
   const editorOptions: EasyMDE.Options = useMemo(() => { // Explicitly type as EasyMDE.Options
     return {
       autofocus: true,
-      spellChecker: true,
+      spellChecker: false,
       fixedToolbar: true, // Make the toolbar sticky
       toolbar: [ // Custom toolbar with individual heading buttons
         "bold",
