@@ -74,10 +74,10 @@ export default function RecipeDetailPage() {
     const input = document.getElementById('recipe-content');
     if (input && recipe) {
       const pdf = new jsPDF('p', 'mm', 'a4');
-      
+
       pdf.html(input, {
         callback: function(doc) {
-          const totalPages = doc.internal.getNumberOfPages();
+          const totalPages = doc.getNumberOfPages();
           for (let i = 1; i <= totalPages; i++) {
             doc.setPage(i);
             doc.setFontSize(10);
@@ -90,10 +90,9 @@ export default function RecipeDetailPage() {
         },
         margin: [15, 15, 20, 15],
         autoPaging: 'slice',
-        width: 180, 
-        windowWidth: 650, 
+        width: 180,
+        windowWidth: 650,
         html2canvas: {
-          // scale: 1, // Use default scale to fix oversized text
           useCORS: true,
         },
       });

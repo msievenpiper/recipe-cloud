@@ -63,7 +63,7 @@ export default function RegisterPage() {
             type="password"
             placeholder="Password"
             value={password}
-            onChange={(e) => setPassword(e.g.target.value)}
+            onChange={(e) => setPassword(e.target.value)}
             className="p-3 border border-gray-300 rounded-md focus:ring-primary-500 focus:border-primary-500"
           />
           <button
