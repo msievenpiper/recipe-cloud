@@ -32,10 +32,13 @@ export default function Navbar() {
               <button className="text-gray-200 hover:text-white px-3 py-2 rounded-md text-sm font-medium focus:outline-none flex items-center">
                 Admin <FaBars className="ml-1 text-xs" />
               </button>
-              <div className="absolute left-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-20 hidden group-hover:block text-gray-800">
-                <Link href="/admin/users" className="block px-4 py-2 text-sm hover:bg-gray-100" onClick={toggleMenu}>
-                  Manage Users
-                </Link>
+              {/* Dropdown with pt-2 to bridge the hover gap */}
+              <div className="absolute left-0 pt-2 w-48 hidden group-hover:block z-20">
+                <div className="bg-white rounded-md shadow-lg py-1 text-gray-800">
+                  <Link href="/admin/users" className="block px-4 py-2 text-sm hover:bg-gray-100" onClick={toggleMenu}>
+                    Manage Users
+                  </Link>
+                </div>
               </div>
             </div>
           )}

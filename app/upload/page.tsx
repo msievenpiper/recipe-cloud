@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { FaLightbulb, FaCamera, FaTextHeight, FaSun, FaUpload } from "react-icons/fa";
 
@@ -11,8 +11,26 @@ const AI_STEPS = [
   "Saving Recipe",
 ];
 
+import { useSession } from "next-auth/react";
+
 export default function UploadPage() {
+  const { data: session, update } = useSession(); // Get session and update function
   const [file, setFile] = useState<File | null>(null);
+
+  const router = useRouter();
+
+  // Redirect if limit reached
+  useEffect(() => {
+    if (session?.user) {
+      const isPremium = session.user.isPremium;
+      const scanCount = session.user.scanCount || 0;
+      const limit = isPremium ? 20 : 3;
+
+      if (scanCount >= limit) {
+        router.push('/pricing');
+      }
+    }
+  }, [session, router]);
   const [error, setError] = useState<string | null>(null);
   const [uploading, setUploading] = useState(false);
   const [uploadProgress, setUploadProgress] = useState(0);
@@ -21,8 +39,7 @@ export default function UploadPage() {
   const [aiProcessingComplete, setAiProcessingComplete] = useState(false);
   const [isDuplicate, setIsDuplicate] = useState(false);
 
-  const router = useRouter();
-
+  // Router is already declared above
   const fileInputRef = useRef<HTMLInputElement>(null);
   const cameraInputRef = useRef<HTMLInputElement>(null);
 
@@ -225,6 +242,7 @@ export default function UploadPage() {
             router.push(`/recipes/${data.recipeId}`);
           }, 2000);
         } else {
+          update(); // Refresh session to reflect new scan count
           simulateAISteps(data.id);
         }
       } else {
