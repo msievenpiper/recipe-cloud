@@ -69,7 +69,7 @@ export default function Home() {
       {/* How It Works / Features Section */}
       <section className="py-16 md:py-24 bg-white">
         <div className="container mx-auto px-4 max-w-6xl">
-          <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 text-primary-800">How Recipe Cloud Works Its Magic</h2>
+          <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 text-primary-800">How Souper Scanner Works Its Magic</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
             <div className="text-center p-6 bg-white rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 transform hover:-translate-y-1">
               <FaCamera className="text-primary-500 text-5xl mx-auto mb-4" />
@@ -99,7 +99,7 @@ export default function Home() {
       {/* Benefits Section */}
       <section className="py-16 md:py-24 bg-gray-100">
         <div className="container mx-auto px-4 max-w-6xl">
-          <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 text-primary-800">Why You'll Love Recipe Cloud</h2>
+          <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 text-primary-800">Why You'll Love Souper Scanner</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
             <div className="space-y-6">
               <div className="flex items-start space-x-4">
@@ -127,7 +127,7 @@ export default function Home() {
             <div className="flex justify-center">
               <Image
                 src="/marketing/iphone.png"
-                alt="Recipe Cloud App Screenshot"
+                alt="Souper Scanner App Screenshot"
                 width={300} // Adjust width as needed
                 height={600} // Adjust height as needed
                 className="rounded-lg shadow-lg"
@@ -158,7 +158,7 @@ export default function Home() {
       {/* Footer */}
       <footer className="bg-gray-800 text-gray-300 py-8">
         <div className="container mx-auto px-4 text-center">
-          <p>&copy; {new Date().getFullYear()} Recipe Cloud. All rights reserved.</p>
+          <p>&copy; {new Date().getFullYear()} Souper Scanner. All rights reserved.</p>
           <div className="flex justify-center space-x-4 mt-4">
             <Link href="/privacy" className="hover:text-white">Privacy Policy</Link>
             <Link href="/terms" className="hover:text-white">Terms of Service</Link>

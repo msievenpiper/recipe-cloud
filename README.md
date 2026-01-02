@@ -1,6 +1,6 @@
-# Recipe Cloud
+# Souper Scanner
 
-Recipe Cloud is a progressive web application that allows users to upload photos of recipes, which are then processed by an AI agent to generate step-by-step instructions and notes. Users can manage their recipes, edit the AI-generated content, and authenticate using various methods, including email/password and popular SSO providers.
+Souper Scanner is a progressive web application that allows users to upload photos of recipes, which are then processed by an AI agent to generate step-by-step instructions and notes. Users can manage their recipes, edit the AI-generated content, and authenticate using various methods, including email/password and popular SSO providers.
 
 ## Features
 

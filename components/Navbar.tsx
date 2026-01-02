@@ -78,8 +78,8 @@ export default function Navbar() {
     <nav className="bg-primary-700 p-4 shadow-md">
       <div className="container mx-auto flex justify-between items-center">
         <Link href="/" className="text-white text-lg font-bold flex items-center space-x-2" onClick={() => setIsOpen(false)}>
-          <Image src="/icon.svg" alt="Recipe Cloud Icon" width={24} height={24} />
-          <span>Recipe Cloud</span>
+          <Image src="/icon.svg" alt="Souper Scanner Icon" width={24} height={24} />
+          <span>Souper Scanner</span>
         </Link>
 
         {/* Desktop Menu */}

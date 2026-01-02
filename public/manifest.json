@@ -1,6 +1,6 @@
 {
-  "name": "Recipe Cloud",
-  "short_name": "RecipeCloud",
+  "name": "Souper Scanner",
+  "short_name": "SouperScanner",
   "description": "Your personal AI-powered recipe manager.",
   "start_url": "/",
   "display": "standalone",

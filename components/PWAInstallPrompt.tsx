@@ -49,7 +49,7 @@ const PWAInstallPrompt: React.FC = () => {
 
   return (
     <div className="fixed bottom-4 left-1/2 -translate-x-1/2 bg-blue-600 text-white p-3 rounded-lg shadow-lg z-50 flex items-center justify-between space-x-4">
-      <span>Add Recipe Cloud to your home screen for quick access!</span>
+      <span>Add Souper Scanner to your home screen for quick access!</span>
       <button
         onClick={handleInstallClick}
         className="bg-white text-blue-600 px-4 py-2 rounded-md font-semibold hover:bg-gray-100 transition-colors"

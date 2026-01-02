@@ -75,12 +75,12 @@ export default function RecipeDetailPage() {
     if (input && recipe) {
       const pdf = new jsPDF('p', 'mm', 'a4');
       pdf.html(input, {
-        callback: function(doc) {
+        callback: function (doc) {
           const totalPages = doc.getNumberOfPages();
           for (let i = 1; i <= totalPages; i++) {
             doc.setPage(i);
             doc.setFontSize(10);
-            const footerText = `Recipe Cloud - Page ${i} of ${totalPages}`;
+            const footerText = `Souper Scanner - Page ${i} of ${totalPages}`;
             const textWidth = doc.getStringUnitWidth(footerText) * doc.getFontSize() / doc.internal.scaleFactor;
             const textX = (doc.internal.pageSize.getWidth() - textWidth) / 2;
             doc.text(footerText, textX, doc.internal.pageSize.getHeight() - 8);
