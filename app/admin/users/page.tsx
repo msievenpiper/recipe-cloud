@@ -2,6 +2,8 @@
 
 import { useState, useEffect } from "react";
 import { FaCrown, FaUserShield, FaSpinner, FaCheck, FaTimes } from "react-icons/fa";
+import { useSession } from "next-auth/react";
+import Link from "next/link";
 
 interface User {
     id: string;
@@ -21,6 +23,8 @@ export default function AdminUsersPage() {
     useEffect(() => {
         fetchUsers();
     }, []);
+
+    const { update } = useSession();
 
     const fetchUsers = async () => {
         try {
@@ -58,6 +62,13 @@ export default function AdminUsersPage() {
             console.error(err);
             alert("Error updating user");
         }
+    };
+
+    const impersonateUser = async (userId: string) => {
+        if (!confirm("Are you sure you want to login as this user? You can return to your admin account later.")) return;
+
+        await update({ impersonateUserId: userId });
+        window.location.href = "/"; // Redirect to home as the new user
     };
 
     if (loading) return <div className="p-8 text-center"><FaSpinner className="animate-spin text-4xl mx-auto" /></div>;
@@ -121,6 +132,17 @@ export default function AdminUsersPage() {
                                             className="text-indigo-600 hover:text-indigo-900"
                                         >
                                             {user.role === 'ADMIN' ? "Remove Admin" : "Make Admin"}
+                                        </button>
+                                        <span className="text-gray-300">|</span>
+                                        <Link href={`/admin/users/${user.id}/recipes`} className="text-blue-600 hover:text-blue-900">
+                                            View Recipes
+                                        </Link>
+                                        <span className="text-gray-300">|</span>
+                                        <button
+                                            onClick={() => impersonateUser(user.id)}
+                                            className="text-orange-600 hover:text-orange-900 font-bold"
+                                        >
+                                            Login as User
                                         </button>
                                     </td>
                                 </tr>

@@ -32,6 +32,7 @@ model Recipe {
   authorId         String
   sharedWith       SharedRecipe[]
   imageFingerprint String?
+  createdAt        DateTime       @default(now())
 }
 
 model SharedRecipe {

@@ -36,7 +36,10 @@ export async function GET(request: Request, { params }: { params: Promise<{ id: 
     });
 
     if (!isAuthor && !isSharedWithUser) {
-        return new NextResponse("Forbidden", { status: 403 });
+        if (session.user.role === 'ADMIN' && session.user.isImpersonating)
+        {
+            return new NextResponse("Forbidden", { status: 403 });
+        }
     }
 
     return NextResponse.json(recipe);

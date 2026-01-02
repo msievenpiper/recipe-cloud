@@ -7,6 +7,7 @@ declare module "next-auth" {
       role: string;
       isPremium: boolean;
       scanCount: number;
+      isImpersonating?: boolean;
     } & DefaultSession["user"];
   }
 }
@@ -17,5 +18,10 @@ declare module "next-auth/jwt" {
     role: string;
     isPremium: boolean;
     scanCount: number;
+    originalAdmin?: {
+      id: string;
+      email: string;
+      role: string;
+    };
   }
 }

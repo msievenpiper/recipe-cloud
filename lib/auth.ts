@@ -80,13 +80,55 @@ export const authOptions: NextAuthOptions = {
         if ('scanCount' in user) token.scanCount = user.scanCount as number;
       }
 
-      // If session update is triggered (e.g. from client update())
+      // Impersonation Logic
       if (trigger === "update" && session) {
-        return { ...token, ...session.user };
+        // If trying to impersonate
+        if (session.impersonateUserId) {
+          // Ensure requester is an admin or already impersonating
+          if (token.role === 'ADMIN' || token.originalAdmin) {
+            const targetUser = await prisma.user.findUnique({
+              where: { id: session.impersonateUserId },
+              select: { id: true, email: true, role: true, isPremium: true, scanCount: true }
+            });
+
+            if (targetUser) {
+              // Save original admin if not already saved
+              if (!token.originalAdmin) {
+                token.originalAdmin = {
+                  id: token.id,
+                  email: token.email!,
+                  role: token.role
+                };
+              }
+
+              // Overwrite token with target user details
+              token.id = targetUser.id;
+              token.email = targetUser.email;
+              token.role = targetUser.role;
+              token.isPremium = targetUser.isPremium;
+              token.scanCount = targetUser.scanCount;
+            }
+          }
+        }
+        // If stop impersonating
+        else if (session.stopImpersonating && token.originalAdmin) {
+          token.id = token.originalAdmin.id;
+          token.email = token.originalAdmin.email;
+          token.role = token.originalAdmin.role;
+          // Clear original admin
+          delete token.originalAdmin;
+          // We will let the DB fetch below refresh the scanCount/isPremium for the admin
+        }
+        // Normal update
+        else {
+          return { ...token, ...session.user };
+        }
       }
 
       // Verification: Always fetch latest status from DB to handle external updates (e.g. payment webhook)
       // This ensures we always have the latest isPremium status
+      // We skip this if impersonating to avoid overwriting impersonated state with original admin state (though logic above handles swapping token.id)
+      // Actually, we SHOULD fetch for the *current* token.id (which might be the impersonated user)
       if (token.id) {
         const dbUser = await prisma.user.findUnique({
           where: { id: token.id },
@@ -107,6 +149,9 @@ export const authOptions: NextAuthOptions = {
         session.user.role = token.role;
         session.user.isPremium = token.isPremium;
         session.user.scanCount = token.scanCount;
+        if (token.originalAdmin) {
+          session.user.isImpersonating = true;
+        }
       }
       return session;
     },

@@ -6,6 +6,7 @@ import { Providers } from "./providers"; // Import the new Providers component
 import PWAInstallPrompt from "../components/PWAInstallPrompt"; // Import the PWAInstallPrompt component
 
 import UsageFloatingBar from "../components/UsageFloatingBar"; // Import UsageFloatingBar
+import ImpersonationBanner from "../components/ImpersonationBanner"; // Import ImpersonationBanner
 
 const inter = Inter({ subsets: ["latin"] }); // Keep if Inter is used elsewhere, otherwise remove
 
@@ -27,6 +28,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <Providers>
+          <ImpersonationBanner />
           <Navbar />
           {children}
           <UsageFloatingBar />
