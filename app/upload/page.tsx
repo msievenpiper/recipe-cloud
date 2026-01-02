@@ -26,21 +26,20 @@ export default function UploadPage() {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const cameraInputRef = useRef<HTMLInputElement>(null);
 
+  const [validationStatus, setValidationStatus] = useState<'valid' | 'warning' | 'error'>('valid');
+  const [validationMessage, setValidationMessage] = useState<string | null>(null);
 
-
-  const [validationError, setValidationError] = useState<string | null>(null);
-
-  const validateImage = async (file: File): Promise<{ valid: boolean; error?: string }> => {
+  const validateImage = async (file: File): Promise<{ status: 'valid' | 'warning' | 'error'; message?: string }> => {
     return new Promise((resolve) => {
       const img = new Image();
       img.onload = () => {
         const width = img.width;
         const height = img.height;
 
-        // 1. Dimension Check
+        // 1. Dimension Check - Warning only
         if (width < 600 || height < 600) {
           URL.revokeObjectURL(img.src);
-          resolve({ valid: false, error: "Image resolution is too low. Please use an image at least 600x600 pixels." });
+          resolve({ status: 'warning', message: "Image resolution is low. Results may be poor." });
           return;
         }
 
@@ -50,7 +49,7 @@ export default function UploadPage() {
         const ctx = canvas.getContext('2d');
         if (!ctx) {
           URL.revokeObjectURL(img.src);
-          resolve({ valid: false, error: "Could not process image." });
+          resolve({ status: 'error', message: "Could not process image." });
           return;
         }
         ctx.drawImage(img, 0, 0);
@@ -79,7 +78,7 @@ export default function UploadPage() {
 
         if (stdDev < 20) { // Threshold for low contrast
           URL.revokeObjectURL(img.src);
-          resolve({ valid: false, error: "Image has low contrast. Please verify lighting is good." });
+          resolve({ status: 'error', message: "Image has low contrast. Please verify lighting is good." });
           return;
         }
 
@@ -121,17 +120,17 @@ export default function UploadPage() {
 
         if (laplacianVariance < 100) { // Threshold for blur (tune as needed)
           URL.revokeObjectURL(img.src);
-          resolve({ valid: false, error: "Image is too blurry. Please try to hold the camera steady." });
+          resolve({ status: 'error', message: "Image is too blurry. Please try to hold the camera steady." });
           return;
         }
 
         URL.revokeObjectURL(img.src);
-        resolve({ valid: true });
+        resolve({ status: 'valid' });
       };
 
       img.onerror = () => {
         URL.revokeObjectURL(img.src);
-        resolve({ valid: false, error: "Invalid image file." });
+        resolve({ status: 'error', message: "Invalid image file." });
       };
 
       img.src = URL.createObjectURL(file);
@@ -143,7 +142,8 @@ export default function UploadPage() {
     setFile(selectedFile);
     if (selectedFile) {
       setError(null);
-      setValidationError(null);
+      setValidationStatus('valid');
+      setValidationMessage(null);
       setUploadProgress(0);
       setAiSteps(AI_STEPS.map(step => ({ name: step, status: 'pending' })));
       setCurrentAIStepIndex(-1);
@@ -151,9 +151,10 @@ export default function UploadPage() {
       setIsDuplicate(false);
 
       // Run validation
-      const validation = await validateImage(selectedFile);
-      if (!validation.valid) {
-        setValidationError(validation.error || "Image validation failed.");
+      const result = await validateImage(selectedFile);
+      setValidationStatus(result.status);
+      if (result.status !== 'valid') {
+        setValidationMessage(result.message || "Image validation warning.");
       }
     }
   };
@@ -192,9 +193,10 @@ export default function UploadPage() {
       return;
     }
 
-    if (validationError) {
-      return; // Prevent submit if validation failed
+    if (validationStatus === 'error') {
+      return; // Prevent submit if validation failed with error
     }
+    // Allow submit if status is 'valid' or 'warning'
 
     setUploading(true);
     setIsDuplicate(false);
@@ -266,18 +268,18 @@ export default function UploadPage() {
             <input ref={cameraInputRef} type="file" accept="image/*" capture="environment" onChange={handleFileChange} className="hidden" />
             {file && <p className="mt-2 text-sm text-gray-700 text-center">Selected file: <span className="font-semibold">{file.name}</span></p>}
             {error && <p className="mt-2 text-sm text-red-600 text-center">{error}</p>}
-            {validationError && (
-              <div className="mt-3 bg-yellow-50 border-l-4 border-yellow-400 p-4">
+            {validationMessage && (
+              <div className={`mt-3 p-4 border-l-4 ${validationStatus === 'error' ? 'bg-red-50 border-red-400' : 'bg-yellow-50 border-yellow-400'}`}>
                 <div className="flex">
                   <div className="flex-shrink-0">
-                    <FaLightbulb className="h-5 w-5 text-yellow-400" aria-hidden="true" />
+                    <FaLightbulb className={`h-5 w-5 ${validationStatus === 'error' ? 'text-red-400' : 'text-yellow-400'}`} aria-hidden="true" />
                   </div>
                   <div className="ml-3">
-                    <p className="text-sm text-yellow-700">
-                      {validationError}
+                    <p className={`text-sm ${validationStatus === 'error' ? 'text-red-700' : 'text-yellow-700'}`}>
+                      {validationMessage}
                     </p>
-                    <p className="text-xs text-yellow-600 mt-1">
-                      Better quality images produce better results.
+                    <p className={`text-xs mt-1 ${validationStatus === 'error' ? 'text-red-600' : 'text-yellow-600'}`}>
+                      {validationStatus === 'error' ? 'Please upload a better image.' : 'Better quality images produce better results.'}
                     </p>
                   </div>
                 </div>
@@ -326,7 +328,7 @@ export default function UploadPage() {
             </div>
           )}
 
-          <button type="submit" disabled={uploading || !file || aiProcessingComplete || !!validationError} className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 disabled:bg-gray-400 transition-colors duration-200">
+          <button type="submit" disabled={uploading || !file || aiProcessingComplete || validationStatus === 'error'} className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 disabled:bg-gray-400 transition-colors duration-200">
             {uploading && !aiProcessingComplete ? "Processing..." : "Upload and Process"}
           </button>
         </form>
