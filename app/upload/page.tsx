@@ -26,16 +26,135 @@ export default function UploadPage() {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const cameraInputRef = useRef<HTMLInputElement>(null);
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+
+
+  const [validationError, setValidationError] = useState<string | null>(null);
+
+  const validateImage = async (file: File): Promise<{ valid: boolean; error?: string }> => {
+    return new Promise((resolve) => {
+      const img = new Image();
+      img.onload = () => {
+        const width = img.width;
+        const height = img.height;
+
+        // 1. Dimension Check
+        if (width < 600 || height < 600) {
+          URL.revokeObjectURL(img.src);
+          resolve({ valid: false, error: "Image resolution is too low. Please use an image at least 600x600 pixels." });
+          return;
+        }
+
+        const canvas = document.createElement('canvas');
+        canvas.width = width;
+        canvas.height = height;
+        const ctx = canvas.getContext('2d');
+        if (!ctx) {
+          URL.revokeObjectURL(img.src);
+          resolve({ valid: false, error: "Could not process image." });
+          return;
+        }
+        ctx.drawImage(img, 0, 0);
+        const imageData = ctx.getImageData(0, 0, width, height);
+        const data = imageData.data;
+
+        // Convert to grayscale
+        const grayData = new Uint8ClampedArray(width * height);
+        let sum = 0;
+        let sumSq = 0;
+
+        for (let i = 0; i < data.length; i += 4) {
+          const r = data[i];
+          const g = data[i + 1];
+          const b = data[i + 2];
+          const gray = 0.299 * r + 0.587 * g + 0.114 * b;
+          grayData[i / 4] = gray;
+          sum += gray;
+          sumSq += gray * gray;
+        }
+
+        // 2. Contrast Check (Standard Deviation)
+        const mean = sum / (width * height);
+        const variance = (sumSq / (width * height)) - (mean * mean);
+        const stdDev = Math.sqrt(variance);
+
+        if (stdDev < 20) { // Threshold for low contrast
+          URL.revokeObjectURL(img.src);
+          resolve({ valid: false, error: "Image has low contrast. Please verify lighting is good." });
+          return;
+        }
+
+        // 3. Blur Check (Laplacian Variance approximation)
+        // We'll calculate the variance of the Laplacian of the grayscale image.
+        // Simplified Laplacian kernel:
+        // 0  1  0
+        // 1 -4  1
+        // 0  1  0
+
+        let laplacianSum = 0;
+        let laplacianSumSq = 0;
+        let pixelCount = 0;
+
+        // Skip edges to simplify
+        for (let y = 1; y < height - 1; y++) {
+          for (let x = 1; x < width - 1; x++) {
+            const i = y * width + x;
+            const north = (y - 1) * width + x;
+            const south = (y + 1) * width + x;
+            const west = y * width + (x - 1);
+            const east = y * width + (x + 1);
+
+            const laplacian =
+              grayData[north] +
+              grayData[south] +
+              grayData[west] +
+              grayData[east] +
+              (-4 * grayData[i]);
+
+            laplacianSum += laplacian;
+            laplacianSumSq += laplacian * laplacian;
+            pixelCount++;
+          }
+        }
+
+        const laplacianMean = laplacianSum / pixelCount;
+        const laplacianVariance = (laplacianSumSq / pixelCount) - (laplacianMean * laplacianMean);
+
+        if (laplacianVariance < 100) { // Threshold for blur (tune as needed)
+          URL.revokeObjectURL(img.src);
+          resolve({ valid: false, error: "Image is too blurry. Please try to hold the camera steady." });
+          return;
+        }
+
+        URL.revokeObjectURL(img.src);
+        resolve({ valid: true });
+      };
+
+      img.onerror = () => {
+        URL.revokeObjectURL(img.src);
+        resolve({ valid: false, error: "Invalid image file." });
+      };
+
+      img.src = URL.createObjectURL(file);
+    });
+  };
+
+  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFile = e.target.files ? e.target.files[0] : null;
     setFile(selectedFile);
     if (selectedFile) {
       setError(null);
+      setValidationError(null);
       setUploadProgress(0);
       setAiSteps(AI_STEPS.map(step => ({ name: step, status: 'pending' })));
       setCurrentAIStepIndex(-1);
       setAiProcessingComplete(false);
       setIsDuplicate(false);
+
+      // Run validation
+      const validation = await validateImage(selectedFile);
+      if (!validation.valid) {
+        setValidationError(validation.error || "Image validation failed.");
+      }
     }
   };
 
@@ -71,6 +190,10 @@ export default function UploadPage() {
     if (!file) {
       setError("Please select an image or take a photo to upload.");
       return;
+    }
+
+    if (validationError) {
+      return; // Prevent submit if validation failed
     }
 
     setUploading(true);
@@ -143,6 +266,23 @@ export default function UploadPage() {
             <input ref={cameraInputRef} type="file" accept="image/*" capture="environment" onChange={handleFileChange} className="hidden" />
             {file && <p className="mt-2 text-sm text-gray-700 text-center">Selected file: <span className="font-semibold">{file.name}</span></p>}
             {error && <p className="mt-2 text-sm text-red-600 text-center">{error}</p>}
+            {validationError && (
+              <div className="mt-3 bg-yellow-50 border-l-4 border-yellow-400 p-4">
+                <div className="flex">
+                  <div className="flex-shrink-0">
+                    <FaLightbulb className="h-5 w-5 text-yellow-400" aria-hidden="true" />
+                  </div>
+                  <div className="ml-3">
+                    <p className="text-sm text-yellow-700">
+                      {validationError}
+                    </p>
+                    <p className="text-xs text-yellow-600 mt-1">
+                      Better quality images produce better results.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
 
           {uploading && (
@@ -176,7 +316,7 @@ export default function UploadPage() {
                   </ul>
                 </div>
               )}
-              
+
               {isDuplicate && (
                 <div className="text-center p-4 bg-blue-50 border border-blue-200 rounded-lg">
                   <p className="font-semibold text-blue-800">Duplicate recipe found!</p>
@@ -186,7 +326,7 @@ export default function UploadPage() {
             </div>
           )}
 
-          <button type="submit" disabled={uploading || !file || aiProcessingComplete} className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 disabled:bg-gray-400 transition-colors duration-200">
+          <button type="submit" disabled={uploading || !file || aiProcessingComplete || !!validationError} className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 disabled:bg-gray-400 transition-colors duration-200">
             {uploading && !aiProcessingComplete ? "Processing..." : "Upload and Process"}
           </button>
         </form>
