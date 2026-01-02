@@ -5,6 +5,8 @@ import Navbar from "../components/Navbar";
 import { Providers } from "./providers"; // Import the new Providers component
 import PWAInstallPrompt from "../components/PWAInstallPrompt"; // Import the PWAInstallPrompt component
 
+import UsageFloatingBar from "../components/UsageFloatingBar"; // Import UsageFloatingBar
+
 const inter = Inter({ subsets: ["latin"] }); // Keep if Inter is used elsewhere, otherwise remove
 
 export const metadata: Metadata = {
@@ -27,6 +29,7 @@ export default function RootLayout({
         <Providers>
           <Navbar />
           {children}
+          <UsageFloatingBar />
           <PWAInstallPrompt />
         </Providers>
       </body>

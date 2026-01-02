@@ -24,6 +24,30 @@ export default function Navbar() {
           <Link href="/upload" className="text-gray-200 hover:text-white px-3 py-2 rounded-md text-sm font-medium" onClick={toggleMenu}>
             Upload
           </Link>
+          <Link href="/profile" className="text-gray-200 hover:text-white px-3 py-2 rounded-md text-sm font-medium" onClick={toggleMenu}>
+            Profile
+          </Link>
+          {session.user?.role === 'ADMIN' && (
+            <div className="relative group inline-block">
+              <button className="text-gray-200 hover:text-white px-3 py-2 rounded-md text-sm font-medium focus:outline-none flex items-center">
+                Admin <FaBars className="ml-1 text-xs" />
+              </button>
+              <div className="absolute left-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-20 hidden group-hover:block text-gray-800">
+                <Link href="/admin/users" className="block px-4 py-2 text-sm hover:bg-gray-100" onClick={toggleMenu}>
+                  Manage Users
+                </Link>
+              </div>
+            </div>
+          )}
+          {/* Mobile Admin Link (simpler for mobile menu) */}
+          <div className="md:hidden">
+            {session.user?.role === 'ADMIN' && (
+              <Link href="/admin/users" className="text-gray-200 hover:text-white px-3 py-2 rounded-md text-sm font-medium block" onClick={toggleMenu}>
+                Admin Dashboard
+              </Link>
+            )}
+          </div>
+
           <button
             onClick={() => { signOut(); toggleMenu(); }}
             className="text-gray-200 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
@@ -70,9 +94,8 @@ export default function Navbar() {
 
       {/* Mobile Sidebar */}
       <div
-        className={`fixed inset-y-0 right-0 w-64 bg-primary-800 z-50 transform ${
-          isOpen ? "translate-x-0" : "translate-x-full"
-        } md:hidden transition-transform duration-300 ease-in-out`}
+        className={`fixed inset-y-0 right-0 w-64 bg-primary-800 z-50 transform ${isOpen ? "translate-x-0" : "translate-x-full"
+          } md:hidden transition-transform duration-300 ease-in-out`}
       >
         <div className="flex justify-end p-4">
           <button onClick={toggleMenu} className="text-white focus:outline-none">

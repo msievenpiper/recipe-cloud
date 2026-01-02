@@ -12,6 +12,12 @@ model User {
   name          String?
   email         String         @unique
   password      String
+  role          String         @default("USER")
+  isPremium     Boolean        @default(false)
+  scanCount     Int            @default(0)
+  lastScanDate  DateTime       @default(now())
+  phoneNumber   String?
+  address       String?
   recipes       Recipe[]
   sharedRecipes SharedRecipe[] @relation("sharedWith")
 }

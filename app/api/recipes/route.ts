@@ -11,7 +11,7 @@ const visionClient = new ImageAnnotatorClient();
 
 const geminiApiKey = process.env.GEMINI_API_KEY;
 if (!geminiApiKey) {
-  throw new Error("GEMINI_API_KEY is not defined in environment variables.");
+    throw new Error("GEMINI_API_KEY is not defined in environment variables.");
 }
 const genAI = new GoogleGenerativeAI(geminiApiKey);
 
@@ -31,6 +31,40 @@ export async function POST(request: Request) {
     const session = await getServerSession(authOptions);
     if (!session) {
         return new NextResponse(null, { status: 401 });
+    }
+
+
+    // Fetch latest user data including scan stats
+    const user = await prisma.user.findUnique({
+        where: { id: session.user.id },
+        select: { isPremium: true, scanCount: true, lastScanDate: true }
+    });
+
+    if (!user) {
+        return new NextResponse("User not found", { status: 404 });
+    }
+
+    const now = new Date();
+    let currentScanCount = user.scanCount;
+
+    // Check if it's a new month, reset if so
+    if (user.lastScanDate.getMonth() !== now.getMonth() || user.lastScanDate.getFullYear() !== now.getFullYear()) {
+        currentScanCount = 0;
+        // Update user record with reset count immediately to handle concurrent requests roughly
+        await prisma.user.update({
+            where: { id: session.user.id },
+            data: { scanCount: 0, lastScanDate: now }
+        });
+    }
+
+    // specific limits
+    const LIMIT = user.isPremium ? 20 : 3;
+
+    if (currentScanCount >= LIMIT) {
+        return NextResponse.json(
+            { error: `You have reached your monthly limit of ${LIMIT} scans. Upgrade to Premium for more.` },
+            { status: 403 }
+        );
     }
 
     const formData = await request.formData();
@@ -59,7 +93,7 @@ export async function POST(request: Request) {
         const [result] = await visionClient.textDetection(tempFilePath);
         const detections = result.textAnnotations;
         if (!detections || detections.length === 0) {
-          throw new Error("No text detections found.");
+            throw new Error("No text detections found.");
         }
         const text = detections.map(d => d.description).join(' ');
 
@@ -85,15 +119,25 @@ export async function POST(request: Request) {
         const titleMatch = markdownContent.match(/^#\s*(.*)/);
         const title = titleMatch ? titleMatch[1] : 'Untitled Recipe';
 
-        const newRecipe = await prisma.recipe.create({
-            data: {
-                title,
-                summary,
-                content: markdownContent,
-                authorId: session.user.id,
-                imageFingerprint: imageFingerprint, // Save the fingerprint
-            },
-        });
+        // Create recipe and increment scan count in a transaction
+        const [newRecipe] = await prisma.$transaction([
+            prisma.recipe.create({
+                data: {
+                    title,
+                    summary,
+                    content: markdownContent,
+                    authorId: session.user.id,
+                    imageFingerprint: imageFingerprint,
+                },
+            }),
+            prisma.user.update({
+                where: { id: session.user.id },
+                data: {
+                    scanCount: { increment: 1 },
+                    lastScanDate: new Date() // Keep last scan date updated
+                }
+            })
+        ]);
 
         return NextResponse.json({ id: newRecipe.id });
     } catch (error) {
