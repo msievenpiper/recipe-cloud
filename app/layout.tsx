@@ -8,8 +8,9 @@ import PWAInstallPrompt from "../components/PWAInstallPrompt"; // Import the PWA
 import UsageFloatingBar from "../components/UsageFloatingBar"; // Import UsageFloatingBar
 import ImpersonationBanner from "../components/ImpersonationBanner"; // Import ImpersonationBanner
 
-const inter = Inter({ subsets: ["latin"] }); // Keep if Inter is used elsewhere, otherwise remove
+import Footer from "../components/Footer"; // Import Footer
 
+const inter = Inter({ subsets: ["latin"] }); // Keep if Inter is used elsewhere, otherwise remove
 export const metadata: Metadata = {
   title: "Souper Scanner",
   description: "Your personal AI-powered recipe manager and scanner",
@@ -28,9 +29,14 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <Providers>
-          <ImpersonationBanner />
-          <Navbar />
-          {children}
+          <div className="flex flex-col min-h-screen">
+            <ImpersonationBanner />
+            <Navbar />
+            <main className="flex-grow">
+              {children}
+            </main>
+            <Footer />
+          </div>
           <UsageFloatingBar />
           <PWAInstallPrompt />
         </Providers>
