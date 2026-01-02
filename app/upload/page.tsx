@@ -22,6 +22,9 @@ export default function UploadPage() {
   // Redirect if limit reached
   useEffect(() => {
     if (session?.user) {
+      // Admins bypass all usage limits
+      if (session.user.role === 'ADMIN') return;
+
       const isPremium = session.user.isPremium;
       const scanCount = session.user.scanCount || 0;
       const limit = isPremium ? 20 : 3;

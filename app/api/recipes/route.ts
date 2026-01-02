@@ -37,7 +37,7 @@ export async function POST(request: Request) {
     // Fetch latest user data including scan stats
     const user = await prisma.user.findUnique({
         where: { id: session.user.id },
-        select: { isPremium: true, scanCount: true, lastScanDate: true }
+        select: { isPremium: true, scanCount: true, lastScanDate: true, role: true }
     });
 
     if (!user) {
@@ -58,13 +58,18 @@ export async function POST(request: Request) {
     }
 
     // specific limits
-    const LIMIT = user.isPremium ? 20 : 3;
+    // Admins bypass all usage limits
+    if (user.role === 'ADMIN') {
+        // Continue to processing
+    } else {
+        const LIMIT = user.isPremium ? 20 : 3;
 
-    if (currentScanCount >= LIMIT) {
-        return NextResponse.json(
-            { error: `You have reached your monthly limit of ${LIMIT} scans. Upgrade to Premium for more.` },
-            { status: 403 }
-        );
+        if (currentScanCount >= LIMIT) {
+            return NextResponse.json(
+                { error: `You have reached your monthly limit of ${LIMIT} scans. Upgrade to Premium for more.` },
+                { status: 403 }
+            );
+        }
     }
 
     const formData = await request.formData();
