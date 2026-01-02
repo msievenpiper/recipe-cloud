@@ -2,7 +2,7 @@ import { withAuth } from "next-auth/middleware";
 import { NextResponse } from "next/server";
 
 export default withAuth(
-  function middleware(req) {
+  function proxy(req) {
     // This function will be called if the user is authenticated.
     // You can add additional authorization logic here if needed.
     // For now, we just let authenticated users pass.
