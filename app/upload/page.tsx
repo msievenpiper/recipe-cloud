@@ -98,7 +98,7 @@ export default function UploadPage() {
 
         if (stdDev < 20) { // Threshold for low contrast
           URL.revokeObjectURL(img.src);
-          resolve({ status: 'error', message: "Image has low contrast. Please verify lighting is good." });
+          resolve({ status: 'warning', message: "Image has low contrast. Please verify lighting is good." });
           return;
         }
 
@@ -140,7 +140,7 @@ export default function UploadPage() {
 
         if (laplacianVariance < 100) { // Threshold for blur (tune as needed)
           URL.revokeObjectURL(img.src);
-          resolve({ status: 'error', message: "Image is too blurry. Please try to hold the camera steady." });
+          resolve({ status: 'warning', message: "Image is too blurry. Please try to hold the camera steady." });
           return;
         }
 
