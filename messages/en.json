@@ -1,0 +1,14 @@
+{
+    "HomePage": {
+        "title": "Souper Scanner",
+        "subtitle": "Your personal AI-powered recipe manager and scanner"
+    },
+    "Navigation": {
+        "home": "Home",
+        "recipes": "Recipes",
+        "upload": "Upload",
+        "profile": "Profile",
+        "signin": "Sign In",
+        "signout": "Sign Out"
+    }
+}

@@ -5,10 +5,13 @@ import Image from "next/image";
 import { useSession, signIn, signOut } from "next-auth/react";
 import { useState } from "react";
 import { FaBars, FaTimes } from "react-icons/fa";
+import LanguageSwitcher from "./LanguageSwitcher";
+import { useTranslations } from "next-intl";
 
 export default function Navbar() {
   const { data: session } = useSession();
   const [isOpen, setIsOpen] = useState(false);
+  const t = useTranslations('Navigation');
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
@@ -19,13 +22,13 @@ export default function Navbar() {
       {session ? (
         <>
           <Link href="/recipes" className="text-gray-200 hover:text-white px-3 py-2 rounded-md text-sm font-medium" onClick={toggleMenu}>
-            My Recipes
+            {t('recipes')}
           </Link>
           <Link href="/upload" className="text-gray-200 hover:text-white px-3 py-2 rounded-md text-sm font-medium" onClick={toggleMenu}>
-            Upload
+            {t('upload')}
           </Link>
           <Link href="/profile" className="text-gray-200 hover:text-white px-3 py-2 rounded-md text-sm font-medium" onClick={toggleMenu}>
-            Profile
+            {t('profile')}
           </Link>
           {session.user?.role === 'ADMIN' && (
             <div className="relative group inline-block">
@@ -55,7 +58,7 @@ export default function Navbar() {
             onClick={() => { signOut(); toggleMenu(); }}
             className="text-gray-200 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
           >
-            Sign Out
+            {t('signout')}
           </button>
         </>
       ) : (
@@ -67,7 +70,7 @@ export default function Navbar() {
             onClick={() => { signIn(); toggleMenu(); }}
             className="text-gray-200 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
           >
-            Sign In
+            {t('signin')}
           </button>
         </>
       )}
@@ -83,8 +86,9 @@ export default function Navbar() {
         </Link>
 
         {/* Desktop Menu */}
-        <div className="hidden md:flex space-x-4">
+        <div className="hidden md:flex space-x-4 items-center">
           <NavLinks />
+          <LanguageSwitcher />
         </div>
 
         {/* Mobile Menu Button */}
@@ -107,6 +111,9 @@ export default function Navbar() {
         </div>
         <div className="flex flex-col items-start space-y-4 p-4">
           <NavLinks />
+          <div className="px-3 py-2">
+            <LanguageSwitcher />
+          </div>
         </div>
       </div>
     </nav>

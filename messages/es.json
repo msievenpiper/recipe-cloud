@@ -1,0 +1,14 @@
+{
+    "HomePage": {
+        "title": "Souper Scanner",
+        "subtitle": "Tu gestor y escáner de recetas personal impulsado por IA"
+    },
+    "Navigation": {
+        "home": "Inicio",
+        "recipes": "Recetas",
+        "upload": "Subir",
+        "profile": "Perfil",
+        "signin": "Iniciar Sesión",
+        "signout": "Cerrar Sesión"
+    }
+}
