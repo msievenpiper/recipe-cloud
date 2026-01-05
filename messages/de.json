@@ -1,0 +1,301 @@
+{
+    "HomePage": {
+        "title": "Souper Scanner",
+        "subtitle": "Ihr persönlicher KI-gestützter Rezept-Manager und Scanner",
+        "Hero": {
+            "headline": "Verwandeln Sie Ihre Rezeptfotos in digitale Meisterwerke",
+            "subheadline": "Aufnehmen, Verarbeiten, Bearbeiten. Ihre kulinarischen Kreationen, perfekt organisiert und überall abrufbar.",
+            "loading": "Laden...",
+            "goToLibrary": "Zur Bibliothek",
+            "uploadFirst": "Laden Sie Ihr erstes Rezept hoch!",
+            "getStarted": "Jetzt kostenlos starten!"
+        },
+        "HowItWorks": {
+            "title": "Wie Souper Scanner seine Magie entfaltet",
+            "step1Title": "1. Aufnehmen & Hochladen",
+            "step1Desc": "Fotografieren Sie Ihr handgeschriebenes oder gedrucktes Rezept. Unser intelligentes System ist bereit.",
+            "step2Title": "2. KI-Transformation",
+            "step2Desc": "Unsere fortschrittliche KI (Google Vision & Gemini) verarbeitet Ihr Bild, extrahiert Zutaten, Schritte und Notizen und formatiert sie wunderschön.",
+            "step3Title": "3. Verfeinern & Organisieren",
+            "step3Desc": "Überprüfen, ordnen und bearbeiten Sie das KI-generierte Rezept in Markdown. Speichern Sie es in Ihrem persönlichen digitalen Kochbuch."
+        },
+        "Benefits": {
+            "title": "Warum Sie Souper Scanner lieben werden",
+            "benefit1Title": "Nie wieder ein Rezept verlieren",
+            "benefit1Desc": "Digitalisieren Sie all Ihre Familienrezepte, Zeitungsausschnitte und handgeschriebenen Notizen. Sicher in der Cloud gespeichert.",
+            "benefit2Title": "Einfach teilen",
+            "benefit2Desc": "Teilen Sie Ihre perfektionierten Rezepte mühelos mit Freunden und Familie, ohne sie neu abtippen zu müssen.",
+            "benefit3Title": "Intelligente Bearbeitung",
+            "benefit3Desc": "Unser intuitiver Markdown-Editor macht das Anpassen von KI-Inhalten zum Kinderspiel. Konzentrieren Sie sich aufs Kochen, nicht aufs Formatieren."
+        },
+        "CTA": {
+            "title": "Bereit, Ihre Küche zu organisieren?",
+            "description": "Schließen Sie sich Tausenden von Hobbyköchen an, die ihr Rezeptmanagement mit KI vereinfachen.",
+            "buttonLoggedIn": "Beginnen Sie mit dem Hochladen Ihrer Rezepte!",
+            "buttonLoggedOut": "Erstellen Sie noch heute Ihr kostenloses Konto"
+        }
+    },
+    "Navigation": {
+        "home": "Startseite",
+        "recipes": "Rezepte",
+        "upload": "Hochladen",
+        "profile": "Profil",
+        "register": "Registrieren",
+        "signin": "Anmelden",
+        "signout": "Abmelden"
+    },
+    "Recipes": {
+        "List": {
+            "loading": "Lade Ihre Rezepte...",
+            "title": "Ihre Rezepte",
+            "addNew": "Neu hinzufügen",
+            "searchPlaceholder": "Rezepte suchen...",
+            "myRecipes": "Meine Rezepte",
+            "sharedWithYou": "Mit Ihnen geteilt",
+            "sharedBy": "Geteilt von",
+            "welcomeTitle": "Willkommen in Ihrer Rezeptsammlung!",
+            "welcomeDesc": "Es sieht so aus, als hätten Sie noch keine Rezepte. Erstellen wir Ihr erstes.",
+            "uploadFirst": "Laden Sie Ihr erstes Rezept hoch"
+        },
+        "Detail": {
+            "loading": "Laden...",
+            "summaryLabel": "Zusammenfassung",
+            "summaryPlaceholder": "Eine kurze Zusammenfassung des Rezepts...",
+            "save": "Speichern",
+            "cancel": "Abbrechen",
+            "print": "Als PDF drucken",
+            "share": "Teilen",
+            "edit": "Bearbeiten",
+            "pdfFooter": "Souper Scanner - Seite"
+        }
+    },
+    "Upload": {
+        "title": "Ein Rezeptfoto hochladen",
+        "subtitle": "Wählen Sie ein Bild oder machen Sie ein Foto",
+        "uploadButton": "Foto hochladen",
+        "takePhotoButton": "Foto machen",
+        "selectedFile": "Ausgewählte Datei:",
+        "progress": "Fortschritt des Dateiuploads",
+        "aiProcessing": "KI-Verarbeitung",
+        "duplicate": "Doppeltes Rezept gefunden!",
+        "redirecting": "Weiterleitung zum bestehenden Rezept...",
+        "submitButton": "Hochladen und Verarbeiten",
+        "processing": "Wird verarbeitet...",
+        "tipsTitle": "Tipps für beste Ergebnisse",
+        "tips": {
+            "clearPhotos": "Klare & ruhige Fotos:",
+            "clearPhotosDesc": "Stellen Sie sicher, dass Ihr Foto gut beleuchtet und nicht verschwommen ist. Halten Sie die Kamera ruhig!",
+            "contrast": "Guter Kontrast:",
+            "contrastDesc": "Der Text sollte sich deutlich vom Hintergrund abheben. Vermeiden Sie unruhige Muster.",
+            "lighting": "Gleichmäßige Beleuchtung:",
+            "lightingDesc": "Vermeiden Sie Schatten auf dem Text. Natürliches, indirektes Licht funktioniert oft am besten.",
+            "focus": "Fokus auf das Rezept:",
+            "focusDesc": "Schneiden Sie unnötige Hintergrundelemente aus, damit sich die KI auf den Text konzentrieren kann."
+        },
+        "aiSteps": {
+            "analyzing": "Bild analysieren",
+            "extracting": "Text extrahieren",
+            "generating": "Rezept generieren",
+            "saving": "Rezept speichern"
+        },
+        "validation": {
+            "warning": "Bildvalidierungswarnung.",
+            "lowRes": "Bildauflösung ist niedrig. Ergebnisse können schlecht sein.",
+            "error": "Bild konnte nicht verarbeitet werden.",
+            "lowContrast": "Niedriger Kontrast. Bitte Beleuchtung prüfen.",
+            "blurry": "Bild ist zu verschwommen. Bitte Kamera ruhig halten.",
+            "invalid": "Ungültige Bilddatei.",
+            "selectFile": "Bitte wählen Sie ein Bild oder machen Sie ein Foto.",
+            "uploadFailed": "Upload fehlgeschlagen. Bitte versuchen Sie es erneut.",
+            "uploadError": "Ein Fehler ist während des Uploads aufgetreten.",
+            "betterQuality": "Bessere Bildqualität liefert bessere Ergebnisse.",
+            "uploadBetter": "Bitte laden Sie ein besseres Bild hoch."
+        }
+    },
+    "Profile": {
+        "title": "Profileinstellungen",
+        "labels": {
+            "name": "Vollständiger Name",
+            "email": "E-Mail-Adresse",
+            "phone": "Telefonnummer",
+            "address": "Adresse"
+        },
+        "placeholders": {
+            "name": "Ihr Name",
+            "email": "ihnen@beispiel.de",
+            "phone": "+49 (0) 000-0000",
+            "address": "Hauptstraße 1, Stadt, Land"
+        },
+        "buttons": {
+            "save": "Änderungen speichern",
+            "saving": "Speichern..."
+        },
+        "subscription": {
+            "title": "Abonnementstatus:",
+            "premium": "Premium",
+            "free": "Kostenloser Plan",
+            "monthlyScans": "Monatliche Scans",
+            "used": "genutzt",
+            "upgradeMessage": "Upgrade auf Premium, um Ihr Limit auf 20 Scans pro Monat zu erhöhen!",
+            "viewPlans": "Pläne anzeigen"
+        },
+        "messages": {
+            "success": "Profil erfolgreich aktualisiert!",
+            "error": "Fehler beim Aktualisieren des Profils",
+            "loadError": "Fehler beim Laden der Profildaten.",
+            "saveError": "Ein Fehler beim Speichern ist aufgetreten."
+        }
+    },
+    "Auth": {
+        "SignIn": {
+            "title": "Anmelden",
+            "emailPlaceholder": "E-Mail",
+            "passwordPlaceholder": "Passwort",
+            "submitButton": "Anmelden",
+            "noAccount": "Noch kein Konto?",
+            "registerLink": "Registrieren",
+            "failed": "Anmeldung fehlgeschlagen."
+        },
+        "Register": {
+            "title": "Registrieren",
+            "emailPlaceholder": "E-E-Mail",
+            "passwordPlaceholder": "Passwort",
+            "submitButton": "Registrieren",
+            "hasAccount": "Bereits ein Konto?",
+            "signInLink": "Anmelden",
+            "failed": "Registrierung fehlgeschlagen.",
+            "signInFailed": "Anmeldung nach Registrierung fehlgeschlagen."
+        }
+    },
+    "Pricing": {
+        "title": "Einfache, transparente Preise",
+        "subtitle": "Wählen Sie den Plan, der zu Ihren Bedürfnissen passt.",
+        "perMonth": "/Monat",
+        "included": "Was enthalten ist",
+        "Free": {
+            "title": "Kostenlos",
+            "description": "Perfekt zum Ausprobieren der Rezeptdigitalisierung.",
+            "price": "0 €",
+            "currentPlan": "Aktueller Plan",
+            "includedStatus": "Inklusive",
+            "features": {
+                "scans": "3 Rezept-Scans pro Monat",
+                "analysis": "Basis-KI-Analyse",
+                "support": "Standard-Support"
+            }
+        },
+        "Premium": {
+            "title": "Premium",
+            "description": "Für den passionierten Hobbykoch.",
+            "price": "9,99 €",
+            "activePlan": "Aktiver Plan",
+            "upgrade": "Jetzt upgraden",
+            "upgrading": "Wird aktualisiert...",
+            "features": {
+                "scans": "20 Rezept-Scans pro Monat",
+                "analysis": "Priorisierte KI-Analyse",
+                "support": "Priorisierter Support"
+            }
+        },
+        "messages": {
+            "success": "Upgrade erfolgreich!",
+            "failed": "Upgrade fehlgeschlagen. Bitte erneut versuchen.",
+            "error": "Ein Fehler ist aufgetreten."
+        }
+    },
+    "Footer": {
+        "description": "Ihr persönlicher KI-gestützter Rezept-Manager und Scanner. Verwandeln Sie Ihre physischen Rezepte mit der Kraft von Google Gemini in eine digitale Sammlung.",
+        "resources": "Ressourcen",
+        "legal": "Rechtliches",
+        "copyright": "Souper Scanner. Alle Rechte vorbehalten.",
+        "tagline": "Erinnerungen scannen, Rezept für Rezept.",
+        "links": {
+            "home": "Startseite",
+            "recipes": "Meine Rezepte",
+            "pricing": "Preise",
+            "upload": "Rezept hochladen",
+            "terms": "Nutzungsbedingungen",
+            "privacy": "Datenschutz"
+        }
+    },
+    "Privacy": {
+        "title": "Datenschutzerklärung",
+        "lastUpdated": "Zuletzt aktualisiert: 2. Januar 2026",
+        "sections": {
+            "collection": {
+                "title": "1. Informationserhebung",
+                "content1": "Wir erheben Informationen, die Sie uns direkt bei der Kontoerstellung zur Verfügung stellen, wie Name und E-Mail-Adresse.",
+                "content2": "Wir erheben die von Ihnen hochgeladenen Bilder zum Zwecke der Rezeptextraktion."
+            },
+            "processing": {
+                "title": "2. KI-Verarbeitung & Dritte",
+                "content1": "Souper Scanner nutzt Google Gemini (LLM) und Google Cloud Vision (OCR) zur Verarbeitung Ihrer Bilder.",
+                "content2": "Ihre hochgeladenen Bilder werden durch die Infrastruktur von Google verarbeitet. Wir nutzen Ihre Daten nicht zum Training eigener Modelle."
+            },
+            "retention": {
+                "title": "3. Datenspeicherung",
+                "storageTitle": "Temporäre Bildspeicherung:",
+                "storageContent": "Wir speichern Ihre Bilder nur vorübergehend. Nach erfolgreicher Verarbeitung wird das Originalbild gelöscht.",
+                "content": "Extrahiertes Rezept-Text und Profildaten werden sicher gespeichert, solange Ihr Konto aktiv ist."
+            },
+            "security": {
+                "title": "4. Sicherheit",
+                "content": "Wir implementieren branchenübliche Sicherheitsmaßnahmen zum Schutz Ihrer Daten."
+            },
+            "cookies": {
+                "title": "5. Cookies",
+                "content": "Wir verwenden Cookies primär für das Sitzungsmanagement und die Authentifizierung."
+            },
+            "rights": {
+                "title": "6. Ihre Rechte",
+                "content": "Sie können Ihre Informationen jederzeit einsehen, bearbeiten oder löschen."
+            }
+        },
+        "contact": "Bei Fragen zum Datenschutz kontaktieren Sie uns unter privacy@souperscanner.com"
+    },
+    "Terms": {
+        "title": "Nutzungsbedingungen",
+        "lastUpdated": "Zuletzt aktualisiert: 2. Januar 2026",
+        "sections": {
+            "acceptance": {
+                "title": "1. Annahme der Bedingungen",
+                "content": "Durch den Zugriff auf Souper Scanner stimmen Sie diesen Nutzungsbedingungen zu."
+            },
+            "description": {
+                "title": "2. Leistungsbeschreibung",
+                "content": "Souper Scanner bietet KI-gestützte Tools zum Scannen und Verwalten von Rezepten."
+            },
+            "usage": {
+                "title": "3. Faire Nutzung & Limits",
+                "content": "Zur Sicherstellung der Servicequalität gelten monatliche Scan-Limits.",
+                "freeTier": "Kostenlose Stufe: 3 Scans pro Monat.",
+                "premiumTier": "Premium-Stufe: 20 Scans pro Monat.",
+                "prohibited": "Automatisierte Scans oder Umgehungsversuche sind untersagt."
+            },
+            "content": {
+                "title": "4. Nutzerinhalte & Urheberrecht",
+                "content": "Sie behalten das Eigentum an Ihren Bildern. Sie sind verantwortlich für die Berechtigung zur Digitalisierung."
+            },
+            "disclaimers": {
+                "title": "5. Haftungsausschluss",
+                "quote": "\"Kochen auf eigene Gefahr.\"",
+                "content": "KI kann Fehler machen. Überprüfen Sie KI-generierte Inhalte stets selbst."
+            },
+            "termination": {
+                "title": "6. Kündigung",
+                "content": "Wir behalten uns das Recht vor, den Zugang zum Dienst bei Verstößen zu sperren."
+            }
+        },
+        "contact": "Bei Fragen kontaktieren Sie uns unter legal@souperscanner.com"
+    },
+    "Components": {
+        "ImpersonationBanner": {
+            "label": "BENUTZER-IMPERSONATION",
+            "exit": "Beenden"
+        },
+        "UsageFloatingBar": {
+            "title": "Monatliche Scans",
+            "upgrade": "Upgrade"
+        }
+    }
+}

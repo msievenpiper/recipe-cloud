@@ -1,0 +1,301 @@
+{
+    "HomePage": {
+        "title": "Souper Scanner",
+        "subtitle": "AIを搭載したあなた専用のレシピ管理・スキャナー",
+        "Hero": {
+            "headline": "レシピ写真をデジタル傑作に変える",
+            "subheadline": "撮影、処理、編集。あなたの料理の創造物を完璧に整理し、どこからでもアクセス可能に。",
+            "loading": "読み込み中...",
+            "goToLibrary": "ライブラリへ",
+            "uploadFirst": "最初のレシピをアップロードしましょう！",
+            "getStarted": "無料で始める"
+        },
+        "HowItWorks": {
+            "title": "Souper Scannerの仕組み",
+            "step1Title": "1. 撮影とアップロード",
+            "step1Desc": "手書きや印刷されたレシピの写真を撮ります。私たちのインテリジェントなシステムが受け取る準備をしています。",
+            "step2Title": "2. AIによる変換",
+            "step2Desc": "高度なAI（Google VisionとGemini）が画像を処理し、材料、手順、メモを抽出して、美しくフォーマットします。",
+            "step3Title": "3. 推敲と整理",
+            "step3Desc": "AIが生成したレシピをMarkdown形式で確認、並べ替え、編集します。パーソナライズされたデジタルクックブックに保存します。"
+        },
+        "Benefits": {
+            "title": "Souper Scannerが愛される理由",
+            "benefit1Title": "二度とレシピをなくさない",
+            "benefit1Desc": "家族のレシピ、雑誌の切り抜き、手書きのメモをすべてデジタル化。クラウドに安全に保存されます。",
+            "benefit2Title": "簡単に共有",
+            "benefit2Desc": "完成したレシピを友人や家族と簡単に共有。打ち直しの手間はもうありません。",
+            "benefit3Title": "スマートな編集",
+            "benefit3Desc": "直感的なMarkdownエディターで、AI生成コンテンツの微調整も簡単。フォーマットではなく、料理に集中できます。"
+        },
+        "CTA": {
+            "title": "キッチンの整理を始めませんか？",
+            "description": "AIでレシピ管理を簡素化している何千人ものホームシェフの仲間に加わりましょう。",
+            "buttonLoggedIn": "レシピのアップロードを開始！",
+            "buttonLoggedOut": "今すぐ無料アカウントを作成"
+        }
+    },
+    "Navigation": {
+        "home": "ホーム",
+        "recipes": "レシピ",
+        "upload": "アップロード",
+        "profile": "プロフィール",
+        "register": "登録",
+        "signin": "サインイン",
+        "signout": "サインアウト"
+    },
+    "Recipes": {
+        "List": {
+            "loading": "レシピを読み込み中...",
+            "title": "あなたのレシピ",
+            "addNew": "新規追加",
+            "searchPlaceholder": "レシピを検索...",
+            "myRecipes": "マイレシピ",
+            "sharedWithYou": "共有されたレシピ",
+            "sharedBy": "共有元",
+            "welcomeTitle": "レシピコレクションへようこそ！",
+            "welcomeDesc": "まだレシピがないようです。最初のレシピを作成しましょう。",
+            "uploadFirst": "最初のレシピをアップロード"
+        },
+        "Detail": {
+            "loading": "読み込み中...",
+            "summaryLabel": "概要",
+            "summaryPlaceholder": "レシピの短い概要...",
+            "save": "保存",
+            "cancel": "キャンセル",
+            "print": "PDFで印刷",
+            "share": "共有",
+            "edit": "編集",
+            "pdfFooter": "Souper Scanner - ページ"
+        }
+    },
+    "Upload": {
+        "title": "レシピ写真をアップロード",
+        "subtitle": "画像を選択するか、写真を撮る",
+        "uploadButton": "写真をアップロード",
+        "takePhotoButton": "写真を撮る",
+        "selectedFile": "選択されたファイル:",
+        "progress": "ファイルアップロードの進捗",
+        "aiProcessing": "AI処理中",
+        "duplicate": "重複するレシピが見つかりました！",
+        "redirecting": "既存のレシピへリダイレクトしています...",
+        "submitButton": "アップロードして処理",
+        "processing": "処理中...",
+        "tipsTitle": "より良い結果を得るためのヒント",
+        "tips": {
+            "clearPhotos": "明るく静止した写真:",
+            "clearPhotosDesc": "レシピ写真が明るく、ぼやけていないことを確認してください。カメラを固定して撮影しましょう！",
+            "contrast": "良好なコントラスト:",
+            "contrastDesc": "テキストが背景から鮮明に浮き立つようにしてください。レシピの後ろに複雑な模様があるのは避けましょう。",
+            "lighting": "均一な照明:",
+            "lightingDesc": "テキストの上に影が入らないようにしてください。自然な間接光が最適です。",
+            "focus": "レシピにフォーカス:",
+            "focusDesc": "不要な背景を切り取ることで、AIがレシピテキストに集中しやすくなります。"
+        },
+        "aiSteps": {
+            "analyzing": "画像を分析中",
+            "extracting": "テキストを抽出中",
+            "generating": "レシピを生成中",
+            "saving": "レシピを保存中"
+        },
+        "validation": {
+            "warning": "画像検証の警告。",
+            "lowRes": "解像度が低いです。結果が思わしくない可能性があります。",
+            "error": "画像を処理できませんでした。",
+            "lowContrast": "コントラストが低いです。照明を確認してください。",
+            "blurry": "画像がぼやけすぎています。カメラを固定して試してください。",
+            "invalid": "無効な画像ファイルです。",
+            "selectFile": "画像を選択するか、写真を撮ってアップロードしてください。",
+            "uploadFailed": "アップロードに失敗しました。もう一度お試しください。",
+            "uploadError": "アップロード中にエラーが発生しました。",
+            "betterQuality": "高品質な画像ほど、より良い結果が得られます。",
+            "uploadBetter": "より良い画像をアップロードしてください。"
+        }
+    },
+    "Profile": {
+        "title": "プロフィール設定",
+        "labels": {
+            "name": "氏名",
+            "email": "メールアドレス",
+            "phone": "電話番号",
+            "address": "住所"
+        },
+        "placeholders": {
+            "name": "お名前",
+            "email": "you@example.com",
+            "phone": "090-0000-0000",
+            "address": "都道府県、市区町村、番地"
+        },
+        "buttons": {
+            "save": "変更を保存",
+            "saving": "保存中..."
+        },
+        "subscription": {
+            "title": "サブスクリプション状況:",
+            "premium": "プレミアム",
+            "free": "フリープラン",
+            "monthlyScans": "今月のスキャン",
+            "used": "使用済み",
+            "upgradeMessage": "プレミアムにアップグレードして、制限を月間20スキャンに増やしましょう！",
+            "viewPlans": "プランを表示"
+        },
+        "messages": {
+            "success": "プロフィールを更新しました！",
+            "error": "プロフィールの更新に失敗しました",
+            "loadError": "プロフィールデータの読み込みに失敗しました。",
+            "saveError": "保存中にエラーが発生しました。"
+        }
+    },
+    "Auth": {
+        "SignIn": {
+            "title": "サインイン",
+            "emailPlaceholder": "メールアドレス",
+            "passwordPlaceholder": "パスワード",
+            "submitButton": "サインイン",
+            "noAccount": "アカウントをお持ちでないですか？",
+            "registerLink": "登録",
+            "failed": "サインインに失敗しました。"
+        },
+        "Register": {
+            "title": "登録",
+            "emailPlaceholder": "メールアドレス",
+            "passwordPlaceholder": "パスワード",
+            "submitButton": "登録",
+            "hasAccount": "既にアカウントをお持ちですか？",
+            "signInLink": "サインイン",
+            "failed": "登録に失敗しました。",
+            "signInFailed": "登録後のサインインに失敗しました。"
+        }
+    },
+    "Pricing": {
+        "title": "シンプルで透明な価格設定",
+        "subtitle": "あなたの料理のニーズに合ったプランをお選びください。",
+        "perMonth": "/月",
+        "included": "含まれる内容",
+        "Free": {
+            "title": "フリー",
+            "description": "レシピのデジタル化を試すのに最適です。",
+            "price": "¥0",
+            "currentPlan": "現在のプラン",
+            "includedStatus": "含まれる",
+            "features": {
+                "scans": "月間3回のレシピスキャン",
+                "analysis": "基本的なAI分析",
+                "support": "標準サポート"
+            }
+        },
+        "Premium": {
+            "title": "プレミアム",
+            "description": "本格的なホームシェフ向け。",
+            "price": "¥980",
+            "activePlan": "有効なプラン",
+            "upgrade": "今すぐアップグレード",
+            "upgrading": "アップグレード中...",
+            "features": {
+                "scans": "月間20回のレシピスキャン",
+                "analysis": "優先的なAI分析",
+                "support": "優先サポート"
+            }
+        },
+        "messages": {
+            "success": "アップグレードが完了しました！",
+            "failed": "アップグレードに失敗しました。もう一度お試しください。",
+            "error": "エラーが発生しました。"
+        }
+    },
+    "Footer": {
+        "description": "AIを搭載したあなた専用のレシピ管理・スキャナー。Google Geminiの力で、物理的なレシピをデジタルコレクションに変えましょう。",
+        "resources": "リソース",
+        "legal": "法的情報",
+        "copyright": "Souper Scanner. All rights reserved.",
+        "tagline": "思い出をスキャンする、レシピひとつずつ。",
+        "links": {
+            "home": "ホーム",
+            "recipes": "マイレシピ",
+            "pricing": "料金",
+            "upload": "レシピをアップロード",
+            "terms": "利用規約",
+            "privacy": "プライバシーポリシー"
+        }
+    },
+    "Privacy": {
+        "title": "プライバシーポリシー",
+        "lastUpdated": "最終更新日: 2026年1月2日",
+        "sections": {
+            "collection": {
+                "title": "1. 情報の収集",
+                "content1": "アカウント作成時に直接提供される氏名、メールアドレスなどの情報を収集します。",
+                "content2": "スキャンサービス利用時、レシピ抽出のためにアップロードされた画像を収集します。"
+            },
+            "processing": {
+                "title": "2. AI処理と第三者",
+                "content1": "Souper Scannerは、画像の処理とレシピ生成にGoogle Gemini (LLM) および Google Cloud Vision (OCR) を利用します。",
+                "content2": "サービスを利用することで、アップロードされた画像と抽出されたテキストがGoogleのインフラで処理されることに同意したものとみなされます。私たちはあなたのデータを使って独自のモデルをトレーニングすることはありません。"
+            },
+            "retention": {
+                "title": "3. データの保持",
+                "storageTitle": "画像の一時保存:",
+                "storageContent": "アップロードされた画像は一時的にのみ保存されます。AIが処理を完了すると、元の画像は削除されます。",
+                "content": "抽出されたテキストとプロフィール情報は、アカウントが有効な限り安全に保存されます。"
+            },
+            "security": {
+                "title": "4. セキュリティ",
+                "content": "業界標準のセキュリティ対策を講じて、あなたのデータを保護します。"
+            },
+            "cookies": {
+                "title": "5. クッキー",
+                "content": "主にセッション管理と認証のためにクッキーを使用します。"
+            },
+            "rights": {
+                "title": "6. あなたの権利",
+                "content": "プロフィールの設定から、いつでも情報の閲覧、編集、削除が可能です。"
+            }
+        },
+        "contact": "プライバシーに関するお問い合わせは、privacy@souperscanner.com までご連絡ください。"
+    },
+    "Terms": {
+        "title": "利用規約",
+        "lastUpdated": "最終更新日: 2026年1月2日",
+        "sections": {
+            "acceptance": {
+                "title": "1. 規約への同意",
+                "content": "Souper Scannerにアクセスまたは利用することで、本利用規約に同意したものとみなされます。"
+            },
+            "description": {
+                "title": "2. サービスの説明",
+                "content": "Souper ScannerはAIを活用したレシピスキャンおよび管理ツールを提供します。"
+            },
+            "usage": {
+                "title": "3. 公正な利用と制限",
+                "content": "サービスの品質維持のため、月間のスキャン制限を設けています。",
+                "freeTier": "フリープラン: 月間3スキャン。",
+                "premiumTier": "プレミアムプラン: 月間20スキャン。",
+                "prohibited": "自動スキャン、ボット利用、または制限を回避しようとする行為は厳格に禁止されています。"
+            },
+            "content": {
+                "title": "4. ユーザーコンテンツと著作権",
+                "content": "アップロードした画像やテキストの所有権はユーザーに帰属します。ただし、アップロードする権利があることをユーザー自身が保証するものとします。"
+            },
+            "disclaimers": {
+                "title": "5. 免責事項",
+                "quote": "\"料理は各自の責任で行ってください。\"",
+                "content": "AIによる抽出では、分量や材料、手順に誤りが生じることがあります。常に元のソースと照らし合わせて確認してください。"
+            },
+            "termination": {
+                "title": "6. 終了",
+                "content": "規約に違反した場合など、当社の裁量によりアカウントを停止または終了する権利を留保します。"
+            }
+        },
+        "contact": "本規約に関するご質問は、legal@souperscanner.com までご連絡ください。"
+    },
+    "Components": {
+        "ImpersonationBanner": {
+            "label": "ユーザーを偽装中",
+            "exit": "終了"
+        },
+        "UsageFloatingBar": {
+            "title": "月間スキャン",
+            "upgrade": "アップグレード"
+        }
+    }
+}

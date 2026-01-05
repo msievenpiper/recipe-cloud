@@ -1,11 +1,13 @@
 "use client";
 
 import { useSession } from "next-auth/react";
-import Link from "next/link";
+import { useTranslations } from "next-intl";
+import { Link } from "../i18n/routing";
 import { FaCrown } from "react-icons/fa";
 
 export default function UsageFloatingBar() {
     const { data: session } = useSession();
+    const t = useTranslations('Components.UsageFloatingBar');
 
     if (!session) return null;
 
@@ -21,7 +23,7 @@ export default function UsageFloatingBar() {
             <div className="bg-white rounded-lg shadow-lg border border-gray-200 p-3 pointer-events-auto flex items-center space-x-4 animate-fade-in-up">
                 <div className="flex-1">
                     <div className="flex justify-between items-center mb-1 text-xs text-gray-600 font-medium">
-                        <span>Monthly Scans</span>
+                        <span>{t('title')}</span>
                         <span>{scanCount} / {limit}</span>
                     </div>
                     <div className="w-32 bg-gray-200 rounded-full h-1.5">
@@ -33,7 +35,7 @@ export default function UsageFloatingBar() {
                 </div>
                 {!isPremium && (
                     <Link href="/pricing" className="bg-yellow-100 hover:bg-yellow-200 text-yellow-800 text-xs font-bold py-1 px-2 rounded flex items-center transition-colors">
-                        <FaCrown className="mr-1" /> Upgrade
+                        <FaCrown className="mr-1" /> {t('upgrade')}
                     </Link>
                 )}
             </div>

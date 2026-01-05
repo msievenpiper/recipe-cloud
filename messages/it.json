@@ -1,0 +1,301 @@
+{
+    "HomePage": {
+        "title": "Souper Scanner",
+        "subtitle": "Il tuo gestore e scanner di ricette personale potenziato dall'IA",
+        "Hero": {
+            "headline": "Trasforma le tue foto di ricette in capolavori digitali",
+            "subheadline": "Scatta, Elabora, Modifica. Le tue creazioni culinarie, perfettamente organizzate e accessibili ovunque.",
+            "loading": "Caricamento...",
+            "goToLibrary": "Vai alla tua libreria",
+            "uploadFirst": "Carica la tua prima ricetta!",
+            "getStarted": "Inizia - È gratis!"
+        },
+        "HowItWorks": {
+            "title": "Come Souper Scanner fa la sua magia",
+            "step1Title": "1. Scatta e Carica",
+            "step1Desc": "Scatta una foto della tua ricetta scritta a mano o stampata. Il nostro sistema intelligente è pronto a riceverla.",
+            "step2Title": "2. Trasformazione IA",
+            "step2Desc": "La nostra IA avanzata (Google Vision & Gemini) elabora la tua immagine, estraendo ingredienti, passaggi e note, quindi la formatta magnificamente.",
+            "step3Title": "3. Perfeziona e Organizza",
+            "step3Desc": "Controlla, riorganizza e modifica la ricetta generata dall'IA in markdown. Salvala nel tuo ricettario digitale personalizzato."
+        },
+        "Benefits": {
+            "title": "Perché amerai Souper Scanner",
+            "benefit1Title": "Non perdere mai più una ricetta",
+            "benefit1Desc": "Digitalizza tutte le tue ricette di famiglia, ritagli di giornale e note scritte a mano. Archiviate in modo sicuro nel cloud.",
+            "benefit2Title": "Condividi con facilità",
+            "benefit2Desc": "Condividi facilmente le tue ricette perfezionate con amici e familiari, senza la fatica di riscriverle.",
+            "benefit3Title": "Editing intelligente",
+            "benefit3Desc": "Il nostro intuitivo editor markdown rende semplicissime le modifiche ai contenuti generati dall'IA. Concentrati sulla cucina, non sulla formattazione."
+        },
+        "CTA": {
+            "title": "Pronto a organizzare la tua cucina?",
+            "description": "Unisciti a migliaia di cuochi amatoriali che semplificano la gestione delle loro ricette con l'IA.",
+            "buttonLoggedIn": "Inizia a caricare le tue ricette!",
+            "buttonLoggedOut": "Crea il tuo account gratuito oggi"
+        }
+    },
+    "Navigation": {
+        "home": "Home",
+        "recipes": "Ricette",
+        "upload": "Carica",
+        "profile": "Profilo",
+        "register": "Registrati",
+        "signin": "Accedi",
+        "signout": "Esci"
+    },
+    "Recipes": {
+        "List": {
+            "loading": "Caricamento ricette...",
+            "title": "Le tue Ricette",
+            "addNew": "Aggiungi Nuova",
+            "searchPlaceholder": "Cerca tra le ricette...",
+            "myRecipes": "Le mie Ricette",
+            "sharedWithYou": "Condivise con te",
+            "sharedBy": "Condivisa da",
+            "welcomeTitle": "Benvenuto nella tua collezione di ricette!",
+            "welcomeDesc": "Sembra che tu non abbia ancora ricette. Creiamo la tua prima.",
+            "uploadFirst": "Carica la tua prima ricetta"
+        },
+        "Detail": {
+            "loading": "Caricamento...",
+            "summaryLabel": "Riepilogo",
+            "summaryPlaceholder": "Un breve riepilogo della ricetta...",
+            "save": "Salva",
+            "cancel": "Annulla",
+            "print": "Stampa in PDF",
+            "share": "Condividi",
+            "edit": "Modifica",
+            "pdfFooter": "Souper Scanner - Pagina"
+        }
+    },
+    "Upload": {
+        "title": "Carica una foto della ricetta",
+        "subtitle": "Scegli un'immagine o scatta una foto",
+        "uploadButton": "Carica Foto",
+        "takePhotoButton": "Scatta Foto",
+        "selectedFile": "File selezionato:",
+        "progress": "Avanzamento caricamento file",
+        "aiProcessing": "Elaborazione IA",
+        "duplicate": "Ricetta duplicata trovata!",
+        "redirecting": "Reindirizzamento alla ricetta esistente...",
+        "submitButton": "Carica ed Elabora",
+        "processing": "Elaborazione...",
+        "tipsTitle": "Suggerimenti per risultati migliori",
+        "tips": {
+            "clearPhotos": "Foto chiare e stabili:",
+            "clearPhotosDesc": "Assicurati che la foto sia ben illuminata e non sfocata. Tieni la fotocamera ferma!",
+            "contrast": "Buon contrasto:",
+            "contrastDesc": "Il testo deve risaltare chiaramente dallo sfondo. Evita motivi complessi.",
+            "lighting": "Illuminazione uniforme:",
+            "lightingDesc": "Evita ombre sul testo. La luce naturale indiretta spesso funziona meglio.",
+            "focus": "Focus sulla ricetta:",
+            "focusDesc": "Ritaglia gli elementi di sfondo non necessari per aiutare l'IA a concentrarsi sul testo."
+        },
+        "aiSteps": {
+            "analyzing": "Analisi immagine",
+            "extracting": "Estrazione testo",
+            "generating": "Generazione ricetta",
+            "saving": "Salvataggio ricetta"
+        },
+        "validation": {
+            "warning": "Avviso validazione immagine.",
+            "lowRes": "La risoluzione è bassa. I risultati potrebbero essere scarsi.",
+            "error": "Impossibile elaborare l'immagine.",
+            "lowContrast": "Contrasto basso. Verifica l'illuminazione.",
+            "blurry": "Immagine troppo sfocata. Tieni ferma la fotocamera.",
+            "invalid": "File immagine non valido.",
+            "selectFile": "Seleziona un'immagine o scatta una foto.",
+            "uploadFailed": "Caricamento fallito. Riprova.",
+            "uploadError": "Errore durante il caricamento.",
+            "betterQuality": "Immagini di qualità migliore producono risultati migliori.",
+            "uploadBetter": "Carica un'immagine migliore."
+        }
+    },
+    "Profile": {
+        "title": "Impostazioni Profilo",
+        "labels": {
+            "name": "Nome Completo",
+            "email": "Indirizzo Email",
+            "phone": "Numero di Telefono",
+            "address": "Indirizzo"
+        },
+        "placeholders": {
+            "name": "Il tuo nome",
+            "email": "tu@esempio.it",
+            "phone": "+39 000 000 0000",
+            "address": "Via Roma 1, Città, Paese"
+        },
+        "buttons": {
+            "save": "Salva Modifiche",
+            "saving": "Salvataggio..."
+        },
+        "subscription": {
+            "title": "Stato Abbonamento:",
+            "premium": "Premium",
+            "free": "Piano Gratuito",
+            "monthlyScans": "Scansioni mensili",
+            "used": "utilizzate",
+            "upgradeMessage": "Passa a Premium per aumentare il limite a 20 scansioni al mese!",
+            "viewPlans": "Visualizza Piani"
+        },
+        "messages": {
+            "success": "Profilo aggiornato con successo!",
+            "error": "Errore durante l'aggiornamento",
+            "loadError": "Errore nel caricamento dei dati del profilo.",
+            "saveError": "Errore durante il salvataggio."
+        }
+    },
+    "Auth": {
+        "SignIn": {
+            "title": "Accedi",
+            "emailPlaceholder": "Email",
+            "passwordPlaceholder": "Password",
+            "submitButton": "Accedi",
+            "noAccount": "Non hai un account?",
+            "registerLink": "Registrati",
+            "failed": "Accesso fallito."
+        },
+        "Register": {
+            "title": "Registrati",
+            "emailPlaceholder": "Email",
+            "passwordPlaceholder": "Password",
+            "submitButton": "Registrati",
+            "hasAccount": "Hai già un account?",
+            "signInLink": "Accedi",
+            "failed": "Registrazione fallita.",
+            "signInFailed": "Accesso fallito dopo la registrazione."
+        }
+    },
+    "Pricing": {
+        "title": "Prezzi semplici e trasparenti",
+        "subtitle": "Scegli il piano giusto per le tue esigenze in cucina.",
+        "perMonth": "/mese",
+        "included": "Cosa è incluso",
+        "Free": {
+            "title": "Gratis",
+            "description": "Perfetto per provare la digitalizzazione delle ricette.",
+            "price": "0 €",
+            "currentPlan": "Piano attuale",
+            "includedStatus": "Incluso",
+            "features": {
+                "scans": "3 Scansioni ricette al mese",
+                "analysis": "Analisi IA di base",
+                "support": "Supporto standard"
+            }
+        },
+        "Premium": {
+            "title": "Premium",
+            "description": "Per gli appassionati seri di cucina.",
+            "price": "9,99 €",
+            "activePlan": "Piano attivo",
+            "upgrade": "Passa ora",
+            "upgrading": "Aggiornamento...",
+            "features": {
+                "scans": "20 Scansioni ricette al mese",
+                "analysis": "Analisi IA prioritaria",
+                "support": "Supporto prioritario"
+            }
+        },
+        "messages": {
+            "success": "Upgrade completato!",
+            "failed": "Upgrade fallito. Riprova.",
+            "error": "Si è verificato un errore."
+        }
+    },
+    "Footer": {
+        "description": "Il tuo gestore e scanner di ricette personale potenziato dall'IA. Trasforma le tue ricette fisiche in una collezione digitale con Google Gemini.",
+        "resources": "Risorse",
+        "legal": "Legale",
+        "copyright": "Souper Scanner. Tutti i diritti riservati.",
+        "tagline": "Scansionando ricordi, una ricetta alla volta.",
+        "links": {
+            "home": "Home",
+            "recipes": "Mie Ricette",
+            "pricing": "Prezzi",
+            "upload": "Carica Ricetta",
+            "terms": "Termini di Servizio",
+            "privacy": "Privacy Policy"
+        }
+    },
+    "Privacy": {
+        "title": "Privacy Policy",
+        "lastUpdated": "Ultimo aggiornamento: 2 gennaio 2026",
+        "sections": {
+            "collection": {
+                "title": "1. Raccolta Informazioni",
+                "content1": "Raccogliamo le informazioni fornite direttamente alla creazione dell'account, come nome ed email.",
+                "content2": "Raccogliamo le immagini caricate per l'estrazione delle ricette."
+            },
+            "processing": {
+                "title": "2. Elaborazione IA e terze parti",
+                "content1": "Souper Scanner utilizza Google Gemini (LLM) e Google Cloud Vision (OCR) per elaborare le immagini.",
+                "content2": "Le immagini vengono elaborate dall'infrastruttura di Google. Non usiamo i tuoi dati per addestrare i nostri modelli."
+            },
+            "retention": {
+                "title": "3. Conservazione Dati",
+                "storageTitle": "Archiviazione temporanea immagini:",
+                "storageContent": "Conserviamo le immagini solo temporaneamente. Una volta elaborate, l'immagine originale viene cancellata.",
+                "content": "Il testo delle ricette e i dati del profilo sono conservati in modo sicuro finché l'account è attivo."
+            },
+            "security": {
+                "title": "4. Sicurezza",
+                "content": "Implementiamo misure di sicurezza standard per proteggere i tuoi dati."
+            },
+            "cookies": {
+                "title": "5. Cookie",
+                "content": "Usiamo i cookie principalmente per la gestione delle sessioni e l'autenticazione."
+            },
+            "rights": {
+                "title": "6. I tuoi diritti",
+                "content": "Puoi visualizzare, modificare o cancellare le tue informazioni in qualsiasi momento."
+            }
+        },
+        "contact": "Per domande sulla privacy, contattaci a privacy@souperscanner.com"
+    },
+    "Terms": {
+        "title": "Termini di Servizio",
+        "lastUpdated": "Ultimo aggiornamento: 2 gennaio 2026",
+        "sections": {
+            "acceptance": {
+                "title": "1. Accettazione dei Termini",
+                "content": "Accedendo a Souper Scanner, accetti i presenti Termini di Servizio."
+            },
+            "description": {
+                "title": "2. Descrizione del Servizio",
+                "content": "Souper Scanner offre strumenti IA per scansionare e gestire ricette."
+            },
+            "usage": {
+                "title": "3. Fair Usage e Limiti",
+                "content": "Per garantire la qualità, applichiamo limiti mensili di scansione.",
+                "freeTier": "Piano Free: 3 scansioni al mese.",
+                "premiumTier": "Piano Premium: 20 scansioni al mese.",
+                "prohibited": "È vietato l'uso di bot o tentativi di aggirare i limiti."
+            },
+            "content": {
+                "title": "4. Contenuti Utente e Copyright",
+                "content": "Mantieni la proprietà delle immagini caricate. Sei responsabile di avere i diritti per digitalizzarle."
+            },
+            "disclaimers": {
+                "title": "5. Esclusioni di responsabilità",
+                "quote": "\"Cucina a tuo rischio.\"",
+                "content": "L'IA può sbagliare. Verifica sempre i contenuti generati. Non siamo responsabili per incidenti in cucina."
+            },
+            "termination": {
+                "title": "6. Cessazione",
+                "content": "Ci riserviamo il diritto di sospendere l'accesso al servizio in caso di violazioni."
+            }
+        },
+        "contact": "Per domande, contattaci a legal@souperscanner.com"
+    },
+    "Components": {
+        "ImpersonationBanner": {
+            "label": "IMPERSONANDO UTENTE",
+            "exit": "Esci"
+        },
+        "UsageFloatingBar": {
+            "title": "Scansioni mensili",
+            "upgrade": "Upgrade"
+        }
+    }
+}

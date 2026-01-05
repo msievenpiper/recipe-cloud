@@ -15,6 +15,7 @@ import IconPicker from "@/components/IconPicker";
 import ShareModal from "@/components/ShareModal";
 import EasyMDE from 'easymde';
 import jsPDF from 'jspdf';
+import { useTranslations } from "next-intl";
 
 interface Recipe {
   id: number;
@@ -35,6 +36,7 @@ export default function RecipeDetailPage() {
   const [showShareModal, setShowShareModal] = useState(false);
   const params = useParams();
   const id = params.id;
+  const t = useTranslations('Recipes.Detail');
 
   useEffect(() => {
     if (id) {
@@ -80,7 +82,7 @@ export default function RecipeDetailPage() {
           for (let i = 1; i <= totalPages; i++) {
             doc.setPage(i);
             doc.setFontSize(10);
-            const footerText = `Souper Scanner - Page ${i} of ${totalPages}`;
+            const footerText = `${t('pdfFooter')} ${i} of ${totalPages}`;
             const textWidth = doc.getStringUnitWidth(footerText) * doc.getFontSize() / doc.internal.scaleFactor;
             const textX = (doc.internal.pageSize.getWidth() - textWidth) / 2;
             doc.text(footerText, textX, doc.internal.pageSize.getHeight() - 8);
@@ -107,7 +109,7 @@ export default function RecipeDetailPage() {
   }), []);
 
   if (!recipe) {
-    return <div className="text-center px-4 py-8 md:p-10 text-primary-700">Loading...</div>;
+    return <div className="text-center px-4 py-8 md:p-10 text-primary-700">{t('loading')}</div>;
   }
 
   return (
@@ -116,16 +118,16 @@ export default function RecipeDetailPage() {
         {isEditing ? (
           <div className="w-full flex flex-col min-h-[calc(100vh-150px)]">
             <div className="mb-4">
-              <label htmlFor="summary" className="block text-sm font-medium text-gray-700">Summary</label>
-              <textarea id="summary" value={summary} onChange={(e) => setSummary(e.target.value)} rows={3} className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500 sm:text-sm" placeholder="A brief summary of the recipe..."></textarea>
+              <label htmlFor="summary" className="block text-sm font-medium text-gray-700">{t('summaryLabel')}</label>
+              <textarea id="summary" value={summary} onChange={(e) => setSummary(e.target.value)} rows={3} className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500 sm:text-sm" placeholder={t('summaryPlaceholder')}></textarea>
             </div>
             <div className="mb-4">
               <IconPicker value={icon} onChange={setIcon} />
             </div>
             <SimpleMdeReact value={content} onChange={setContent} options={editorOptions} className="w-full flex-1" />
             <div className="mt-4 space-x-2 flex-shrink-0">
-              <button onClick={handleSave} className="bg-primary-600 hover:bg-primary-700 text-white font-bold py-2 px-4 rounded-lg transition-colors duration-200">Save</button>
-              <button onClick={() => setIsEditing(false)} className="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded-lg transition-colors duration-200">Cancel</button>
+              <button onClick={handleSave} className="bg-primary-600 hover:bg-primary-700 text-white font-bold py-2 px-4 rounded-lg transition-colors duration-200">{t('save')}</button>
+              <button onClick={() => setIsEditing(false)} className="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded-lg transition-colors duration-200">{t('cancel')}</button>
             </div>
           </div>
         ) : (
@@ -136,11 +138,11 @@ export default function RecipeDetailPage() {
                 <h1 className="text-3xl font-bold text-gray-800">{recipe.title}</h1>
               </div>
               <div className="flex flex-wrap gap-2">
-                <button onClick={handlePrintToPdf} className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg transition-colors duration-200">Print to PDF</button>
+                <button onClick={handlePrintToPdf} className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg transition-colors duration-200">{t('print')}</button>
                 {isAuthor && (
                   <>
-                    <button onClick={() => setShowShareModal(true)} className="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-lg transition-colors duration-200">Share</button>
-                    <button onClick={() => setIsEditing(true)} className="bg-primary-600 hover:bg-primary-700 text-white font-bold py-2 px-4 rounded-lg transition-colors duration-200">Edit</button>
+                    <button onClick={() => setShowShareModal(true)} className="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-lg transition-colors duration-200">{t('share')}</button>
+                    <button onClick={() => setIsEditing(true)} className="bg-primary-600 hover:bg-primary-700 text-white font-bold py-2 px-4 rounded-lg transition-colors duration-200">{t('edit')}</button>
                   </>
                 )}
               </div>

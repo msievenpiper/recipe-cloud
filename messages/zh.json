@@ -1,0 +1,301 @@
+{
+    "HomePage": {
+        "title": "Souper Scanner",
+        "subtitle": "您的私人AI驱动食谱管理器和扫描仪",
+        "Hero": {
+            "headline": "将您的食谱照片转化为数字杰作",
+            "subheadline": "拍摄、处理、编辑。您的烹饪创意，完美组织，随时随地访问。",
+            "loading": "加载中...",
+            "goToLibrary": "前往您的库",
+            "uploadFirst": "上传您的第一份食谱！",
+            "getStarted": "开始使用 - 它是免费的！"
+        },
+        "HowItWorks": {
+            "title": "Souper Scanner 如何施展魔法",
+            "step1Title": "1. 拍摄与上传",
+            "step1Desc": "拍摄您的手写或打印食谱的照片。我们的智能系统随时准备接收。",
+            "step2Title": "2. AI 转型",
+            "step2Desc": "我们的先进 AI（Google Vision 和 Gemini）处理您的图像，提取配料、步骤和注释，然后将其精美格式化。",
+            "step3Title": "3. 完善与组织",
+            "step3Desc": "以 markdown 形式查看、重新排列和编辑 AI 生成的食谱。将其保存到您的个性化数字食谱中。"
+        },
+        "Benefits": {
+            "title": "为什么您会爱上 Souper Scanner",
+            "benefit1Title": "永不丢失食谱",
+            "benefit1Desc": "数字化您所有的家庭食谱、杂志剪报和手写笔记。安全存储在云端。",
+            "benefit2Title": "轻松分享",
+            "benefit2Desc": "轻松与朋友和家人分享您完善后的食谱，无需重新打字的麻烦。",
+            "benefit3Title": "智能编辑",
+            "benefit3Desc": "我们直观的 markdown 编辑器使调整 AI 生成的内容变得轻而易举。专注于烹饪，而非格式化。"
+        },
+        "CTA": {
+            "title": "准备好整理您的厨房了吗？",
+            "description": "加入成千上万名通过 AI 简化食谱管理的家庭厨师。",
+            "buttonLoggedIn": "开始上传您的食谱！",
+            "buttonLoggedOut": "立即创建您的免费帐户"
+        }
+    },
+    "Navigation": {
+        "home": "首页",
+        "recipes": "食谱",
+        "upload": "上传",
+        "profile": "个人资料",
+        "register": "注册",
+        "signin": "登录",
+        "signout": "登出"
+    },
+    "Recipes": {
+        "List": {
+            "loading": "正在加载您的食谱...",
+            "title": "您的食谱",
+            "addNew": "新增",
+            "searchPlaceholder": "搜索所有食谱...",
+            "myRecipes": "我的食谱",
+            "sharedWithYou": "与您分享",
+            "sharedBy": "分享者",
+            "welcomeTitle": "欢迎来到您的食谱收藏！",
+            "welcomeDesc": "看起来您还没有任何食谱。让我们创建您的第一份。",
+            "uploadFirst": "上传您的第一份食谱"
+        },
+        "Detail": {
+            "loading": "加载中...",
+            "summaryLabel": "摘要",
+            "summaryPlaceholder": "食谱简要摘要...",
+            "save": "保存",
+            "cancel": "取消",
+            "print": "打印为 PDF",
+            "share": "分享",
+            "edit": "编辑",
+            "pdfFooter": "Souper Scanner - 第"
+        }
+    },
+    "Upload": {
+        "title": "上传食谱照片",
+        "subtitle": "选择图像或拍照",
+        "uploadButton": "上传照片",
+        "takePhotoButton": "拍照",
+        "selectedFile": "选定文件：",
+        "progress": "文件上传进度",
+        "aiProcessing": "AI 处理中",
+        "duplicate": "发现重复食谱！",
+        "redirecting": "正在将您重定向到现有食谱...",
+        "submitButton": "上传并处理",
+        "processing": "正在处理...",
+        "tipsTitle": "获得最佳效果的建议",
+        "tips": {
+            "clearPhotos": "清晰且稳定的照片：",
+            "clearPhotosDesc": "确保您的食谱照片光线充足且不模糊。保持相机稳定！",
+            "contrast": "良好的对比度：",
+            "contrastDesc": "文字应清晰地从背景中脱颖而出。避免食谱后面有复杂的图案。",
+            "lighting": "均匀的光照：",
+            "lightingDesc": "避免在文字上投射阴影。自然散光通常效果最佳。",
+            "focus": "对准食谱：",
+            "focusDesc": "裁剪掉不必要的背景元素，以帮助 AI 专注于食谱文本。"
+        },
+        "aiSteps": {
+            "analyzing": "分析图像",
+            "extracting": "提取文本",
+            "generating": "生成食谱",
+            "saving": "保存食谱"
+        },
+        "validation": {
+            "warning": "图像验证警告。",
+            "lowRes": "图像分辨率低。结果可能不佳。",
+            "error": "无法处理图像。",
+            "lowContrast": "图像对比度低。请确认光照良好。",
+            "blurry": "图像太模糊。请尝试保持相机稳定。",
+            "invalid": "无效的图像文件。",
+            "selectFile": "请选择图像或拍照上传。",
+            "uploadFailed": "上传失败。请再试一次。",
+            "uploadError": "上传过程中发生错误。",
+            "betterQuality": "更高质量的图像产生更好的结果。",
+            "uploadBetter": "请上传更好的图像。"
+        }
+    },
+    "Profile": {
+        "title": "个人资料设置",
+        "labels": {
+            "name": "全名",
+            "email": "邮件地址",
+            "phone": "电话号码",
+            "address": "地址"
+        },
+        "placeholders": {
+            "name": "您的姓名",
+            "email": "you@example.com",
+            "phone": "+86 000-0000-0000",
+            "address": "省/市/区 街道详细地址"
+        },
+        "buttons": {
+            "save": "保存更改",
+            "saving": "正在保存..."
+        },
+        "subscription": {
+            "title": "订阅状态：",
+            "premium": "高级版",
+            "free": "免费计划",
+            "monthlyScans": "每月扫描次数",
+            "used": "已使用",
+            "upgradeMessage": "升级到高级版以将限制提高到每月 20 次扫描！",
+            "viewPlans": "查看计划"
+        },
+        "messages": {
+            "success": "个人资料更新成功！",
+            "error": "无法更新个人资料",
+            "loadError": "加载个人资料数据失败。",
+            "saveError": "保存时发生错误。"
+        }
+    },
+    "Auth": {
+        "SignIn": {
+            "title": "登录",
+            "emailPlaceholder": "电子邮件",
+            "passwordPlaceholder": "密码",
+            "submitButton": "登录",
+            "noAccount": "还没有帐户？",
+            "registerLink": "注册",
+            "failed": "登录失败。"
+        },
+        "Register": {
+            "title": "注册",
+            "emailPlaceholder": "电子邮件",
+            "passwordPlaceholder": "密码",
+            "submitButton": "注册",
+            "hasAccount": "已经有帐户？",
+            "signInLink": "登录",
+            "failed": "注册失败。",
+            "signInFailed": "注册后登录失败。"
+        }
+    },
+    "Pricing": {
+        "title": "简单透明的价格",
+        "subtitle": "选择适合您烹饪需求的计划。",
+        "perMonth": "/月",
+        "included": "包含内容",
+        "Free": {
+            "title": "免费",
+            "description": "非常适合尝试食谱数字化。",
+            "price": "¥0",
+            "currentPlan": "当前计划",
+            "includedStatus": "包含",
+            "features": {
+                "scans": "每月 3 次食谱扫描",
+                "analysis": "基础 AI 分析",
+                "support": "标准支持"
+            }
+        },
+        "Premium": {
+            "title": "高级版",
+            "description": "专为严肃的自制大厨设计。",
+            "price": "¥68",
+            "activePlan": "活动计划",
+            "upgrade": "立即升级",
+            "upgrading": "正在升级...",
+            "features": {
+                "scans": "每月 20 次食谱扫描",
+                "analysis": "优先 AI 分析",
+                "support": "优先支持"
+            }
+        },
+        "messages": {
+            "success": "升级成功！",
+            "failed": "升级失败。请再试一次。",
+            "error": "发生了错误。"
+        }
+    },
+    "Footer": {
+        "description": "您的私人AI驱动食谱管理器和扫描仪。利用 Google Gemini 的力量将您的实体食谱转化为数字收藏。",
+        "resources": "资源",
+        "legal": "法律",
+        "copyright": "Souper Scanner。保留所有权利。",
+        "tagline": "一次记录一份食谱，扫描记忆。",
+        "links": {
+            "home": "首页",
+            "recipes": "我的食谱",
+            "pricing": "定价",
+            "upload": "上传食谱",
+            "terms": "服务条款",
+            "privacy": "隐私政策"
+        }
+    },
+    "Privacy": {
+        "title": "隐私政策",
+        "lastUpdated": "最后更新：2026年1月2日",
+        "sections": {
+            "collection": {
+                "title": "1. 信息收集",
+                "content1": "我们收集您在创建帐户时直接提供给我们的信息，例如您的姓名、电子邮件地址和个人资料信息。",
+                "content2": "当您使用我们的扫描服务时，我们收集您上传的图像以用于食谱提取。"
+            },
+            "processing": {
+                "title": "2. AI 处理与第三方",
+                "content1": "Souper Scanner 使用 Google Gemini 服务 (LLM) 和 Google Cloud Vision (OCR) 来处理您的图像并生成食谱内容。",
+                "content2": "通过使用本服务，您确认您上传的图像和由此产生的提取文本将由 Google 的基础设施处理。我们不使用您的数据来训练我们自己的模型。"
+            },
+            "retention": {
+                "title": "3. 数据保留",
+                "storageTitle": "临时图像存储：",
+                "storageContent": "我们只临时存储您上传的图像。AI 成功处理图像并生成数字食谱内容后，原始图像将从我们的存储中清除。",
+                "content": "只要您的帐户保持活动状态，提取的食谱文本和您的个人资料信息就会安全地存储在我们的数据库中。"
+            },
+            "security": {
+                "title": "4. 安全",
+                "content": "我们实施行业标准的安全措施来保护您的数据。"
+            },
+            "cookies": {
+                "title": "5. Cookie",
+                "content": "我们使用 Cookie 主要是为了通过 NextAuth.js 进行会话管理和身份验证。"
+            },
+            "rights": {
+                "title": "6. 您的权利",
+                "content": "您可以随时通过个人资料设置查看、编辑或删除帐户信息。帐户删除后，相关的所有个人数据将永久删除。"
+            }
+        },
+        "contact": "有关隐私的咨询，请通过 privacy@souperscanner.com 与我们联系"
+    },
+    "Terms": {
+        "title": "服务条款",
+        "lastUpdated": "最后更新：2026年1月2日",
+        "sections": {
+            "acceptance": {
+                "title": "1. 接受条款",
+                "content": "访问或使用 Souper Scanner 即表示您同意受本服务条款的约束。"
+            },
+            "description": {
+                "title": "2. 服务说明",
+                "content": "Souper Scanner 提供 AI 驱动的食谱扫描和管理工具。"
+            },
+            "usage": {
+                "title": "3. 公平使用与限制",
+                "content": "为了确保所有用户的服务质量，我们实施每月扫描限制。",
+                "freeTier": "免费层：每月 3 次扫描。",
+                "premiumTier": "高级层：每月 20 次扫描。",
+                "prohibited": "严禁自动扫描、机器人使用或任何试图规避这些限制的行为。"
+            },
+            "content": {
+                "title": "4. 用户内容与版权",
+                "content": "您保留所上传图像或文本的所有权。但是，您有责任确保您有权数字化并存储所上传的食谱。"
+            },
+            "disclaimers": {
+                "title": "5. 免责声明",
+                "quote": "\"烹饪风险自担。\"",
+                "content": "AI 提取偶尔会导致测量、配料或说明方面的错误。始终根据原始资料核对 AI 生成的内容。"
+            },
+            "termination": {
+                "title": "6. 终止",
+                "content": "我们保留自行决定暂停或终止您访问本服务的权利。"
+            }
+        },
+        "contact": "如果您对这些条款有任何疑问，请通过 legal@souperscanner.com 联系我们"
+    },
+    "Components": {
+        "ImpersonationBanner": {
+            "label": "正在模拟用户",
+            "exit": "退出"
+        },
+        "UsageFloatingBar": {
+            "title": "每月扫描量",
+            "upgrade": "升级"
+        }
+    }
+}
