@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import Link from "next/link";
+import { Link } from "@/i18n/routing";
 import Image from "next/image";
 import { FaCamera, FaMagic, FaEdit, FaUsers, FaStar, FaUpload, FaBookOpen } from "react-icons/fa";
 import { useSession } from "next-auth/react";

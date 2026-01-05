@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+import { Link } from "../i18n/routing";
 import Image from "next/image";
 import { useSession, signIn, signOut } from "next-auth/react";
 import { useState } from "react";
@@ -64,7 +64,7 @@ export default function Navbar() {
       ) : (
         <>
           <Link href="/register" className="text-gray-200 hover:text-white px-3 py-2 rounded-md text-sm font-medium" onClick={toggleMenu}>
-            Register
+            {t('register')}
           </Link>
           <button
             onClick={() => { signIn(); toggleMenu(); }}

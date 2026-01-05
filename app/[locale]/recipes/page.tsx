@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useMemo, useRef } from "react";
-import Link from "next/link";
+import { Link } from "@/i18n/routing";
 import { FaBookOpen, FaSearch, FaPlus } from "react-icons/fa";
 import { useTranslations } from "next-intl";
 

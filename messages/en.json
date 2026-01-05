@@ -40,6 +40,7 @@
         "recipes": "Recipes",
         "upload": "Upload",
         "profile": "Profile",
+        "register": "Register",
         "signin": "Sign In",
         "signout": "Sign Out"
     },
@@ -286,5 +287,15 @@
             }
         },
         "contact": "If you have any questions regarding these terms, please contact us at legal@souperscanner.com"
+    },
+    "Components": {
+        "ImpersonationBanner": {
+            "label": "IMPERSONATING USER",
+            "exit": "Exit"
+        },
+        "UsageFloatingBar": {
+            "title": "Monthly Scans",
+            "upgrade": "Upgrade"
+        }
     }
 }

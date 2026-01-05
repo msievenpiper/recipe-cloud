@@ -1,8 +1,8 @@
 import { withAuth } from "next-auth/middleware";
 import createMiddleware from "next-intl/middleware";
 import { NextRequest } from "next/server";
+import { routing } from './i18n/routing';
 
-const locales = ['en', 'es'];
 const publicPages = [
   '/',
   '/pricing',
@@ -14,13 +14,9 @@ const publicPages = [
   '/api/auth/register'
 ];
 
-const intlMiddleware = createMiddleware({
-  locales,
-  defaultLocale: 'en'
-});
+const intlMiddleware = createMiddleware(routing);
 
 const authMiddleware = withAuth(
-  // Note: If you use withAuth, the middleware function is only called if authorized returns true.
   function onSuccess(req) {
     return intlMiddleware(req);
   },
@@ -35,21 +31,19 @@ const authMiddleware = withAuth(
 );
 
 export default function middleware(req: NextRequest) {
-  // Check if public page
   const publicPathnameRegex = RegExp(
-    `^(/(${locales.join('|')}))?(${publicPages.join('|')})?/?$`,
+    `^(/(${routing.locales.join('|')}))?(${publicPages.join('|')})?/?$`,
     'i'
   );
   const isPublicPage = publicPathnameRegex.test(req.nextUrl.pathname);
 
   if (isPublicPage) {
-    return intlMiddleware(req); // Just run intl middleware
+    return intlMiddleware(req);
   } else {
-    return (authMiddleware as any)(req); // Run auth middleware (which then calls intlMiddleware on success)
+    return (authMiddleware as any)(req);
   }
 }
 
 export const config = {
-  // Match only internationalized pathnames
   matcher: ['/((?!api|_next|.*\\..*).*)']
 };

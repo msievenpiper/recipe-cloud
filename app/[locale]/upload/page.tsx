@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter } from "@/i18n/routing";
 import { FaLightbulb, FaCamera, FaTextHeight, FaSun, FaUpload } from "react-icons/fa";
 import { useSession } from "next-auth/react";
 import { useTranslations } from "next-intl";

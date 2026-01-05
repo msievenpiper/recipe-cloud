@@ -1,7 +1,7 @@
 "use client";
 
+import { usePathname, useRouter } from '@/i18n/routing';
 import { useLocale } from "next-intl";
-import { useRouter, usePathname } from "next/navigation";
 import { ChangeEvent, useTransition } from "react";
 
 export default function LanguageSwitcher() {
@@ -11,38 +11,29 @@ export default function LanguageSwitcher() {
     const localActive = useLocale();
 
     const onSelectChange = (e: ChangeEvent<HTMLSelectElement>) => {
-        const nextLocale = e.target.value;
+        const nextLocale = e.target.value as any;
         startTransition(() => {
-            // Replace the locale in the pathname
-            // Assuming pathname starts with /en or /es, we want to replace it.
-            // E.g. /en/recipes -> /es/recipes
-            // Or / -> /es (if redirected)
-            // This logic depends on how usePathname returns the path. 
-            // With next-intl middleware, pathname might include the locale or not depending on configuration.
-            // But standard Next.js logic:
-
-            // However, we should use navigation APIs from next-intl if available for cleaner switching.
-            // But simpler: just replace the first segment.
-
-            const segments = pathname.split('/');
-            segments[1] = nextLocale;
-            const newPath = segments.join('/');
-            router.replace(newPath);
+            router.replace(pathname, { locale: nextLocale });
         });
     };
 
     return (
-        <label className="border-2 rounded">
-            <p className="sr-only">Change language</p>
+        <div className="relative inline-block text-left">
             <select
-                defaultValue={localActive}
-                className="bg-transparent py-2"
+                value={localActive}
+                className="bg-primary-800 text-gray-200 hover:text-white px-3 pr-5 py-2 rounded-md text-sm font-medium focus:outline-none focus:ring-2 focus:ring-primary-500 appearance-none cursor-pointer border-none"
                 onChange={onSelectChange}
                 disabled={isPending}
             >
-                <option value="en">English</option>
-                <option value="es">Español</option>
+                <option value="en">EN</option>
+                <option value="es">ES</option>
             </select>
-        </label>
+            {/* Custom arrow for the select */}
+            <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center text-gray-200">
+                <svg className="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                    <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
+                </svg>
+            </div>
+        </div>
     );
 }

@@ -40,6 +40,7 @@
         "recipes": "Recetas",
         "upload": "Subir",
         "profile": "Perfil",
+        "register": "Registrarse",
         "signin": "Iniciar Sesión",
         "signout": "Cerrar Sesión"
     },
@@ -273,7 +274,7 @@
             },
             "content": {
                 "title": "4. Contenido del Usuario y Derechos de Autor",
-                "content": "Usted conserva la propiedad de cualquier imagen o texto que suba. Sin embargo, usted es responsable de asegurarse de tener derecho a digitalizar y almacenar las recetas que suba. Souper Scanner respeta los derechos de propiedad intelectual y espera que los usuarios hagan lo mismo."
+                "content": "Usted conserva la propiedad de cualquier imagen o texto que suba. Sin embargo, usted es responsable de asegurarse de tener derecho a digitalizar y almacenar las recetas que suba. Souper Scanner respects intellectual property rights and expects users to do the same."
             },
             "disclaimers": {
                 "title": "5. Descargos de Responsabilidad",
@@ -286,5 +287,15 @@
             }
         },
         "contact": "Si tiene alguna pregunta sobre estos términos, contáctenos en legal@souperscanner.com"
+    },
+    "Components": {
+        "ImpersonationBanner": {
+            "label": "SUPLANTO A USUARIO",
+            "exit": "Salir"
+        },
+        "UsageFloatingBar": {
+            "title": "Escaneos Mensuales",
+            "upgrade": "Mejorar"
+        }
     }
 }

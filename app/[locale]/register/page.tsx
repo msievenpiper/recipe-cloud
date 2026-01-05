@@ -1,8 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter } from "next/navigation";
-import Link from "next/link";
+import { useRouter } from "@/i18n/routing";
+import { Link } from "@/i18n/routing";
 import { signIn } from "next-auth/react";
 import InteractiveBackground from "@/components/InteractiveBackground";
 import { useTranslations } from "next-intl";
