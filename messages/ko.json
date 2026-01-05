@@ -1,0 +1,301 @@
+{
+    "HomePage": {
+        "title": "Souper Scanner",
+        "subtitle": "당신만의 인공지능 기반 레시피 관리자 및 스캐너",
+        "Hero": {
+            "headline": "레시피 사진을 디지털 걸작으로 변환하세요",
+            "subheadline": "촬영, 처리, 편집. 당신의 요리 창작물을 완벽하게 정리하고 어디서나 액세스하세요.",
+            "loading": "로딩 중...",
+            "goToLibrary": "라이브러리로 이동",
+            "uploadFirst": "첫 번째 레시피를 업로드하세요!",
+            "getStarted": "무료로 시작하기"
+        },
+        "HowItWorks": {
+            "title": "Souper Scanner가 마법을 부리는 방법",
+            "step1Title": "1. 촬영 및 업로드",
+            "step1Desc": "손글씨나 인쇄된 레시피를 사진으로 찍으세요. 우리의 지능형 시스템이 받을 준비가 되어 있습니다.",
+            "step2Title": "2. AI 변환",
+            "step2Desc": "우리의 고급 AI(Google Vision & Gemini)가 이미지를 처리하여 재료, 단계, 메모를 추출하고 아름답게 형식을 맞춥니다.",
+            "step3Title": "3. 다듬기 및 정리",
+            "step3Desc": "AI가 생성한 레시피를 마크다운 형식으로 검토하고 수정하세요. 당신만의 디지털 요리책에 저장하세요."
+        },
+        "Benefits": {
+            "title": "Souper Scanner를 사랑하게 될 이유",
+            "benefit1Title": "다시는 레시피를 잃어버리지 마세요",
+            "benefit1Desc": "가족 레시피, 잡지 스크랩, 손글씨 메모를 모두 디지털화하세요. 클라우드에 안전하게 저장됩니다.",
+            "benefit2Title": "간편한 공유",
+            "benefit2Desc": "완성된 레시피를 친구 및 가족과 쉽게 공유하세요. 다시 타이핑하는 번거로움이 없습니다.",
+            "benefit3Title": "스마트한 편집",
+            "benefit3Desc": "직관적인 마크다운 에디터로 AI 생성 콘텐츠를 쉽게 수정할 수 있습니다. 형식이 아닌 요리에 집중하세요."
+        },
+        "CTA": {
+            "title": "주방을 정리할 준비가 되셨나요?",
+            "description": "AI로 레시피 관리를 단순화하고 있는 수천 명의 홈 요리사들과 함께하세요.",
+            "buttonLoggedIn": "레시피 업로드를 시작하세요!",
+            "buttonLoggedOut": "지금 무료 계정을 만드세요"
+        }
+    },
+    "Navigation": {
+        "home": "홈",
+        "recipes": "레시피",
+        "upload": "업로드",
+        "profile": "프로필",
+        "register": "가입하기",
+        "signin": "로그인",
+        "signout": "로그아웃"
+    },
+    "Recipes": {
+        "List": {
+            "loading": "레시피를 불러오는 중...",
+            "title": "나의 레시피",
+            "addNew": "새로 추가",
+            "searchPlaceholder": "레시피 검색...",
+            "myRecipes": "나의 레시피",
+            "sharedWithYou": "공유받은 레시피",
+            "sharedBy": "공유자:",
+            "welcomeTitle": "레시피 컬렉션에 오신 것을 환영합니다!",
+            "welcomeDesc": "아직 레시피가 없습니다. 첫 번째 레시피를 만들어 보세요.",
+            "uploadFirst": "첫 번째 레시피 업로드"
+        },
+        "Detail": {
+            "loading": "로딩 중...",
+            "summaryLabel": "요약",
+            "summaryPlaceholder": "레시피에 대한 짧은 요약...",
+            "save": "저장",
+            "cancel": "취소",
+            "print": "PDF로 인쇄",
+            "share": "공유",
+            "edit": "편집",
+            "pdfFooter": "Souper Scanner - 페이지"
+        }
+    },
+    "Upload": {
+        "title": "레시피 사진 업로드",
+        "subtitle": "이미지를 선택하거나 사진을 찍으세요",
+        "uploadButton": "사진 업로드",
+        "takePhotoButton": "사진 찍기",
+        "selectedFile": "선택된 파일:",
+        "progress": "파일 업로드 진행률",
+        "aiProcessing": "AI 처리 중",
+        "duplicate": "중복된 레시피를 찾았습니다!",
+        "redirecting": "기존 레시피로 이동 중...",
+        "submitButton": "업로드 및 처리",
+        "processing": "처리 중...",
+        "tipsTitle": "최상의 결과를 위한 팁",
+        "tips": {
+            "clearPhotos": "선명하고 흔들림 없는 사진:",
+            "clearPhotosDesc": "사진이 밝고 흐릿하지 않은지 확인하세요. 카메라를 안정적으로 들고 찍으세요!",
+            "contrast": "좋은 대비:",
+            "contrastDesc": "텍스트가 배경과 명확하게 대비되어야 합니다. 복잡한 무늬가 있는 배경은 피하세요.",
+            "lighting": "균일한 조명:",
+            "lightingDesc": "텍스트 위에 그림자가 생기지 않도록 하세요. 자연스러운 간접 조명이 가장 좋습니다.",
+            "focus": "레시피에 집중:",
+            "focusDesc": "불필요한 배경을 잘라내어 AI가 텍스트에 집중할 수 있도록 도와주세요."
+        },
+        "aiSteps": {
+            "analyzing": "이미지 분석 중",
+            "extracting": "텍스트 추출 중",
+            "generating": "레시피 생성 중",
+            "saving": "레시피 저장 중"
+        },
+        "validation": {
+            "warning": "이미지 검증 경고.",
+            "lowRes": "해상도가 낮습니다. 결과가 좋지 않을 수 있습니다.",
+            "error": "이미지를 처리할 수 없습니다.",
+            "lowContrast": "대비가 낮습니다. 조명을 확인하세요.",
+            "blurry": "이미지가 너무 흐릿합니다. 카메라를 고정해 보세요.",
+            "invalid": "유효하지 않은 이미지 파일입니다.",
+            "selectFile": "업로드할 이미지를 선택하거나 사진을 찍으세요.",
+            "uploadFailed": "업로드 실패. 다시 시도해 주세요.",
+            "uploadError": "업로드 중 오류가 발생했습니다.",
+            "betterQuality": "고화질 이미지일수록 더 좋은 결과가 나옵니다.",
+            "uploadBetter": "더 좋은 이미지를 업로드해 주세요."
+        }
+    },
+    "Profile": {
+        "title": "프로필 설정",
+        "labels": {
+            "name": "성함",
+            "email": "이메일 주소",
+            "phone": "전화번호",
+            "address": "주소"
+        },
+        "placeholders": {
+            "name": "이름 입력",
+            "email": "you@example.com",
+            "phone": "010-0000-0000",
+            "address": "시/도, 구/군, 상세주소"
+        },
+        "buttons": {
+            "save": "변경 사항 저장",
+            "saving": "저장 중..."
+        },
+        "subscription": {
+            "title": "구독 상태:",
+            "premium": "프리미엄",
+            "free": "무료 플랜",
+            "monthlyScans": "이달의 스캔",
+            "used": "사용됨",
+            "upgradeMessage": "프리미엄으로 업그레이드하여 월 20회 스캔으로 한도를 늘리세요!",
+            "viewPlans": "요금제 보기"
+        },
+        "messages": {
+            "success": "프로필이 성공적으로 업데이트되었습니다!",
+            "error": "프로필 업데이트 실패",
+            "loadError": "프로필 데이터를 불러오지 못했습니다.",
+            "saveError": "저장 중 오류가 발생했습니다."
+        }
+    },
+    "Auth": {
+        "SignIn": {
+            "title": "로그인",
+            "emailPlaceholder": "이메일",
+            "passwordPlaceholder": "비밀번호",
+            "submitButton": "로그인",
+            "noAccount": "계정이 없으신가요?",
+            "registerLink": "가입하기",
+            "failed": "로그인 실패."
+        },
+        "Register": {
+            "title": "회원가입",
+            "emailPlaceholder": "이메일",
+            "passwordPlaceholder": "비밀번호",
+            "submitButton": "가입하기",
+            "hasAccount": "이미 계정이 있으신가요?",
+            "signInLink": "로그인",
+            "failed": "회원가입 실패.",
+            "signInFailed": "가입 후 로그인에 실패했습니다."
+        }
+    },
+    "Pricing": {
+        "title": "심플하고 투명한 요금제",
+        "subtitle": "당신의 요리 생활에 맞는 플랜을 선택하세요.",
+        "perMonth": "/월",
+        "included": "포함 내역",
+        "Free": {
+            "title": "무료",
+            "description": "레시피 디지털화를 체험해 보기에 적합합니다.",
+            "price": "₩0",
+            "currentPlan": "현재 플랜",
+            "includedStatus": "포함됨",
+            "features": {
+                "scans": "월 3회 레시피 스캔",
+                "analysis": "기본 AI 분석",
+                "support": "표준 고객 지원"
+            }
+        },
+        "Premium": {
+            "title": "프리미엄",
+            "description": "진정한 요리 애호가를 위한 플랜.",
+            "price": "₩9,900",
+            "activePlan": "활성 플랜",
+            "upgrade": "지금 업그레이드",
+            "upgrading": "업그레이드 중...",
+            "features": {
+                "scans": "월 20회 레시피 스캔",
+                "analysis": "우선 AI 분석",
+                "support": "우선 고객 지원"
+            }
+        },
+        "messages": {
+            "success": "업그레이드 성공!",
+            "failed": "업그레이드 실패. 다시 시도해 주세요.",
+            "error": "오류가 발생했습니다."
+        }
+    },
+    "Footer": {
+        "description": "당신만의 인공지능 기반 레시피 관리자 및 스캐너. Google Gemini의 힘으로 당신의 소중한 레시피를 디지털 컬렉션으로 변환하세요.",
+        "resources": "리소스",
+        "legal": "법적 고지",
+        "copyright": "Souper Scanner. 모든 권리 보유.",
+        "tagline": "추억을 스캔합니다, 레시피 하나하나.",
+        "links": {
+            "home": "홈",
+            "recipes": "나의 레시피",
+            "pricing": "가격",
+            "upload": "레시피 업로드",
+            "terms": "이용약관",
+            "privacy": "개인정보 처리방침"
+        }
+    },
+    "Privacy": {
+        "title": "개인정보 처리방침",
+        "lastUpdated": "최종 업데이트: 2026년 1월 2일",
+        "sections": {
+            "collection": {
+                "title": "1. 정보 수집",
+                "content1": "계정 생성 시 이름, 이메일 주소 등 직접 제공하시는 정보를 수집합니다.",
+                "content2": "스캔 서비스 이용 시 레시피 추출을 위해 업로드되는 이미지를 수집합니다."
+            },
+            "processing": {
+                "title": "2. AI 처리 및 제3자",
+                "content1": "Souper Scanner는 이미지 처리 및 레시피 생성을 위해 Google Gemini(LLM) 및 Google Cloud Vision(OCR) 서비스를 이용합니다.",
+                "content2": "서비스 이용 시 귀하의 업로드 이미지와 추출 텍스트가 Google 인프라에서 처리됨에 동의하는 것으로 간주됩니다. 당사는 귀하의 데이터를 자체 모델 학습에 사용하지 않습니다."
+            },
+            "retention": {
+                "title": "3. 데이터 보관",
+                "storageTitle": "이미지 임시 보관:",
+                "storageContent": "이미지는 일시적으로만 저장됩니다. AI 처리가 완료되면 원본 이미지는 삭제됩니다.",
+                "content": "추출된 레시피 텍스트와 프로필 정보는 계정이 활성 상태인 동안 안전하게 보관됩니다."
+            },
+            "security": {
+                "title": "4. 보안",
+                "content": "귀하의 데이터를 보호하기 위해 업계 표준 보안 조치를 시행하고 있습니다."
+            },
+            "cookies": {
+                "title": "5. 쿠키",
+                "content": "세션 관리 및 NextAuth.js 기반 인증을 위해 주로 쿠키를 사용합니다."
+            },
+            "rights": {
+                "title": "6. 귀하의 권리",
+                "content": "귀하는 언제든지 프로필 설정을 통해 정보를 조회, 수정 또는 삭제할 수 있습니다. 계정 삭제 시 관련 모든 데이터는 영구 삭제됩니다."
+            }
+        },
+        "contact": "개인정보 관련 문의는 privacy@souperscanner.com으로 연락주시기 바랍니다."
+    },
+    "Terms": {
+        "title": "이용약관",
+        "lastUpdated": "최종 업데이트: 2026년 1월 2일",
+        "sections": {
+            "acceptance": {
+                "title": "1. 약관 동의",
+                "content": "Souper Scanner를 이용함으로써 귀하는 본 이용약관에 동의하는 것으로 간주됩니다."
+            },
+            "description": {
+                "title": "2. 서비스 설명",
+                "content": "Souper Scanner는 AI 기반의 레시피 스캔 및 관리 도구를 제공합니다."
+            },
+            "usage": {
+                "title": "3. 공정 이용 및 제한",
+                "content": "서비스 품질 유지를 위해 다음과 같은 월간 스캔 제한을 적용합니다.",
+                "freeTier": "무료 티어: 월 3회 스캔.",
+                "premiumTier": "프리미엄 티어: 월 20회 스캔.",
+                "prohibited": "자동화된 스캔 또는 제한 우회 시도는 엄격히 금지됩니다."
+            },
+            "content": {
+                "title": "4. 사용자 콘텐츠 및 저작권",
+                "content": "귀하는 업로드한 이미지 및 텍스트에 대한 소유권을 유지합니다. 다만, 업로드하는 레시피를 디지털화할 권리가 있음을 보장해야 합니다."
+            },
+            "disclaimers": {
+                "title": "5. 면책 조항",
+                "quote": "\"요리 시 발생하는 위험은 본인 책임입니다.\"",
+                "content": "AI 추출 과정에서 수치, 재료 또는 지침에 오류가 발생할 수 있습니다. 항상 원본과 대조하여 확인하시기 바랍니다."
+            },
+            "termination": {
+                "title": "6. 종료",
+                "content": "약관 위반 등 당사 판단에 따라 서비스 이용 권한을 일시 중지하거나 종료할 수 있습니다."
+            }
+        },
+        "contact": "약관에 관한 문의는 legal@souperscanner.com으로 연락주시기 바랍니다."
+    },
+    "Components": {
+        "ImpersonationBanner": {
+            "label": "사용자 가장 중",
+            "exit": "종료"
+        },
+        "UsageFloatingBar": {
+            "title": "월간 스캔",
+            "upgrade": "업그레이드"
+        }
+    }
+}

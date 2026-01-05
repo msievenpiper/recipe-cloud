@@ -25,8 +25,16 @@ export default function LanguageSwitcher() {
                 onChange={onSelectChange}
                 disabled={isPending}
             >
-                <option value="en">EN</option>
-                <option value="es">ES</option>
+                <option value="en">🇺🇸 EN</option>
+                <option value="es">🇪🇸 ES</option>
+                <option value="fr">🇫🇷 FR</option>
+                <option value="de">🇩🇪 DE</option>
+                <option value="it">🇮🇹 IT</option>
+                <option value="pt">🇵🇹 PT</option>
+                <option value="zh">🇨🇳 ZH</option>
+                <option value="ja">🇯🇵 JA</option>
+                <option value="ko">🇰🇷 KO</option>
+                <option value="ru">🇷🇺 RU</option>
             </select>
             {/* Custom arrow for the select */}
             <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center text-gray-200">
