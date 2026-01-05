@@ -1,7 +1,39 @@
 {
     "HomePage": {
         "title": "Souper Scanner",
-        "subtitle": "Your personal AI-powered recipe manager and scanner"
+        "subtitle": "Your personal AI-powered recipe manager and scanner",
+        "Hero": {
+            "headline": "Transform Your Recipe Photos into Digital Masterpieces",
+            "subheadline": "Snap, Process, Edit. Your culinary creations, perfectly organized and accessible anywhere.",
+            "loading": "Loading...",
+            "goToLibrary": "Go to Your Library",
+            "uploadFirst": "Upload Your First Recipe!",
+            "getStarted": "Get Started - It's Free!"
+        },
+        "HowItWorks": {
+            "title": "How Souper Scanner Works Its Magic",
+            "step1Title": "1. Snap & Upload",
+            "step1Desc": "Capture a photo of your handwritten or printed recipe. Our intelligent system is ready to receive it.",
+            "step2Title": "2. AI Transformation",
+            "step2Desc": "Our advanced AI (Google Vision & Gemini) processes your image, extracting ingredients, steps, and notes, then formats it beautifully.",
+            "step3Title": "3. Refine & Organize",
+            "step3Desc": "Review, rearrange, and edit the AI-generated recipe in markdown. Save it to your personalized digital cookbook."
+        },
+        "Benefits": {
+            "title": "Why You'll Love Souper Scanner",
+            "benefit1Title": "Never Lose a Recipe Again",
+            "benefit1Desc": "Digitize all your family recipes, magazine clippings, and handwritten notes. Securely stored in the cloud.",
+            "benefit2Title": "Share with Ease",
+            "benefit2Desc": "Easily share your perfected recipes with friends and family, without the hassle of retyping.",
+            "benefit3Title": "Smart Editing",
+            "benefit3Desc": "Our intuitive markdown editor makes tweaking AI-generated content a breeze. Focus on cooking, not formatting."
+        },
+        "CTA": {
+            "title": "Ready to Organize Your Kitchen?",
+            "description": "Join thousands of home cooks simplifying their recipe management with AI.",
+            "buttonLoggedIn": "Start Uploading Your Recipes!",
+            "buttonLoggedOut": "Start Your Free Account Today"
+        }
     },
     "Navigation": {
         "home": "Home",
@@ -10,5 +42,249 @@
         "profile": "Profile",
         "signin": "Sign In",
         "signout": "Sign Out"
+    },
+    "Recipes": {
+        "List": {
+            "loading": "Loading your recipes...",
+            "title": "Your Recipes",
+            "addNew": "Add New",
+            "searchPlaceholder": "Search all recipes...",
+            "myRecipes": "My Recipes",
+            "sharedWithYou": "Shared With You",
+            "sharedBy": "Shared by",
+            "welcomeTitle": "Welcome to Your Recipe Collection!",
+            "welcomeDesc": "It looks like you don't have any recipes yet. Let's create your first one.",
+            "uploadFirst": "Upload Your First Recipe"
+        },
+        "Detail": {
+            "loading": "Loading...",
+            "summaryLabel": "Summary",
+            "summaryPlaceholder": "A brief summary of the recipe...",
+            "save": "Save",
+            "cancel": "Cancel",
+            "print": "Print to PDF",
+            "share": "Share",
+            "edit": "Edit",
+            "pdfFooter": "Souper Scanner - Page"
+        }
+    },
+    "Upload": {
+        "title": "Upload a Recipe Photo",
+        "subtitle": "Choose an image or take a photo",
+        "uploadButton": "Upload Photo",
+        "takePhotoButton": "Take Photo",
+        "selectedFile": "Selected file:",
+        "progress": "File Upload Progress",
+        "aiProcessing": "AI Processing",
+        "duplicate": "Duplicate recipe found!",
+        "redirecting": "Redirecting you to the existing recipe...",
+        "submitButton": "Upload and Process",
+        "processing": "Processing...",
+        "tipsTitle": "Tips for Best Results",
+        "tips": {
+            "clearPhotos": "Clear & Steady Photos:",
+            "clearPhotosDesc": "Ensure your recipe photo is well-lit and not blurry. Hold your camera steady!",
+            "contrast": "Good Contrast:",
+            "contrastDesc": "Text should stand out clearly from the background. Avoid busy patterns behind the recipe.",
+            "lighting": "Even Lighting:",
+            "lightingDesc": "Avoid shadows cast over the text. Natural, indirect light often works best.",
+            "focus": "Focus on the Recipe:",
+            "focusDesc": "Crop out unnecessary background elements to help the AI focus on the recipe text."
+        },
+        "aiSteps": {
+            "analyzing": "Analyzing Image",
+            "extracting": "Extracting Text",
+            "generating": "Generating Recipe",
+            "saving": "Saving Recipe"
+        },
+        "validation": {
+            "warning": "Image validation warning.",
+            "lowRes": "Image resolution is low. Results may be poor.",
+            "error": "Could not process image.",
+            "lowContrast": "Image has low contrast. Please verify lighting is good.",
+            "blurry": "Image is too blurry. Please try to hold the camera steady.",
+            "invalid": "Invalid image file.",
+            "selectFile": "Please select an image or take a photo to upload.",
+            "uploadFailed": "Upload failed. Please try again.",
+            "uploadError": "An error occurred during the upload. Please try again.",
+            "betterQuality": "Better quality images produce better results.",
+            "uploadBetter": "Please upload a better image."
+        }
+    },
+    "Profile": {
+        "title": "Profile Settings",
+        "labels": {
+            "name": "Full Name",
+            "email": "Email Address",
+            "phone": "Phone Number",
+            "address": "Address"
+        },
+        "placeholders": {
+            "name": "Your Name",
+            "email": "you@example.com",
+            "phone": "+1 (555) 000-0000",
+            "address": "123 Main St, City, Country"
+        },
+        "buttons": {
+            "save": "Save Changes",
+            "saving": "Saving..."
+        },
+        "subscription": {
+            "title": "Subscription Status:",
+            "premium": "Premium",
+            "free": "Free Plan",
+            "monthlyScans": "Monthly Scans",
+            "used": "used",
+            "upgradeMessage": "Upgrade to Premium to increase your limit to 20 scans per month!",
+            "viewPlans": "View Plans"
+        },
+        "messages": {
+            "success": "Profile updated successfully!",
+            "error": "Failed to update profile",
+            "loadError": "Failed to load profile data.",
+            "saveError": "An error occurred while saving."
+        }
+    },
+    "Auth": {
+        "SignIn": {
+            "title": "Sign In",
+            "emailPlaceholder": "Email",
+            "passwordPlaceholder": "Password",
+            "submitButton": "Sign In",
+            "noAccount": "Don't have an account?",
+            "registerLink": "Register",
+            "failed": "Sign-in failed."
+        },
+        "Register": {
+            "title": "Register",
+            "emailPlaceholder": "Email",
+            "passwordPlaceholder": "Password",
+            "submitButton": "Register",
+            "hasAccount": "Already have an account?",
+            "signInLink": "Sign in",
+            "failed": "Registration failed.",
+            "signInFailed": "Sign-in failed after registration."
+        }
+    },
+    "Pricing": {
+        "title": "Simple, transparent pricing",
+        "subtitle": "Choose the plan that's right for your cooking needs.",
+        "perMonth": "/mo",
+        "included": "What's included",
+        "Free": {
+            "title": "Free",
+            "description": "Perfect for trying out the recipe digitization.",
+            "price": "$0",
+            "currentPlan": "Current Plan",
+            "includedStatus": "Included",
+            "features": {
+                "scans": "3 Recipe Scans per month",
+                "analysis": "Basic AI Analysis",
+                "support": "Standard Support"
+            }
+        },
+        "Premium": {
+            "title": "Premium",
+            "description": "For the serious home chef.",
+            "price": "$9.99",
+            "activePlan": "Active Plan",
+            "upgrade": "Upgrade Now",
+            "upgrading": "Upgrading...",
+            "features": {
+                "scans": "20 Recipe Scans per month",
+                "analysis": "Priority AI Analysis",
+                "support": "Priority Support"
+            }
+        },
+        "messages": {
+            "success": "Upgrade successful!",
+            "failed": "Upgrade failed. Please try again.",
+            "error": "An error occurred."
+        }
+    },
+    "Footer": {
+        "description": "Your personal AI-powered recipe manager and scanner. Transform your physical recipes into a digital collection with the power of Google Gemini.",
+        "resources": "Resources",
+        "legal": "Legal",
+        "copyright": "Souper Scanner. All rights reserved.",
+        "tagline": "Scanning memories, one recipe at a time.",
+        "links": {
+            "home": "Home",
+            "recipes": "My Recipes",
+            "pricing": "Pricing",
+            "upload": "Upload Recipe",
+            "terms": "Terms of Service",
+            "privacy": "Privacy Policy"
+        }
+    },
+    "Privacy": {
+        "title": "Privacy Policy",
+        "lastUpdated": "Last Updated: January 2, 2026",
+        "sections": {
+            "collection": {
+                "title": "1. Information Collection",
+                "content1": "We collect information you provide directly to us when you create an account, such as your name, email address, and any optional profile information (phone, address).",
+                "content2": "When you use our scanning service, we collect the images you upload for the purpose of recipe extraction."
+            },
+            "processing": {
+                "title": "2. AI Processing & Third Parties",
+                "content1": "Souper Scanner utilizes Google Gemini services (LLM) and Google Cloud Vision (OCR) to process your images and generate recipe content.",
+                "content2": "By using the service, you acknowledge that your uploaded images and the resulting extracted text will be processed by Google's infrastructure. We do not use your data to train our own models, but third-party AI providers may have their own data handling policies."
+            },
+            "retention": {
+                "title": "3. Data Retention",
+                "storageTitle": "Temporary Image Storage:",
+                "storageContent": "We only store your uploaded images temporarily. Once the AI agent has successfully processed the image and generated the digital recipe content, the original image is cleared from our active processing storage.",
+                "content": "Extracted recipe text and your account profile information are stored securely in our database for as long as your account remains active."
+            },
+            "security": {
+                "title": "4. Security",
+                "content": "We implement industry-standard security measures to protect your data, including password hashing (bcrypt) and encrypted connections. However, no method of transmission over the internet is 100% secure."
+            },
+            "cookies": {
+                "title": "5. Cookies",
+                "content": "We use cookies primarily for session management and authentication via NextAuth.js. These are necessary for the application to function and recognize you across different pages."
+            },
+            "rights": {
+                "title": "6. Your Rights",
+                "content": "You may view, edit, or delete your account information at any time through your profile settings. Upon account deletion, all personal data associated with your account will be permanently removed from our databases."
+            }
+        },
+        "contact": "For privacy-related inquiries, please contact us at privacy@souperscanner.com"
+    },
+    "Terms": {
+        "title": "Terms of Service",
+        "lastUpdated": "Last Updated: January 2, 2026",
+        "sections": {
+            "acceptance": {
+                "title": "1. Acceptance of Terms",
+                "content": "By accessing or using Souper Scanner, you agree to be bound by these Terms of Service. If you do not agree to all of these terms, do not use our service."
+            },
+            "description": {
+                "title": "2. Description of Service",
+                "content": "Souper Scanner provides AI-powered recipe scanning and management tools. We use advanced OCR and Large Language Models (LLMs) like Google Gemini to extract data from images provided by users."
+            },
+            "usage": {
+                "title": "3. Fair Usage & Limits",
+                "content": "To ensure high quality of service for all users, we implement the following monthly scan limits:",
+                "freeTier": "Free Tier: 3 scans per month.",
+                "premiumTier": "Premium Tier: 20 scans per month.",
+                "prohibited": "Automated scanning, bot usage, or any attempt to circumvent these limits is strictly prohibited and may result in account termination."
+            },
+            "content": {
+                "title": "4. User Content & Copyright",
+                "content": "You retain ownership of any images or text you upload. However, you are responsible for ensuring you have the right to digitize and store the recipes you upload. Souper Scanner respects intellectual property rights and expects users to do the same."
+            },
+            "disclaimers": {
+                "title": "5. Disclaimers",
+                "quote": "\"Cook at your own risk.\"",
+                "content": "Souper Scanner is an AI-powered tool. While we strive for accuracy, AI extraction can occasionally result in errors in measurements, ingredients, or instructions. Always verify AI-generated content against your original source. We are not liable for any kitchen accidents, failed dishes, or dietary issues resulting from the use of our service."
+            },
+            "termination": {
+                "title": "6. Termination",
+                "content": "We reserve the right to suspend or terminate your access to the service at our sole discretion, without notice, for conduct that we believe violates these Terms or is harmful to other users of the service, us, or third parties, or for any other reason."
+            }
+        },
+        "contact": "If you have any questions regarding these terms, please contact us at legal@souperscanner.com"
     }
 }

@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { FaUser, FaEnvelope, FaPhone, FaMapMarkerAlt, FaCrown, FaCheckCircle, FaSpinner } from "react-icons/fa";
+import { useTranslations } from "next-intl";
 
 export default function ProfilePage() {
     const [loading, setLoading] = useState(true);
@@ -16,6 +17,7 @@ export default function ProfilePage() {
         scanCount: 0,
     });
     const [message, setMessage] = useState<{ type: 'success' | 'error', text: string } | null>(null);
+    const t = useTranslations('Profile');
 
     useEffect(() => {
         fetch("/api/user/profile")
@@ -37,10 +39,10 @@ export default function ProfilePage() {
             })
             .catch(err => {
                 console.error(err);
-                setMessage({ type: 'error', text: "Failed to load profile data." });
+                setMessage({ type: 'error', text: t('messages.loadError') });
                 setLoading(false);
             });
-    }, []);
+    }, [t]);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const { name, value } = e.target;
@@ -65,13 +67,13 @@ export default function ProfilePage() {
             });
 
             if (res.ok) {
-                setMessage({ type: 'success', text: "Profile updated successfully!" });
+                setMessage({ type: 'success', text: t('messages.success') });
             } else {
                 throw new Error("Failed to update profile");
             }
         } catch (error) {
             console.error(error);
-            setMessage({ type: 'error', text: "An error occurred while saving." });
+            setMessage({ type: 'error', text: t('messages.saveError') });
         } finally {
             setSaving(false);
         }
@@ -96,13 +98,13 @@ export default function ProfilePage() {
                     <div className="px-6 py-4 bg-primary-700">
                         <h2 className="text-xl font-bold text-white flex items-center">
                             <FaCrown className="mr-2 text-yellow-400" />
-                            Subscription Status: {userData.isPremium ? "Premium" : "Free Plan"}
+                            {t('subscription.title')} {userData.isPremium ? t('subscription.premium') : t('subscription.free')}
                         </h2>
                     </div>
                     <div className="p-6">
                         <div className="flex items-center justify-between mb-4">
-                            <span className="text-gray-700 font-medium">Monthly Scans</span>
-                            <span className="text-sm text-gray-500">{userData.scanCount} / {usageLimit} used</span>
+                            <span className="text-gray-700 font-medium">{t('subscription.monthlyScans')}</span>
+                            <span className="text-sm text-gray-500">{userData.scanCount} / {usageLimit} {t('subscription.used')}</span>
                         </div>
                         <div className="w-full bg-gray-200 rounded-full h-2.5">
                             <div
@@ -113,10 +115,10 @@ export default function ProfilePage() {
                         {!userData.isPremium && (
                             <div className="mt-4 bg-yellow-50 p-4 rounded-md border border-yellow-200">
                                 <p className="text-sm text-yellow-800">
-                                    Upgrade to Premium to increase your limit to 20 scans per month!
+                                    {t('subscription.upgradeMessage')}
                                 </p>
                                 <a href="/pricing" className="mt-2 inline-block text-sm font-semibold text-primary-700 hover:text-primary-800">
-                                    View Plans &rarr;
+                                    {t('subscription.viewPlans')} &rarr;
                                 </a>
                             </div>
                         )}
@@ -126,7 +128,7 @@ export default function ProfilePage() {
                 {/* Profile Form */}
                 <div className="bg-white rounded-lg shadow overflow-hidden">
                     <div className="px-6 py-4 border-b border-gray-200">
-                        <h2 className="text-xl font-bold text-gray-800">Profile Settings</h2>
+                        <h2 className="text-xl font-bold text-gray-800">{t('title')}</h2>
                     </div>
                     <div className="p-6">
                         {message && (
@@ -138,7 +140,7 @@ export default function ProfilePage() {
                         <form onSubmit={handleSubmit} className="space-y-6">
                             <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
+                                    <label className="block text-sm font-medium text-gray-700 mb-1">{t('labels.name')}</label>
                                     <div className="relative rounded-md shadow-sm">
                                         <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                                             <FaUser className="text-gray-400" />
@@ -149,13 +151,13 @@ export default function ProfilePage() {
                                             value={userData.name}
                                             onChange={handleChange}
                                             className="focus:ring-primary-500 focus:border-primary-500 block w-full pl-10 sm:text-sm border-gray-300 rounded-md py-2 px-3 border"
-                                            placeholder="Your Name"
+                                            placeholder={t('placeholders.name')}
                                         />
                                     </div>
                                 </div>
 
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-700 mb-1">Email Address</label>
+                                    <label className="block text-sm font-medium text-gray-700 mb-1">{t('labels.email')}</label>
                                     <div className="relative rounded-md shadow-sm">
                                         <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                                             <FaEnvelope className="text-gray-400" />
@@ -166,13 +168,13 @@ export default function ProfilePage() {
                                             value={userData.email}
                                             onChange={handleChange}
                                             className="focus:ring-primary-500 focus:border-primary-500 block w-full pl-10 sm:text-sm border-gray-300 rounded-md py-2 px-3 border"
-                                            placeholder="you@example.com"
+                                            placeholder={t('placeholders.email')}
                                         />
                                     </div>
                                 </div>
 
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-700 mb-1">Phone Number</label>
+                                    <label className="block text-sm font-medium text-gray-700 mb-1">{t('labels.phone')}</label>
                                     <div className="relative rounded-md shadow-sm">
                                         <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                                             <FaPhone className="text-gray-400" />
@@ -183,13 +185,13 @@ export default function ProfilePage() {
                                             value={userData.phoneNumber}
                                             onChange={handleChange}
                                             className="focus:ring-primary-500 focus:border-primary-500 block w-full pl-10 sm:text-sm border-gray-300 rounded-md py-2 px-3 border"
-                                            placeholder="+1 (555) 000-0000"
+                                            placeholder={t('placeholders.phone')}
                                         />
                                     </div>
                                 </div>
 
                                 <div className="sm:col-span-2">
-                                    <label className="block text-sm font-medium text-gray-700 mb-1">Address</label>
+                                    <label className="block text-sm font-medium text-gray-700 mb-1">{t('labels.address')}</label>
                                     <div className="relative rounded-md shadow-sm">
                                         <div className="absolute inset-y-0 left-0 pl-3 pt-2.5 pointer-events-none">
                                             <FaMapMarkerAlt className="text-gray-400" />
@@ -200,7 +202,7 @@ export default function ProfilePage() {
                                             onChange={handleChange}
                                             rows={3}
                                             className="focus:ring-primary-500 focus:border-primary-500 block w-full pl-10 sm:text-sm border-gray-300 rounded-md py-2 px-3 border"
-                                            placeholder="123 Main St, City, Country"
+                                            placeholder={t('placeholders.address')}
                                         />
                                     </div>
                                 </div>
@@ -212,7 +214,7 @@ export default function ProfilePage() {
                                     disabled={saving}
                                     className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 disabled:bg-gray-400"
                                 >
-                                    {saving ? 'Saving...' : 'Save Changes'}
+                                    {saving ? t('buttons.saving') : t('buttons.save')}
                                 </button>
                             </div>
                         </form>

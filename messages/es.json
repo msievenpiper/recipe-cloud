@@ -1,7 +1,39 @@
 {
     "HomePage": {
         "title": "Souper Scanner",
-        "subtitle": "Tu gestor y escáner de recetas personal impulsado por IA"
+        "subtitle": "Tu gestor y escáner de recetas personal impulsado por IA",
+        "Hero": {
+            "headline": "Transforma tus Fotos de Recetas en Obras Maestras Digitales",
+            "subheadline": "Captura, Procesa, Edita. Tus creaciones culinarias, perfectamente organizadas y accesibles en cualquier lugar.",
+            "loading": "Cargando...",
+            "goToLibrary": "Ve a tu Librería",
+            "uploadFirst": "¡Sube tu Primera Receta!",
+            "getStarted": "Empieza - ¡Es Gratis!"
+        },
+        "HowItWorks": {
+            "title": "Cómo Souper Scanner Hace su Magia",
+            "step1Title": "1. Captura y Sube",
+            "step1Desc": "Toma una foto de tu receta escrita a mano o impresa. Nuestro sistema inteligente está listo para recibirla.",
+            "step2Title": "2. Transformación IA",
+            "step2Desc": "Nuestra IA avanzada (Google Vision y Gemini) procesa tu imagen, extrayendo ingredientes, pasos y notas, luego la formatea bellamente.",
+            "step3Title": "3. Refina y Organiza",
+            "step3Desc": "Revisa, reorganiza y edita la receta generada por IA en markdown. Guárdala en tu libro de cocina digital personalizado."
+        },
+        "Benefits": {
+            "title": "Por Qué Te Encantará Souper Scanner",
+            "benefit1Title": "Nunca Vuelvas a Perder una Receta",
+            "benefit1Desc": "Digitaliza todas tus recetas familiares, recortes de revistas y notas escritas a mano. Almacenadas de forma segura en la nube.",
+            "benefit2Title": "Comparte con Facilidad",
+            "benefit2Desc": "Comparte fácilmente tus recetas perfeccionadas con amigos y familiares, sin la molestia de volver a escribirlas.",
+            "benefit3Title": "Edición Inteligente",
+            "benefit3Desc": "Nuestro editor intuitivo de markdown hace que ajustar el contenido generado por IA sea muy fácil. Concéntrate en cocinar, no en formatear."
+        },
+        "CTA": {
+            "title": "¿Listo para Organizar tu Cocina?",
+            "description": "Únete a miles de cocineros caseros que simplifican la gestión de sus recetas con IA.",
+            "buttonLoggedIn": "¡Comienza a Subir tus Recetas!",
+            "buttonLoggedOut": "Comienza tu Cuenta Gratuita Hoy"
+        }
     },
     "Navigation": {
         "home": "Inicio",
@@ -10,5 +42,249 @@
         "profile": "Perfil",
         "signin": "Iniciar Sesión",
         "signout": "Cerrar Sesión"
+    },
+    "Recipes": {
+        "List": {
+            "loading": "Cargando tus recetas...",
+            "title": "Tus Recetas",
+            "addNew": "Agregar Nueva",
+            "searchPlaceholder": "Buscar todas las recetas...",
+            "myRecipes": "Mis Recetas",
+            "sharedWithYou": "Compartidas Contigo",
+            "sharedBy": "Compartido por",
+            "welcomeTitle": "¡Bienvenido a tu Colección de Recetas!",
+            "welcomeDesc": "Parece que aún no tienes recetas. Creemos la primera.",
+            "uploadFirst": "Sube tu Primera Receta"
+        },
+        "Detail": {
+            "loading": "Cargando...",
+            "summaryLabel": "Resumen",
+            "summaryPlaceholder": "Un breve resumen de la receta...",
+            "save": "Guardar",
+            "cancel": "Cancelar",
+            "print": "Imprimir a PDF",
+            "share": "Compartir",
+            "edit": "Editar",
+            "pdfFooter": "Souper Scanner - Página"
+        }
+    },
+    "Upload": {
+        "title": "Sube una Foto de Receta",
+        "subtitle": "Elige una imagen o toma una foto",
+        "uploadButton": "Subir Foto",
+        "takePhotoButton": "Tomar Foto",
+        "selectedFile": "Archivo seleccionado:",
+        "progress": "Progreso de carga",
+        "aiProcessing": "Procesamiento IA",
+        "duplicate": "¡Receta duplicada encontrada!",
+        "redirecting": "Redirigiéndote a la receta existente...",
+        "submitButton": "Subir y Procesar",
+        "processing": "Procesando...",
+        "tipsTitle": "Consejos para Mejores Resultados",
+        "tips": {
+            "clearPhotos": "Fotos Claras y Estables:",
+            "clearPhotosDesc": "¡Asegúrate de que tu foto esté bien iluminada y no borrosa. Mantén la cámara estable!",
+            "contrast": "Buen Contraste:",
+            "contrastDesc": "El texto debe destacar claramente del fondo. Evita patrones ocupados detrás de la receta.",
+            "lighting": "Iluminación Uniforme:",
+            "lightingDesc": "Evita sombras sobre el texto. La luz natural e indirecta suele funcionar mejor.",
+            "focus": "Enfócate en la Receta:",
+            "focusDesc": "Recorta elementos de fondo innecesarios para ayudar a la IA a enfocarse en el texto de la receta."
+        },
+        "aiSteps": {
+            "analyzing": "Analizando Imagen",
+            "extracting": "Extrayendo Texto",
+            "generating": "Generando Receta",
+            "saving": "Guardando Receta"
+        },
+        "validation": {
+            "warning": "Advertencia de validación de imagen.",
+            "lowRes": "La resolución de la imagen es baja. Los resultados pueden ser pobres.",
+            "error": "No se pudo procesar la imagen.",
+            "lowContrast": "La imagen tiene poco contraste. Por favor verifica que la iluminación sea buena.",
+            "blurry": "La imagen está demasiado borrosa. Intenta mantener la cámara estable.",
+            "invalid": "Archivo de imagen inválido.",
+            "selectFile": "Por favor selecciona una imagen o toma una foto para subir.",
+            "uploadFailed": "La carga falló. Por favor intenta de nuevo.",
+            "uploadError": "Ocurrió un error durante la carga. Por favor intenta de nuevo.",
+            "betterQuality": "Las imágenes de mejor calidad producen mejores resultados.",
+            "uploadBetter": "Por favor sube una mejor imagen."
+        }
+    },
+    "Profile": {
+        "title": "Configuración de Perfil",
+        "labels": {
+            "name": "Nombre Completo",
+            "email": "Correo Electrónico",
+            "phone": "Número de Teléfono",
+            "address": "Dirección"
+        },
+        "placeholders": {
+            "name": "Tu Nombre",
+            "email": "tu@ejemplo.com",
+            "phone": "+1 (555) 000-0000",
+            "address": "123 Calle Principal, Ciudad, País"
+        },
+        "buttons": {
+            "save": "Guardar Cambios",
+            "saving": "Guardando..."
+        },
+        "subscription": {
+            "title": "Estado de Suscripción:",
+            "premium": "Premium",
+            "free": "Plan Gratuito",
+            "monthlyScans": "Escaneos Mensuales",
+            "used": "usados",
+            "upgradeMessage": "¡Mejora a Premium para aumentar tu límite a 20 escaneos por mes!",
+            "viewPlans": "Ver Planes"
+        },
+        "messages": {
+            "success": "¡Perfil actualizado exitosamente!",
+            "error": "Error al actualizar perfil",
+            "loadError": "Error al cargar datos del perfil.",
+            "saveError": "Ocurrió un error al guardar."
+        }
+    },
+    "Auth": {
+        "SignIn": {
+            "title": "Iniciar Sesión",
+            "emailPlaceholder": "Correo",
+            "passwordPlaceholder": "Contraseña",
+            "submitButton": "Iniciar Sesión",
+            "noAccount": "¿No tienes una cuenta?",
+            "registerLink": "Regístrate",
+            "failed": "Inicio de sesión fallido."
+        },
+        "Register": {
+            "title": "Registrarse",
+            "emailPlaceholder": "Correo",
+            "passwordPlaceholder": "Contraseña",
+            "submitButton": "Registrarse",
+            "hasAccount": "¿Ya tienes una cuenta?",
+            "signInLink": "Inicia sesión",
+            "failed": "Registro fallido.",
+            "signInFailed": "Inicio de sesión fallido después del registro."
+        }
+    },
+    "Pricing": {
+        "title": "Precios simples y transparentes",
+        "subtitle": "Elige el plan adecuado para tus necesidades culinarias.",
+        "perMonth": "/mes",
+        "included": "Qué incluye",
+        "Free": {
+            "title": "Gratis",
+            "description": "Perfecto para probar la digitalización de recetas.",
+            "price": "$0",
+            "currentPlan": "Plan Actual",
+            "includedStatus": "Incluido",
+            "features": {
+                "scans": "3 Escaneos de Recetas al mes",
+                "analysis": "Análisis IA Básico",
+                "support": "Soporte Estándar"
+            }
+        },
+        "Premium": {
+            "title": "Premium",
+            "description": "Para el chef casero serio.",
+            "price": "$9.99",
+            "activePlan": "Plan Activo",
+            "upgrade": "Mejorar Ahora",
+            "upgrading": "Mejorando...",
+            "features": {
+                "scans": "20 Escaneos de Recetas al mes",
+                "analysis": "Análisis IA Prioritario",
+                "support": "Soporte Prioritario"
+            }
+        },
+        "messages": {
+            "success": "¡Mejora exitosa!",
+            "failed": "La mejora falló. Por favor intente de nuevo.",
+            "error": "Ocurrió un error."
+        }
+    },
+    "Footer": {
+        "description": "Tu gestor y escáner de recetas personal impulsado por IA. Transforma tus recetas físicas en una colección digital con el poder de Google Gemini.",
+        "resources": "Recursos",
+        "legal": "Legal",
+        "copyright": "Souper Scanner. Todos los derechos reservados.",
+        "tagline": "Escaneando recuerdos, una receta a la vez.",
+        "links": {
+            "home": "Inicio",
+            "recipes": "Mis Recetas",
+            "pricing": "Precios",
+            "upload": "Subir Receta",
+            "terms": "Términos de Servicio",
+            "privacy": "Política de Privacidad"
+        }
+    },
+    "Privacy": {
+        "title": "Política de Privacidad",
+        "lastUpdated": "Última Actualización: 2 de Enero, 2026",
+        "sections": {
+            "collection": {
+                "title": "1. Recopilación de Información",
+                "content1": "Recopilamos información que nos proporcionas directamente cuando creas una cuenta, como tu nombre, dirección de correo electrónico y cualquier información de perfil opcional (teléfono, dirección).",
+                "content2": "Cuando utilizas nuestro servicio de escaneo, recopilamos las imágenes que subes con el propósito de extraer la receta."
+            },
+            "processing": {
+                "title": "2. Procesamiento de IA y Terceros",
+                "content1": "Souper Scanner utiliza los servicios de Google Gemini (LLM) y Google Cloud Vision (OCR) para procesar tus imágenes y generar el contenido de la receta.",
+                "content2": "Al utilizar el servicio, reconoces que tus imágenes subidas y el texto extraído resultante serán procesados por la infraestructura de Google. No utilizamos tus datos para entrenar nuestros propios modelos, pero los proveedores de IA externos pueden tener sus propias políticas de manejo de datos."
+            },
+            "retention": {
+                "title": "3. Retención de Datos",
+                "storageTitle": "Almacenamiento Temporal de Imágenes:",
+                "storageContent": "Solo almacenamos tus imágenes subidas temporalmente. Una vez que el agente de IA ha procesado con éxito la imagen y generado el contenido digital de la receta, la imagen original se borra de nuestro almacenamiento de procesamiento activo.",
+                "content": "El texto de la receta extraído y la información de tu perfil de cuenta se almacenan de forma segura en nuestra base de datos mientras tu cuenta permanezca activa."
+            },
+            "security": {
+                "title": "4. Seguridad",
+                "content": "Implementamos medidas de seguridad estándar de la industria para proteger tus datos, incluyendo hash de contraseñas (bcrypt) y conexiones encriptadas. Sin embargo, ningún método de transmisión a través de Internet es 100% seguro."
+            },
+            "cookies": {
+                "title": "5. Cookies",
+                "content": "Utilizamos cookies principalmente para la gestión de sesiones y autenticación a través de NextAuth.js. Estas son necesarias para que la aplicación funcione y te reconozca en diferentes páginas."
+            },
+            "rights": {
+                "title": "6. Sus Derechos",
+                "content": "Puede ver, editar o eliminar la información de su cuenta en cualquier momento a través de la configuración de su perfil. Tras la eliminación de la cuenta, todos los datos personales asociados con su cuenta se eliminarán permanentemente de nuestras bases de datos."
+            }
+        },
+        "contact": "Para consultas relacionadas con la privacidad, contáctenos en privacy@souperscanner.com"
+    },
+    "Terms": {
+        "title": "Términos de Servicio",
+        "lastUpdated": "Última Actualización: 2 de Enero, 2026",
+        "sections": {
+            "acceptance": {
+                "title": "1. Aceptación de los Términos",
+                "content": "Al acceder o utilizar Souper Scanner, usted acepta estar sujeto a estos Términos de Servicio. Si no está de acuerdo con todos estos términos, no utilice nuestro servicio."
+            },
+            "description": {
+                "title": "2. Descripción del Servicio",
+                "content": "Souper Scanner proporciona herramientas de escaneo y gestión de recetas impulsadas por IA. Utilizamos OCR avanzado y Modelos de Lenguaje Grande (LLMs) como Google Gemini para extraer datos de imágenes proporcionadas por los usuarios."
+            },
+            "usage": {
+                "title": "3. Uso Justo y Límites",
+                "content": "Para garantizar una alta calidad de servicio para todos los usuarios, implementamos los siguientes límites de escaneo mensuales:",
+                "freeTier": "Nivel Gratuito: 3 escaneos por mes.",
+                "premiumTier": "Nivel Premium: 20 escaneos por mes.",
+                "prohibited": "El escaneo automatizado, el uso de bots o cualquier intento de eludir estos límites está estrictamente prohibido y puede resultar en la terminación de la cuenta."
+            },
+            "content": {
+                "title": "4. Contenido del Usuario y Derechos de Autor",
+                "content": "Usted conserva la propiedad de cualquier imagen o texto que suba. Sin embargo, usted es responsable de asegurarse de tener derecho a digitalizar y almacenar las recetas que suba. Souper Scanner respeta los derechos de propiedad intelectual y espera que los usuarios hagan lo mismo."
+            },
+            "disclaimers": {
+                "title": "5. Descargos de Responsabilidad",
+                "quote": "\"Cocine bajo su propio riesgo.\"",
+                "content": "Souper Scanner es una herramienta impulsada por IA. Si bien nos esforzamos por la precisión, la extracción de IA ocasionalmente puede resultar en errores en medidas, ingredientes o instrucciones. Siempre verifique el contenido generado por IA con su fuente original. No somos responsables de accidentes de cocina, platos fallidos o problemas dietéticos resultantes del uso de nuestro servicio."
+            },
+            "termination": {
+                "title": "6. Terminación",
+                "content": "Nos reservamos el derecho de suspender o terminar su acceso al servicio a nuestra entera discreción, sin previo aviso, por conducta que creemos viola estos Términos o es perjudicial para otros usuarios del servicio, nosotros o terceros, o por cualquier otra razón."
+            }
+        },
+        "contact": "Si tiene alguna pregunta sobre estos términos, contáctenos en legal@souperscanner.com"
     }
 }

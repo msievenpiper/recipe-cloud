@@ -3,6 +3,7 @@
 import { useState, useEffect, useMemo, useRef } from "react";
 import Link from "next/link";
 import { FaBookOpen, FaSearch, FaPlus } from "react-icons/fa";
+import { useTranslations } from "next-intl";
 
 interface Recipe {
   id: number;
@@ -22,6 +23,7 @@ export default function RecipeListPage() {
   const [searchTerm, setSearchTerm] = useState("");
   const [showSuggestions, setShowSuggestions] = useState(false);
   const searchInputRef = useRef<HTMLInputElement>(null);
+  const t = useTranslations('Recipes.List');
 
   useEffect(() => {
     Promise.all([
@@ -88,7 +90,7 @@ export default function RecipeListPage() {
   if (loading) {
     return (
       <div className="flex min-h-screen flex-col items-center justify-center px-4 py-8 md:p-24">
-        <h1 className="text-4xl font-bold text-primary-700">Loading your recipes...</h1>
+        <h1 className="text-4xl font-bold text-primary-700">{t('loading')}</h1>
       </div>
     );
   }
@@ -96,10 +98,10 @@ export default function RecipeListPage() {
   return (
     <div className="flex flex-col items-center px-4 py-8 md:p-24 bg-gray-50">
       <div className="w-full max-w-2xl flex justify-between items-center mb-8">
-        <h1 className="text-4xl font-bold text-primary-800">Your Recipes</h1>
+        <h1 className="text-4xl font-bold text-primary-800">{t('title')}</h1>
         <Link href="/upload" className="bg-primary-600 hover:bg-primary-700 text-white font-bold py-2 px-4 rounded-lg flex items-center space-x-2 transition-colors duration-200">
           <FaPlus />
-          <span>Add New</span>
+          <span>{t('addNew')}</span>
         </Link>
       </div>
 
@@ -107,7 +109,7 @@ export default function RecipeListPage() {
         <div className="w-full max-w-2xl mb-8 relative" ref={searchInputRef}>
           <input
             type="text"
-            placeholder="Search all recipes..."
+            placeholder={t('searchPlaceholder')}
             className="w-full p-3 pl-10 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200"
             value={searchTerm}
             onChange={(e) => {
@@ -131,7 +133,7 @@ export default function RecipeListPage() {
 
       {filteredMyRecipes.length > 0 && (
         <div className="w-full max-w-2xl mb-8">
-          <h2 className="text-2xl font-bold text-primary-800 mb-4">My Recipes</h2>
+          <h2 className="text-2xl font-bold text-primary-800 mb-4">{t('myRecipes')}</h2>
           <ul className="w-full">
             {filteredMyRecipes.map((recipe) => (
               <li key={recipe.id} className="mb-4 p-4 border border-gray-200 rounded-lg shadow-sm flex items-center space-x-4 bg-white hover:shadow-md transition-shadow duration-200">
@@ -150,7 +152,7 @@ export default function RecipeListPage() {
 
       {filteredSharedRecipes.length > 0 && (
         <div className="w-full max-w-2xl">
-          <h2 className="text-2xl font-bold text-primary-800 mb-4">Shared With You</h2>
+          <h2 className="text-2xl font-bold text-primary-800 mb-4">{t('sharedWithYou')}</h2>
           <ul className="w-full">
             {filteredSharedRecipes.map((recipe) => (
               <li key={recipe.id} className="mb-4 p-4 border border-gray-200 rounded-lg shadow-sm flex items-center space-x-4 bg-white hover:shadow-md transition-shadow duration-200">
@@ -159,7 +161,7 @@ export default function RecipeListPage() {
                   <Link href={`/recipes/${recipe.id}`} className="text-xl font-semibold text-primary-700 hover:text-primary-900 hover:underline">
                     {recipe.title}
                   </Link>
-                  <p className="text-gray-500 text-xs mt-1">Shared by {recipe.author?.name || recipe.author?.email}</p>
+                  <p className="text-gray-500 text-xs mt-1">{t('sharedBy')} {recipe.author?.name || recipe.author?.email}</p>
                   {recipe.summary && <p className="text-gray-600 text-sm mt-1">{recipe.summary}</p>}
                 </div>
               </li>
@@ -170,10 +172,10 @@ export default function RecipeListPage() {
 
       {allRecipes.length === 0 && (
         <div className="text-center bg-white p-6 md:p-10 rounded-lg shadow-md mx-4 border border-gray-200">
-          <h2 className="text-2xl font-bold mb-4 text-primary-800">Welcome to Your Recipe Collection!</h2>
-          <p className="mb-6 text-gray-700">It looks like you don't have any recipes yet. Let's create your first one.</p>
+          <h2 className="text-2xl font-bold mb-4 text-primary-800">{t('welcomeTitle')}</h2>
+          <p className="mb-6 text-gray-700">{t('welcomeDesc')}</p>
           <Link href="/upload" className="bg-primary-600 hover:bg-primary-700 text-white font-bold py-3 px-6 rounded-lg text-lg transition-colors duration-200">
-            Upload Your First Recipe
+            {t('uploadFirst')}
           </Link>
         </div>
       )}
