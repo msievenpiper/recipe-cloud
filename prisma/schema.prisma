@@ -32,7 +32,21 @@ model Recipe {
   authorId         String
   sharedWith       SharedRecipe[]
   imageFingerprint String?
+  translations     RecipeTranslation[]
   createdAt        DateTime       @default(now())
+}
+
+model RecipeTranslation {
+  id           Int      @id @default(autoincrement())
+  recipe       Recipe   @relation(fields: [recipeId], references: [id], onDelete: Cascade)
+  recipeId     Int
+  languageCode String
+  title        String
+  summary      String?
+  content      String
+  createdAt    DateTime @default(now())
+
+  @@unique([recipeId, languageCode])
 }
 
 model SharedRecipe {

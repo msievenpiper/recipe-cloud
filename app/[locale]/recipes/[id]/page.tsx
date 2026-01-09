@@ -34,9 +34,25 @@ export default function RecipeDetailPage() {
   const [summary, setSummary] = useState("");
   const [icon, setIcon] = useState("");
   const [showShareModal, setShowShareModal] = useState(false);
+  const [translatedRecipe, setTranslatedRecipe] = useState<{ title: string; content: string; summary: string } | null>(null);
+  const [targetLang, setTargetLang] = useState("en");
+  const [isTranslating, setIsTranslating] = useState(false);
   const params = useParams();
   const id = params.id;
   const t = useTranslations('Recipes.Detail');
+
+  const languages = [
+    { code: 'en', name: 'English', flag: '🇺🇸' },
+    { code: 'es', name: 'Español', flag: '🇪🇸' },
+    { code: 'fr', name: 'Français', flag: '🇫🇷' },
+    { code: 'de', name: 'Deutsch', flag: '🇩🇪' },
+    { code: 'it', name: 'Italiano', flag: '🇮🇹' },
+    { code: 'pt', name: 'Português', flag: '🇵🇹' },
+    { code: 'zh', name: '中文', flag: '🇨🇳' },
+    { code: 'ja', name: '日本語', flag: '🇯🇵' },
+    { code: 'ko', name: '한국어', flag: '🇰🇷' },
+    { code: 'ru', name: 'Русский', flag: '🇷🇺' },
+  ];
 
   useEffect(() => {
     if (id) {
@@ -72,8 +88,49 @@ export default function RecipeDetailPage() {
     setIsEditing(false);
   };
 
+  const handleTranslate = async (langCode: string) => {
+    if (!recipe) return;
+    setIsTranslating(true);
+    try {
+      const res = await fetch(`/api/recipes/${id}/translate`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          targetLanguage: languages.find(l => l.code === langCode)?.name,
+          languageCode: langCode
+        }),
+      });
+      if (res.ok) {
+        const data = await res.json();
+        setTranslatedRecipe(data);
+      } else {
+        const errorText = await res.text();
+        alert(`Translation failed: ${errorText}`);
+      }
+    } catch (error: any) {
+      console.error("Translation error:", error);
+      alert(`Translation error: ${error.message}`);
+    } finally {
+      setIsTranslating(false);
+    }
+  };
+
+  useEffect(() => {
+    // If targetLang is changed and it's not 'en' (assuming original is en)
+    // and we don't have the translation yet, fetch it.
+    if (targetLang !== 'en' && recipe) {
+      handleTranslate(targetLang);
+    } else if (targetLang === 'en') {
+      setTranslatedRecipe(null);
+    }
+  }, [targetLang, recipe?.id]); // Also trigger if recipe ID changes (e.g. navigation)
+
+  const currentTitle = translatedRecipe?.title || recipe?.title || "";
+  const currentSummary = translatedRecipe?.summary || summary;
+  const currentContent = translatedRecipe?.content || content;
+
   const handlePrintToPdf = async () => {
-    const input = document.getElementById('recipe-content');
+    const input = document.getElementById('recipe-content-wrapper');
     if (input && recipe) {
       const pdf = new jsPDF('p', 'mm', 'a4');
       pdf.html(input, {
@@ -87,7 +144,7 @@ export default function RecipeDetailPage() {
             const textX = (doc.internal.pageSize.getWidth() - textWidth) / 2;
             doc.text(footerText, textX, doc.internal.pageSize.getHeight() - 8);
           }
-          doc.save(`${recipe.title}.pdf`);
+          doc.save(`${currentTitle}.pdf`);
         },
         margin: [15, 15, 20, 15],
         autoPaging: 'slice',
@@ -132,10 +189,41 @@ export default function RecipeDetailPage() {
           </div>
         ) : (
           <div className="relative">
+            {/* Translation Header Bar */}
+            <div className="mb-6 pb-4 border-b border-gray-100 flex flex-wrap items-center justify-between gap-4">
+              <div className="flex items-center gap-3">
+                <label className="text-sm font-medium text-gray-500">{t('translate')}:</label>
+                <div className="flex items-center gap-2">
+                  <select
+                    value={targetLang}
+                    onChange={(e) => setTargetLang(e.target.value)}
+                    className="text-sm border-gray-300 rounded-md shadow-sm focus:ring-primary-500 focus:border-primary-500"
+                    disabled={isTranslating}
+                  >
+                    {languages.map(lang => (
+                      <option key={lang.code} value={lang.code}>{lang.flag} {lang.name}</option>
+                    ))}
+                  </select>
+                  {isTranslating && <span className="text-sm text-primary-600 animate-pulse">{t('translating')}...</span>}
+                </div>
+              </div>
+              {translatedRecipe && targetLang !== 'en' && (
+                <button
+                  onClick={() => {
+                    setTargetLang('en');
+                    setTranslatedRecipe(null);
+                  }}
+                  className="text-sm text-gray-500 hover:text-gray-700 underline"
+                >
+                  {t('original')}
+                </button>
+              )}
+            </div>
+
             <div className="flex flex-col md:flex-row md:items-start md:justify-between mb-4">
               <div className="flex items-center mb-4 md:mb-0">
                 {recipe.icon && <span className="text-4xl mr-2">{recipe.icon}</span>}
-                <h1 className="text-3xl font-bold text-gray-800">{recipe.title}</h1>
+                <h1 className="text-3xl font-bold text-gray-800">{currentTitle}</h1>
               </div>
               <div className="flex flex-wrap gap-2">
                 <button onClick={handlePrintToPdf} className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg transition-colors duration-200">{t('print')}</button>
@@ -147,10 +235,13 @@ export default function RecipeDetailPage() {
                 )}
               </div>
             </div>
-            {recipe.summary && <p className="text-lg text-gray-600 mb-4">{recipe.summary}</p>}
-            <article id="recipe-content" className="prose prose-base">
-              <ReactMarkdown remarkPlugins={[remarkGfm]}>{recipe.content}</ReactMarkdown>
-            </article>
+
+            <div id="recipe-content-wrapper">
+              {currentSummary && <p className="text-lg text-gray-600 mb-6 italic border-l-4 border-primary-200 pl-4">{currentSummary}</p>}
+              <article id="recipe-content" className="prose prose-base max-w-none">
+                <ReactMarkdown remarkPlugins={[remarkGfm]}>{currentContent}</ReactMarkdown>
+              </article>
+            </div>
           </div>
         )}
       </div>
