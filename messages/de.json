@@ -66,7 +66,11 @@
             "print": "Als PDF drucken",
             "share": "Teilen",
             "edit": "Bearbeiten",
-            "pdfFooter": "Souper Scanner - Seite"
+            "pdfFooter": "Souper Scanner - Seite",
+            "translate": "Rezept übersetzen",
+            "translating": "Übersetzen...",
+            "targetLanguage": "Zielsprache",
+            "original": "Original anzeigen"
         }
     },
     "Upload": {

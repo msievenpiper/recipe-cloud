@@ -66,7 +66,11 @@
             "print": "打印为 PDF",
             "share": "分享",
             "edit": "编辑",
-            "pdfFooter": "Souper Scanner - 第"
+            "pdfFooter": "Souper Scanner - 第",
+            "translate": "翻译食谱",
+            "translating": "翻译中...",
+            "targetLanguage": "目标语言",
+            "original": "显示原文"
         }
     },
     "Upload": {

@@ -66,7 +66,11 @@
             "print": "Imprimer en PDF",
             "share": "Partager",
             "edit": "Éditer",
-            "pdfFooter": "Souper Scanner - Page"
+            "pdfFooter": "Souper Scanner - Page",
+            "translate": "Traduire la recette",
+            "translating": "Traduction...",
+            "targetLanguage": "Langue cible",
+            "original": "Afficher l'original"
         }
     },
     "Upload": {
