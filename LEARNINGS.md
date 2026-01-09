@@ -17,7 +17,7 @@ The largest pinch points I ran into were using AI text detection, inital models 
 2. Using Gemini image detection
 3. Generating a contract only image and then running the monochrome image through Gemini
 
-When using option 2, I found the best results, however, this meant every single scan consumed a very large amount of Cloud Vision and Gemini credits. I eventually settled on using Gemini 2.5 Flash to do all the image detection and add more client side image detection to improve the experience.
+When using option 3, I found the best results, however, this meant every single scan consumed a very large amount of Cloud Vision and Gemini credits. I eventually settled on using Gemini 2.5 Flash to do all the image detection and add more client side image detection to improve the experience.
 
 ___
 
