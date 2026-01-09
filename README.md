@@ -9,6 +9,8 @@ Please note this project is over 80% chat bot made using the following tools:
 * Claude
 
 >It was mostly made in PHPStorm with Gemini Code Assist and Antigravity. Please do not take this project as a reference for how to write code or my abilities as it reflects neither. This was purely an experiment to see how effective AI tools are for web development and how they can be used to improve productivity.
+
+>See my thoughts on this project [here](LEARNINGS.md).
 ___
 
 Recipe Cloud is a progressive web application that allows users to upload photos of recipes, which are then processed by an AI agent to generate structured markdown content. Users can manage their recipes, translate them into multiple languages, generate PDFs, and authenticate using various methods.
