@@ -1,21 +1,24 @@
-# Souper Scanner
+# Recipe Cloud
 
-Souper Scanner is a progressive web application that allows users to upload photos of recipes, which are then processed by an AI agent to generate step-by-step instructions and notes. Users can manage their recipes, edit the AI-generated content, and authenticate using various methods, including email/password and popular SSO providers.
+Recipe Cloud is a progressive web application that allows users to upload photos of recipes, which are then processed by an AI agent to generate structured markdown content. Users can manage their recipes, translate them into multiple languages, generate PDFs, and authenticate using various methods.
 
 ## Features
 
-*   **AI-Powered Recipe Extraction**: Upload a photo of a recipe, and an AI agent (Google Cloud Vision for OCR, Google Gemini for content generation) will process it to produce structured markdown instructions and notes.
+*   **AI-Powered Recipe Extraction**: Upload a photo of a recipe, and an AI agent (Google Cloud Vision for OCR, Google Gemini 2.0 Flash for content generation) will process it to produce structured markdown instructions and notes.
+*   **Multi-Language Translation**: Translate recipes into 10+ supported languages (Spanish, French, German, Italian, Portuguese, Dutch, Russian, Chinese, Japanese, Korean) with persistent storage and caching.
+*   **PDF Generation**: Export recipes (and their translations) to PDF format with support for international fonts.
 *   **User Authentication**: Secure user authentication via:
     *   Email and Password (with bcrypt hashing).
     *   Google, Facebook, and Twitter Single Sign-On (SSO) using NextAuth.js.
 *   **Recipe Management**:
     *   View a list of all your uploaded recipes.
     *   View detailed recipe pages with markdown rendering.
-    *   Edit AI-generated recipe content (markdown) directly within the application.
-*   **Progressive Web App (PWA) Ready**: Built with Next.js for a fast and responsive user experience.
-*   **SQLite Database**: Simple and efficient local database management using Prisma.
+    *   Edit AI-generated recipe content directly within the application.
+*   **Admin Features**: Administrators can bypass usage limits and manage the system.
+*   **Progressive Web App (PWA)**: Built with Next.js for a fast, responsive, and installable user experience.
+*   **Database**: Supports SQLite for local development and PostgreSQL for production via Prisma.
 *   **Responsive UI**: Modern user interface built with Tailwind CSS.
-*   **Protected Routes**: Access to recipe management and upload features is restricted to authenticated users.
+*   **Integrated Legal Pages**: Includes Terms of Service and Privacy Policy.
 
 ## Getting Started
 
@@ -46,18 +49,23 @@ Follow these instructions to get your development environment set up and running
 
     ```env
     # NextAuth.js - Authentication
+    NEXTAUTH_URL=http://localhost:3000
+    NEXTAUTH_SECRET=YOUR_NEXTAUTH_SECRET # Generate a strong secret, e.g., using `openssl rand -hex 32`
+
+    # OAuth Providers
     GOOGLE_CLIENT_ID=YOUR_GOOGLE_CLIENT_ID
     GOOGLE_CLIENT_SECRET=YOUR_GOOGLE_CLIENT_SECRET
     FACEBOOK_CLIENT_ID=YOUR_FACEBOOK_CLIENT_ID
     FACEBOOK_CLIENT_SECRET=YOUR_FACEBOOK_CLIENT_SECRET
     TWITTER_CLIENT_ID=YOUR_TWITTER_CLIENT_ID
     TWITTER_CLIENT_SECRET=YOUR_TWITTER_CLIENT_SECRET
-    NEXTAUTH_URL=http://localhost:3000
-    NEXTAUTH_SECRET=YOUR_NEXTAUTH_SECRET # Generate a strong secret, e.g., using `openssl rand -hex 32`
 
     # Google Cloud & Gemini API
     GEMINI_API_KEY=YOUR_GEMINI_API_KEY
     GOOGLE_APPLICATION_CREDENTIALS=/path/to/your/google-cloud-service-account-key.json
+
+    # Database
+    DATABASE_URL="file:./dev.db" # Or "postgresql://..." for Docker/Production
     ```
     *   **`GOOGLE_APPLICATION_CREDENTIALS`**: This should be the **absolute path** to the JSON key file for your Google Cloud service account (with "Cloud Vision AI User" role). See [Google Cloud Authentication](https://cloud.google.com/docs/authentication/getting-started) for more details on how to create and download this key.
 
@@ -102,6 +110,18 @@ You can deploy with SQLite, but be aware that your data will not persist across 
 *   `gcloud CLI` installed and configured.
 *   **Cloud Run API** enabled in your GCP project.
 *   **Cloud Build API** enabled in your GCP project.
+*   **Cloud SQL (PostgreSQL)** (Recommended for persistent data).
+
+#### Docker Compose (Local/VPS with Postgres)
+
+For a more robust setup including a PostgreSQL database, you can use Docker Compose:
+
+1.  **Configure environment variables**: Ensure `.env` contains the correct `DATABASE_URL` pointing to the `db` service (e.g., `postgresql://user:password@db:5432/mydatabase?schema=public`).
+2.  **Run with Docker Compose**:
+    ```bash
+    docker-compose up --build
+    ```
+    This will start the Next.js application and a PostgreSQL database.
 
 #### Deployment Steps
 
