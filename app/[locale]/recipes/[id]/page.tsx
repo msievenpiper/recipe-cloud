@@ -133,23 +133,79 @@ export default function RecipeDetailPage() {
     const input = document.getElementById('recipe-content-wrapper');
     if (input && recipe) {
       const pdf = new jsPDF('p', 'mm', 'a4');
-      pdf.html(input, {
+
+      // Injecting styles to match the website branding
+      const printStyles = `
+        <style>
+          @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+          body { 
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+            color: #1f2937;
+            line-height: 1.5;
+            padding: 0;
+            margin: 0;
+          }
+          h1 { 
+            font-size: 28px !important; 
+            font-weight: 700 !important; 
+            margin-bottom: 16px !important;
+            color: #111827 !important;
+          }
+          .recipe-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 24px;
+          }
+          .recipe-icon {
+            font-size: 36px;
+            margin-right: 12px;
+          }
+          .summary {
+            font-size: 16px;
+            color: #4b5563;
+            font-style: italic;
+            border-left: 4px solid #e5e7eb;
+            padding-left: 16px;
+            margin-bottom: 24px;
+          }
+          .prose h1, .prose h2, .prose h3 {
+            color: #111827 !important;
+            font-weight: 600 !important;
+            margin-top: 24px !important;
+            margin-bottom: 12px !important;
+          }
+          .prose p { margin-bottom: 12px; }
+          .prose ul, .prose ol { margin-bottom: 16px; padding-left: 20px; }
+          .prose li { margin-bottom: 4px; }
+        </style>
+      `;
+
+      const container = `<div style="padding: 0; margin: 0;">${printStyles}${input.innerHTML}</div>`;
+
+      pdf.html(container, {
         callback: function (doc) {
           const totalPages = doc.getNumberOfPages();
           for (let i = 1; i <= totalPages; i++) {
             doc.setPage(i);
-            doc.setFontSize(10);
+            doc.setFont("helvetica", "normal");
+            doc.setFontSize(8);
+            doc.setTextColor(156, 163, 175); // gray-400
             const footerText = `${t('pdfFooter')} ${i} of ${totalPages}`;
             const textWidth = doc.getStringUnitWidth(footerText) * doc.getFontSize() / doc.internal.scaleFactor;
             const textX = (doc.internal.pageSize.getWidth() - textWidth) / 2;
-            doc.text(footerText, textX, doc.internal.pageSize.getHeight() - 8);
+            doc.text(footerText, textX, doc.internal.pageSize.getHeight() - 10);
           }
           doc.save(`${currentTitle}.pdf`);
         },
         margin: [15, 15, 20, 15],
         autoPaging: 'slice',
         width: 180,
-        windowWidth: 650,
+        windowWidth: 800, // Increased for better resolution and spacing
+        html2canvas: {
+          scale: 0.25, // Adjust scale for better quality/size balance
+          useCORS: true,
+          logging: false,
+        }
       });
     }
   };
@@ -220,12 +276,8 @@ export default function RecipeDetailPage() {
               )}
             </div>
 
-            <div className="flex flex-col md:flex-row md:items-start md:justify-between mb-4">
-              <div className="flex items-center mb-4 md:mb-0">
-                {recipe.icon && <span className="text-4xl mr-2">{recipe.icon}</span>}
-                <h1 className="text-3xl font-bold text-gray-800">{currentTitle}</h1>
-              </div>
-              <div className="flex flex-wrap gap-2">
+            <div className="flex justify-between items-start mb-6 no-print">
+              <div id="recipe-actions" className="flex flex-wrap gap-2 ml-auto">
                 <button onClick={handlePrintToPdf} className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg transition-colors duration-200">{t('print')}</button>
                 {isAuthor && (
                   <>
@@ -237,7 +289,12 @@ export default function RecipeDetailPage() {
             </div>
 
             <div id="recipe-content-wrapper">
-              {currentSummary && <p className="text-lg text-gray-600 mb-6 italic border-l-4 border-primary-200 pl-4">{currentSummary}</p>}
+              <div className="recipe-header flex items-center mb-6">
+                {recipe.icon && <span className="recipe-icon text-4xl mr-3">{recipe.icon}</span>}
+                <h1 className="text-3xl font-bold text-gray-800">{currentTitle}</h1>
+              </div>
+
+              {currentSummary && <p className="summary text-lg text-gray-600 mb-6 italic border-l-4 border-primary-200 pl-4">{currentSummary}</p>}
               <article id="recipe-content" className="prose prose-base max-w-none">
                 <ReactMarkdown remarkPlugins={[remarkGfm]}>{currentContent}</ReactMarkdown>
               </article>
