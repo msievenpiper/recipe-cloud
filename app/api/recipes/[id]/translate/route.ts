@@ -26,10 +26,15 @@ export async function POST(
         return new NextResponse("Invalid recipe ID", { status: 400 });
     }
 
-    const { targetLanguage } = await request.json();
-    if (!targetLanguage) {
-        return new NextResponse("Target language is required", { status: 400 });
+    const { targetLanguage, languageCode } = await request.json();
+    if (!targetLanguage && !languageCode) {
+        return new NextResponse("Target language or language code is required", { status: 400 });
     }
+
+    // Map language code to name if only code is provided, or vice versa
+    // In a real app, this might be a more robust mapping
+    const langCode = languageCode || targetLanguage?.substring(0, 2).toLowerCase();
+    const langName = targetLanguage || languageCode; // Fallback, though frontend should ideally send both
 
     try {
         const recipe = await prisma.recipe.findUnique({
@@ -40,9 +45,30 @@ export async function POST(
             return new NextResponse("Recipe not found", { status: 404 });
         }
 
-        console.log("Using API key starting with:", geminiApiKey?.substring(0, 5));
+        // Check for existing translation
+        if (langCode) {
+            const existingTranslation = await prisma.recipeTranslation.findUnique({
+                where: {
+                    recipeId_languageCode: {
+                        recipeId: recipeId,
+                        languageCode: langCode,
+                    },
+                },
+            });
+
+            if (existingTranslation) {
+                console.log(`Using cached translation for ${langCode}`);
+                return NextResponse.json({
+                    title: existingTranslation.title,
+                    summary: existingTranslation.summary,
+                    content: existingTranslation.content,
+                });
+            }
+        }
+
+        console.log(`Calling Gemini (${targetLanguage || langCode}) for translation. Using API key starting with:`, geminiApiKey?.substring(0, 5));
         const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
-        const prompt = `Translate the following recipe into ${targetLanguage}. 
+        const prompt = `Translate the following recipe into ${langName}. 
         Return the result in JSON format with exactly these fields: "title", "summary", "content".
         Preserve all Markdown formatting, structure, and headings in the "content" field.
         
@@ -52,14 +78,54 @@ export async function POST(
 
         const aiResult = await model.generateContent(prompt);
         const response = aiResult.response;
-        let text = response.text();
+        const text = response.text();
+        console.log("Raw Gemini response received. Length:", text.length);
 
-        // Clean up markdown block if present
-        if (text.startsWith('```json')) {
-            text = text.replace(/^```json/, '').replace(/```$/, '').trim();
+        let translatedData;
+        try {
+            // Extract JSON block using regex if present, otherwise try parsing whole text
+            const jsonMatch = text.match(/\{[\s\S]*\}/);
+            const jsonString = jsonMatch ? jsonMatch[0] : text;
+            translatedData = JSON.parse(jsonString);
+        } catch (parseError) {
+            console.error("Failed to parse Gemini response as JSON. Raw text:", text);
+            return new NextResponse("Invalid response format from translation service", { status: 500 });
         }
 
-        const translatedData = JSON.parse(text);
+        if (!translatedData.title || !translatedData.content) {
+            console.error("Gemini response missing required fields:", translatedData);
+            return new NextResponse("Translation service returned incomplete data", { status: 500 });
+        }
+
+        // Store the translation
+        if (langCode) {
+            try {
+                await prisma.recipeTranslation.upsert({
+                    where: {
+                        recipeId_languageCode: {
+                            recipeId: recipeId,
+                            languageCode: langCode,
+                        },
+                    },
+                    update: {
+                        title: translatedData.title,
+                        summary: translatedData.summary || "",
+                        content: translatedData.content,
+                    },
+                    create: {
+                        recipeId: recipeId,
+                        languageCode: langCode,
+                        title: translatedData.title,
+                        summary: translatedData.summary || "",
+                        content: translatedData.content,
+                    },
+                });
+                console.log(`Stored translation for ${langCode}`);
+            } catch (dbError) {
+                console.error("Failed to store translation in DB:", dbError);
+                // We still return the translated data even if storing it failed
+            }
+        }
 
         return NextResponse.json(translatedData);
     } catch (error: any) {

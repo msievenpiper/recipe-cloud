@@ -36,8 +36,7 @@ export async function GET(request: Request, { params }: { params: Promise<{ id: 
     });
 
     if (!isAuthor && !isSharedWithUser) {
-        if (session.user.role === 'ADMIN' && session.user.isImpersonating)
-        {
+        if (session.user.role === 'ADMIN' && session.user.isImpersonating) {
             return new NextResponse("Forbidden", { status: 403 });
         }
     }
@@ -69,9 +68,20 @@ export async function PUT(request: Request, { params }: { params: Promise<{ id: 
     }
 
     const { title, content, summary, icon } = await request.json();
-    const updatedRecipe = await prisma.recipe.update({
-        where: { id: recipeId },
-        data: { title, content, summary, icon },
+
+    // Update recipe and delete translations in a transaction
+    const updatedRecipe = await prisma.$transaction(async (tx) => {
+        const updated = await tx.recipe.update({
+            where: { id: recipeId },
+            data: { title, content, summary, icon },
+        });
+
+        // Invalidate translations
+        await tx.recipeTranslation.deleteMany({
+            where: { recipeId },
+        });
+
+        return updated;
     });
 
     return NextResponse.json(updatedRecipe);

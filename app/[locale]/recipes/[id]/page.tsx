@@ -88,25 +88,42 @@ export default function RecipeDetailPage() {
     setIsEditing(false);
   };
 
-  const handleTranslate = async () => {
+  const handleTranslate = async (langCode: string) => {
     if (!recipe) return;
     setIsTranslating(true);
     try {
       const res = await fetch(`/api/recipes/${id}/translate`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ targetLanguage: languages.find(l => l.code === targetLang)?.name }),
+        body: JSON.stringify({
+          targetLanguage: languages.find(l => l.code === langCode)?.name,
+          languageCode: langCode
+        }),
       });
       if (res.ok) {
         const data = await res.json();
         setTranslatedRecipe(data);
+      } else {
+        const errorText = await res.text();
+        alert(`Translation failed: ${errorText}`);
       }
-    } catch (error) {
+    } catch (error: any) {
       console.error("Translation error:", error);
+      alert(`Translation error: ${error.message}`);
     } finally {
       setIsTranslating(false);
     }
   };
+
+  useEffect(() => {
+    // If targetLang is changed and it's not 'en' (assuming original is en)
+    // and we don't have the translation yet, fetch it.
+    if (targetLang !== 'en' && recipe) {
+      handleTranslate(targetLang);
+    } else if (targetLang === 'en') {
+      setTranslatedRecipe(null);
+    }
+  }, [targetLang, recipe?.id]); // Also trigger if recipe ID changes (e.g. navigation)
 
   const currentTitle = translatedRecipe?.title || recipe?.title || "";
   const currentSummary = translatedRecipe?.summary || summary;
@@ -181,23 +198,21 @@ export default function RecipeDetailPage() {
                     value={targetLang}
                     onChange={(e) => setTargetLang(e.target.value)}
                     className="text-sm border-gray-300 rounded-md shadow-sm focus:ring-primary-500 focus:border-primary-500"
+                    disabled={isTranslating}
                   >
                     {languages.map(lang => (
                       <option key={lang.code} value={lang.code}>{lang.flag} {lang.name}</option>
                     ))}
                   </select>
-                  <button
-                    onClick={handleTranslate}
-                    disabled={isTranslating}
-                    className="bg-primary-50 hover:bg-primary-100 text-primary-700 text-sm font-semibold py-1.5 px-4 rounded-md transition-all disabled:opacity-50"
-                  >
-                    {isTranslating ? t('translating') : t('translate')}
-                  </button>
+                  {isTranslating && <span className="text-sm text-primary-600 animate-pulse">{t('translating')}...</span>}
                 </div>
               </div>
-              {translatedRecipe && (
+              {translatedRecipe && targetLang !== 'en' && (
                 <button
-                  onClick={() => setTranslatedRecipe(null)}
+                  onClick={() => {
+                    setTargetLang('en');
+                    setTranslatedRecipe(null);
+                  }}
                   className="text-sm text-gray-500 hover:text-gray-700 underline"
                 >
                   {t('original')}
